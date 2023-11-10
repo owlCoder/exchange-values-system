@@ -1,5 +1,4 @@
-// src/contexts/AuthContext.tsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import ICurrentUser from '../interfaces/ICurrentUser';
 import AuthProviderProps from '../props/AuthContext';
 import AuthContextType from '../types/AuthContext';
@@ -7,18 +6,26 @@ import AuthContextType from '../types/AuthContext';
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<ICurrentUser | null>(null);
+  const [currentUser, setCurrentUser] = useState<ICurrentUser | null>(() => {
+    // Initialize currentUser from local storage
+    const storedUser = localStorage.getItem('currentUser');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-  // You can use a useEffect to load the currentUser from session storage or other sources
-  useEffect(() => {
-    const storedUser = sessionStorage.getItem('currentUser');
-    if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
+  // Function to set the currentUser and expose it
+  const setUser = (user: ICurrentUser | null) => {
+    if (user) { 
+      // Store the user in session or local storage
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('currentUser');
     }
-  }, []);
+
+    setCurrentUser(user);
+  };
 
   return (
-    <AuthContext.Provider value={{ currentUser }}>
+    <AuthContext.Provider value={{ currentUser, setUser }}>
       {children}
     </AuthContext.Provider>
   );
@@ -29,5 +36,5 @@ export const useAuth = () => {
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-  return context.currentUser;
+  return context;
 };

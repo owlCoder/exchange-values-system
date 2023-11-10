@@ -33,7 +33,8 @@ export async function LogIn(creditials: ILogin) {
     //     // Handle network or server errors
     //     console.error('API error:', error);
     // }
-    sessionStorage.setItem('currentUser', '1');
+    //sessionStorage.setItem('currentUser', "{uid: 1, token: '122', admin: true}");
+    return {code: 200, payload: {uid: Math.random(), token: '122', admin: true}};
 };
 
 export async function LogOut() {
