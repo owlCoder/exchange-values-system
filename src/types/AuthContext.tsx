@@ -1,7 +1,7 @@
+import ICurrentUser from "../interfaces/ICurrentUser";
+
 type AuthContextType = {
-    isAuthenticated: boolean;
-    login: (email: string, password: string) => void;
-    logout: () => void;
+    currentUser: ICurrentUser | null
   };
   
   export default AuthContextType;
