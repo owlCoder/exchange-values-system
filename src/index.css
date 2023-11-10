@@ -1,17 +1,51 @@
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --16-PX-normal-text-font-family: "Poppins-Regular", Helvetica;
+  --16-PX-normal-text-font-size: 16px;
+  --16-PX-normal-text-font-style: normal;
+  --16-PX-normal-text-font-weight: 400;
+  --16-PX-normal-text-letter-spacing: 0px;
+  --16-PX-normal-text-line-height: 150%;
+  --main: rgba(88, 152, 91, 0.89);
+  --second-text: rgba(164, 168, 171, 1);
+  --title-font-family: "Poppins-Bold", Helvetica;
+  --title-font-size: 30px;
+  --title-font-style: normal;
+  --title-font-weight: 700;
+  --title-letter-spacing: 0px;
+  --title-line-height: normal;
+  --white: rgba(255, 255, 255, 1);
+}
+
+/* Custom made classes for UI */
+/* Author: owlCoder MIT Licence 2023 */
+
+/* Linear background class overlap*/
+.linear-overlap {
+  background-color: rgba(255, 255, 255, 1);
+  background: linear-gradient(180deg, rgba(88, 152, 91, 0.6) 0%, rgb(33, 42, 54) 100%);
+}
+
+/* Colorful text on eg. Transcations */
+.linear-text {
+  /* position: absolute; */
+  background: linear-gradient(90deg, rgb(88, 152, 91) 30%, rgb(251, 119, 74) 70%);
+  -webkit-background-clip: text !important;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Poppins-Bold", Helvetica;
+  font-weight: 700;
+  color: transparent;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
 }
