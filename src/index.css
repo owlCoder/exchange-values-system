@@ -64,3 +64,18 @@ body {
   letter-spacing: 0;
   line-height: normal;
 }
+
+.non-linear-text {
+  /* position: absolute; */
+  background: white;
+  -webkit-background-clip: text !important;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Poppins-SemiBold", Helvetica;
+  font-weight: 700;
+  color: transparent;
+  font-size: 18px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
