@@ -17,6 +17,7 @@ const Login: React.FC = () => {
 
   const handleLogout = () => {
     LogOut();
+    navigate('/');
   }
 
   return (
