@@ -1,32 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+  
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .all-\[unset\] {
-    all: unset;
+/* Custom made classes for UI */
+/* Author: owlCoder MIT Licence 2023 */
+@layer utilities {
+  @variants responsive {
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
   }
 }
 
-:root {
-  --16-PX-normal-text-font-family: "Poppins-Regular", Helvetica;
-  --16-PX-normal-text-font-size: 16px;
-  --16-PX-normal-text-font-style: normal;
-  --16-PX-normal-text-font-weight: 400;
-  --16-PX-normal-text-letter-spacing: 0px;
-  --16-PX-normal-text-line-height: 150%;
-  --main: rgba(88, 152, 91, 0.89);
-  --second-text: rgba(164, 168, 171, 1);
-  --title-font-family: "Poppins-Bold", Helvetica;
-  --title-font-size: 30px;
-  --title-font-style: normal;
-  --title-font-weight: 700;
-  --title-letter-spacing: 0px;
-  --title-line-height: normal;
-  --white: rgba(255, 255, 255, 1);
+/* Background styles */
+html, a, abbr, acronym, address, applet, area, article, aside, audio, 
+b, base, bdi, bdo, big, blockquote, body, br, button, canvas, caption, center, cite, 
+code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, dir, div, dl, dt, 
+em, embed, fieldset, figcaption, figure, font, footer, form, frame, frameset, 
+h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, 
+kbd, label, legend, li, link, main, map, mark, menu, menuitem, meta, meter, nav, noframes, 
+noscript, object, ol, optgroup, option, output, p, param, picture, pre, progress, q, rp, rt, 
+ruby, s, samp, script, section, select, small, source, span, strike, strong, style, sub, summary, 
+sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, tt, u, ul, var, video, wbr
+{
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Custom made classes for UI */
-/* Author: owlCoder MIT Licence 2023 */
+body {
+  background: linear-gradient(180deg, #4d7e4f 50%, #212A36 100%);
+  font-family: 'Poppins', sans-serif;
+}
+
 
 /* Linear background class overlap*/
 .linear-overlap {

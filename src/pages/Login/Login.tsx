@@ -39,7 +39,7 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div>
+    <main className='min-h-screen'>
       {currentUser ? (
         <>
         <p>You are already logged in.</p>
@@ -63,7 +63,7 @@ const Login: React.FC = () => {
           <button onClick={handleLogin}>Login</button> {/* Use handleLogin function */}
         </>
       )}
-    </div>
+    </main>
   );
 };
 
