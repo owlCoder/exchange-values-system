@@ -1,12 +1,24 @@
+import axios from 'axios';
 import ILogin from '../interfaces/ILogin';
 
+const apiUrl = 'http://localhost:5000/api';
+
 // Call API to check is token still valid
-export async function Token(creditials:ILogin) {
+export async function Token(creditials: ILogin) {
     // TODO
 }
 
-
 export async function LogIn(creditials: ILogin) {
+    axios.get(apiUrl)
+        .then((response) => {
+            // Handle the successful response here.
+            console.log('Data:', response.data);
+        })
+        .catch((error) => {
+            // Handle any errors that occurred during the request.
+            console.error('Error:', error);
+        });
+
     // Call API to check user creditials in MySQL database
     // TODO 
     // Use util method for password hashing and send hashed passwords to API to check creditials
@@ -34,7 +46,7 @@ export async function LogIn(creditials: ILogin) {
     //     console.error('API error:', error);
     // }
     //sessionStorage.setItem('currentUser', "{uid: 1, token: '122', admin: true}");
-    return {code: 200, payload: {uid: Math.random(), token: '122', admin: true}};
+    return { code: 200, payload: { uid: Math.random(), token: '122', admin: true } };
 };
 
 export async function LogOut() {

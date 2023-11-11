@@ -21,7 +21,7 @@ const Login: React.FC = () => {
     
     const loginData: ILogin = { email, password }; // Create the login data object
     let response = await LogIn(loginData); // Call the LogIn function with the login data
-
+console.log(response)
     if (response.code === 200) {
       const { uid, token, admin } = response.payload;
       setUser({ uid: uid, token: token, admin: admin });
