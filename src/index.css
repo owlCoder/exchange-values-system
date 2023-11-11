@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-  
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom made classes for UI */
-/* Author: owlCoder MIT Licence 2023 */
 @layer utilities {
   @variants responsive {
 
@@ -23,59 +20,6 @@
   }
 }
 
-/* Background styles */
-html, a, abbr, acronym, address, applet, area, article, aside, audio, 
-b, base, bdi, bdo, big, blockquote, body, br, button, canvas, caption, center, cite, 
-code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, dir, div, dl, dt, 
-em, embed, fieldset, figcaption, figure, font, footer, form, frame, frameset, 
-h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, 
-kbd, label, legend, li, link, main, map, mark, menu, menuitem, meta, meter, nav, noframes, 
-noscript, object, ol, optgroup, option, output, p, param, picture, pre, progress, q, rp, rt, 
-ruby, s, samp, script, section, select, small, source, span, strike, strong, style, sub, summary, 
-sup, table, tbody, td, template, textarea, tfoot, th, thead, time, title, tr, track, tt, u, ul, var, video, wbr
-{
-  font-family: 'Poppins', sans-serif;
-}
-
-body {
-  background: linear-gradient(180deg, #4d7e4f 50%, #212A36 100%);
-  font-family: 'Poppins', sans-serif;
-}
-
-
-/* Linear background class overlap*/
-.linear-overlap {
-  background-color: rgba(255, 255, 255, 1);
-  background: linear-gradient(180deg, rgba(88, 152, 91, 0.6) 0%, rgb(33, 42, 54) 100%);
-}
-
-/* Colorful text on eg. Transcations */
-.linear-text {
-  /* position: absolute; */
-  background: linear-gradient(90deg, rgb(88, 152, 91) 30%, rgb(251, 119, 74) 70%);
-  -webkit-background-clip: text !important;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-family: "Poppins-Bold", Helvetica;
-  font-weight: 700;
-  color: transparent;
-  font-size: 20px;
-  text-align: center;
-  letter-spacing: 0;
-  line-height: normal;
-}
-
-.non-linear-text {
-  /* position: absolute; */
-  background: white;
-  -webkit-background-clip: text !important;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-family: "Poppins-SemiBold", Helvetica;
-  font-weight: 700;
-  color: transparent;
-  font-size: 18px;
-  text-align: center;
-  letter-spacing: 0;
-  line-height: normal;
+.bgw {
+  background-image: url('../public/bg.jpg');
 }
