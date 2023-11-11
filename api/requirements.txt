@@ -1,0 +1,4 @@
+Flask==3.0.0
+Flask-CORS==4.0.0  # for CORS support
+SQLAlchemy==1.4.30  # The latest version of SQLAlchemy
+mysql-connector-python==8.0.30  # The latest version of the MySQL driver

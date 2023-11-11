@@ -1,0 +1,54 @@
+# Ignore virtual environment files for Flask API
+/api/env/
+
+# Ignore the virtual environment for React app
+/app/node_modules/
+/app/yarn-error.log
+/app/.yarn-integrity
+/app/.pnp.js
+
+# Ignore build and generated files
+/app/build/
+/app/dist/
+
+# Ignore development and configuration files
+/app/.env
+/app/.env.local
+/app/.env.development.local
+/app/.env.test.local
+/app/.env.production.local
+
+# Ignore user-specific files
+/app/.cache/
+/app/.eslintcache
+/app/.git
+/app/.idea/
+/app/.vscode/
+/app/*.log
+/app/.DS_Store
+/app/.project
+/app/.pyc
+/app/*.pyo
+/app/__pycache__/
+/app/.pytest_cache/
+/app/coverage/
+/app/.nyc_output/
+/app/public/
+/app/package-lock.json
+/app/yarn.lock
+/app/.coverage
+/app/coverage
+/app/coverage-final.json
+/app/test-results.xml
+/app/lambda-package/
+
+# Ignore temporary and backup files
+/app/*~
+/app/#*
+/app/.#*
+
+# Ignore environment-specific files
+/app/.env.local
+/app/.env.development.local
+/app/.env.test.local
+/app/.env.production.local
