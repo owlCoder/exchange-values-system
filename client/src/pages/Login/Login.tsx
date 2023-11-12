@@ -5,7 +5,6 @@ import { LiaSignOutAltSolid } from 'react-icons/lia';
 import { useAuth } from '../../contexts/AuthContext';
 import { LogIn, LogOut } from '../../service/AuthenticationService';
 import ILogin from '../../interfaces/ILogin'; // Import the ILogin interface
-import axios from 'axios';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -14,48 +13,21 @@ const Login: React.FC = () => {
   const { currentUser, setUser } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin =  () => {
-    //     const loginData: ILogin = { email, password }; // Create the login data object
-    //     let response = await LogIn(loginData); // Call the LogIn function with the login data
-    // console.log(response)
-
-    // Define the data you want to send in the request body
-    const requestData = {
-      email: email,
-      password: password
-    };
-
-    // Make the POST request
-     axios.post('http://localhost:5000/api/auth0/', requestData, {
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      }
-    })
-      .then(response => {
-        // Check the status code of the response
-        if (response.status === 200) {
-          // Successful login, handle the JSON response data
-          console.log('Login successful:', response);
-
-          // Continue with your logic here
-        } else {
-          // Handle other status codes if necessary
-          console.log('Login failed');
-        }
-
-        // Handle other logic after the API call here
-      })
-      .catch(error => {
-        // Handle network or server errors
-
-        // You can return an error object or throw an exception if needed
-        console.error('An error occurred:', error);
-      });
+  const handleLogin = async () => {
+    try {
+      const loginData: ILogin = { email, password };
+      const response = await LogIn(loginData);
   
-  // if (response.status === 200) {
-  //   const { uid, token, admin } = response.payload;
-  //   setUser({ uid: uid, token: token, admin: admin });
-
+      if (response) {
+        console.log(response);
+      } else {
+        console.log('Login failed or no response data');
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
+  
   // Auth user now be redirected to dashboard
   // Note: Dashboard is a page but contains more components that are shown depending on user role.
   // On, e.g., if an administrator is signed in, the dashboard will only load the administrator dashboard
@@ -67,8 +39,6 @@ const Login: React.FC = () => {
   // } else {
   //   // set error
   // }
-};
-
 const handleLogout = () => {
   LogOut();
   setUser(null);

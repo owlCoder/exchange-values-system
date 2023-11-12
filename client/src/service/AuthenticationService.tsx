@@ -1,5 +1,6 @@
 import axios from 'axios';
 import ILogin from '../interfaces/ILogin';
+import ICurrentUser from '../interfaces/ICurrentUser';
 
 const apiUrl = 'http://localhost:5000/api/';
 
@@ -8,41 +9,24 @@ export async function Token(creditials: ILogin) {
     // TODO
 }
 
-export async function LogIn(credentials: ILogin): Promise<any> {
-    try {
-        const response = await fetch(
-        apiUrl + 'auth0/',
-        {
-            method: 'POST',
-            body: JSON.stringify({
-                email: credentials.email,
-                password: credentials.password,
-              }),
-              headers: {
-                'Content-Type': 'application/json',
-              }
+export function LogIn(credentials: ILogin): Promise<ICurrentUser> {
+    return new Promise<ICurrentUser>(async (resolve, reject) => {
+      try {
+        const response = await axios.post(apiUrl + 'auth0/', credentials, {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+          },
+        });
+  
+        if (response.status === 200) {
+            resolve(response.data as ICurrentUser);
+        } else {
+            reject({ message: 'Login failed' });
         }
-      );
-  
-      // Check the status code of the response
-      if (response.status === 200) {
-        // Successful login, do something with the response data if needed
-        const responseData = response;
-        console.log('Login successful:', responseData);
-  
-        // Continue with the rest of your logic here
-      } else {
-        // Handle other status codes if necessary
-        console.log('Login failed');
+      } catch (error) {
+            reject(error);
       }
-  
-      // Handle other logic after the API call here
-    } catch (error) {
-      // Handle network or server errors
-  
-      // You can return an error object or throw an exception if needed
-      return error;
-    }
+    });
   }
 
 export async function LogOut() {
