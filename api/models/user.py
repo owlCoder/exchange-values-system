@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from db_config import Base, engine
 
 class User(Base):
     __tablename__ = 'users'
@@ -17,3 +16,5 @@ class User(Base):
     password = Column(String(255), nullable=False)
     admin = Column(Boolean, nullable=False)
     verified = Column(Boolean, nullable=False)
+
+Base.metadata.create_all(engine)

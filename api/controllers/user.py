@@ -1,6 +1,14 @@
-from models import User
+from models.user import User
 from db_config import db
 from sqlalchemy.orm.exc import NoResultFound
+
+def user_exists(email, hashed_password):
+    try:
+        user = db.session.query(User).filter(User.email == email, User.password == hashed_password).first()
+        return user is not None  # Return True if user exists, False otherwise
+    except Exception as e:
+        return False
+    
 
 def get_user_by_id(user_id):
     try:
@@ -25,6 +33,17 @@ def get_user_by_id(user_id):
     except Exception as e:
         return None  # Handle other exceptions
 
+def get_user_by_email(email):
+    try:
+        user = db.session.query(User).filter(User.email == email).first()
+        if user:
+            return user.uid
+        else:
+            return None
+    except NoResultFound as e:
+        return None  # User not found
+    except Exception as e:
+        return None  # Handle other exceptions
 
 def get_all_users_data():
     try:

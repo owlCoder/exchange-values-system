@@ -3,7 +3,6 @@ from controllers.user import *
 
 user_blueprint = Blueprint('user_blueprint', __name__)
 
-
 @user_blueprint.route('/api/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user_data = get_user_by_id(user_id)

@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 from routes.user import user_blueprint
+from routes.token import token_blueprint
+from routes.auth import auth_blueprint
 from db_config import db
 
 # Initialize app
@@ -13,8 +15,10 @@ CORS(app)
 # Initialize database engine
 db.init_app(app)
 
-# Import and register your blueprints/routes here
+# Import and register your blueprints
 app.register_blueprint(user_blueprint)
+app.register_blueprint(token_blueprint)
+app.register_blueprint(auth_blueprint)
 
 # Run app
 if __name__ == '__main__':
