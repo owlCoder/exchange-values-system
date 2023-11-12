@@ -9,8 +9,9 @@ def login():
     creditials = request.get_json()
     email = creditials['email']
     password_hash = hash_method(creditials['password'])
-   
-    return auth_user(email, password_hash) # check
+    response = auth_user(email, password_hash)
+    
+    return response
 
 @auth_blueprint.route('/api/auth0/logout', methods = ["POST"])
 def logout():

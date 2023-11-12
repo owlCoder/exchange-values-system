@@ -8,40 +8,42 @@ export async function Token(creditials: ILogin) {
     // TODO
 }
 
-export async function LogIn(creditials: ILogin): Promise<any> {
+export async function LogIn(credentials: ILogin): Promise<any> {
     try {
-        const response = await axios.post(apiUrl + 'auth0/', 
+        const response = await fetch(
+        apiUrl + 'auth0/',
         {
-            email: creditials.email,
-            password: creditials.password
-        }, 
-        {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        // Check the status code of the response
-        if (response.status === 200) {
-            // Successful login, do something with the response data if needed
-            const responseData = response;
-            console.log('Login successful:', responseData);
-
-            // Continue with the rest of your logic here
-        } else {
-            // Handle other status codes if necessary
-            console.log('Login failed');
+            method: 'POST',
+            body: JSON.stringify({
+                email: credentials.email,
+                password: credentials.password,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+              }
         }
-
-        // Handle other logic after the API call here
+      );
+  
+      // Check the status code of the response
+      if (response.status === 200) {
+        // Successful login, do something with the response data if needed
+        const responseData = response;
+        console.log('Login successful:', responseData);
+  
+        // Continue with the rest of your logic here
+      } else {
+        // Handle other status codes if necessary
+        console.log('Login failed');
+      }
+  
+      // Handle other logic after the API call here
     } catch (error) {
-        // Handle network or server errors
-        console.error('API error:', error);
-
-        // You can return an error object or throw an exception if needed
-        return error;
+      // Handle network or server errors
+  
+      // You can return an error object or throw an exception if needed
+      return error;
     }
-}
+  }
 
 export async function LogOut() {
     // Call API to clear session on Flask API and remove pair<uid, ICurrentUser> from database

@@ -3,12 +3,10 @@ from db_config import db
 from sqlalchemy.orm.exc import NoResultFound
 
 def user_exists(email, hashed_password):
-    try:
-        user = db.session.query(User).filter(User.email == email, User.password == hashed_password).first()
-        return user is not None  # Return True if user exists, False otherwise
-    except Exception as e:
-        return False
-    
+ 
+    user = db.session.query(User).filter(User.email == email, User.password == hashed_password).first()
+    return user is not None  # Return True if user exists, False otherwise
+
 
 def get_user_by_id(user_id):
     try:
