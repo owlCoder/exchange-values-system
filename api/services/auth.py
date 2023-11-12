@@ -10,7 +10,7 @@ def auth_user(email, password):
         user = get_user_by_id(uid)
         
         if create_token(token, email, uid):
-            return jsonify({ 'token': token, 'admin': user['admin'], 'uid': uid }), 200
+            return jsonify({ 'token': token, 'admin': user['admin'], 'uid': uid, 'verified': user['verified'] }), 200
         else:
             return jsonify({'data': "Check your email and password. Auth service failed to create a token"}), 500
     else:

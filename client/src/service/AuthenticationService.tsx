@@ -1,8 +1,7 @@
 import axios from 'axios';
 import ILogin from '../interfaces/ILogin';
 import ICurrentUser from '../interfaces/ICurrentUser';
-
-const apiUrl = 'http://localhost:5000/api/';
+import { API_URL } from '..';
 
 // Call API to check is token still valid
 export async function Token(creditials: ILogin) {
@@ -12,7 +11,7 @@ export async function Token(creditials: ILogin) {
 export function LogIn(credentials: ILogin): Promise<ICurrentUser> {
     return new Promise<ICurrentUser>(async (resolve, reject) => {
       try {
-        const response = await axios.post(apiUrl + 'auth0/', credentials, {
+        const response = await axios.post(API_URL + 'auth0/', credentials, {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',
           },

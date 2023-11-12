@@ -11,3 +11,6 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+// Global API Endpoint
+export const API_URL = 'http://localhost:5000/api/'
