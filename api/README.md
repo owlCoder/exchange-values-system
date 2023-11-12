@@ -114,5 +114,3 @@ We welcome contributions to this Flask API project. Please feel free to open iss
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 ```
-
-You can save this content to a file named `README.md` in your project directory.

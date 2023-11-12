@@ -1,5 +1,6 @@
 # Ignore virtual environment files for Flask API
-/api/env/
+/api/alenv/
+__pycache__/
 
 # Ignore the virtual environment for React app
 /app/node_modules/
