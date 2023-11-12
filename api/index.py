@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
 # Allows all origins to access your API.
-CORS(app)
-
+# CORS(app)
+CORS(app, resources={r'/*': {'origins': '*'}})
 # Initialize database engine
 db.init_app(app)
 

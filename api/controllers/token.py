@@ -13,9 +13,9 @@ def create_token(token, user_email, user_uid):
         return False
 
 
-def is_token_valid(token):
+def is_token_valid(token, email):
     try:
-        token_entry = db.session.query(Token).filter(Token.token == token).first()
+        token_entry = db.session.query(Token).filter(Token.token == token, Token.email == email).first()
         if token_entry:
             # Token found, it is valid
             return True

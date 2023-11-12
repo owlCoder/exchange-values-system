@@ -1,53 +1,47 @@
 import axios from 'axios';
 import ILogin from '../interfaces/ILogin';
 
-const apiUrl = 'http://localhost:5000/api';
+const apiUrl = 'http://localhost:5000/api/';
 
 // Call API to check is token still valid
 export async function Token(creditials: ILogin) {
     // TODO
 }
 
-export async function LogIn(creditials: ILogin) {
-    axios.get(apiUrl)
-        .then((response) => {
-            // Handle the successful response here.
-            console.log('Data:', response.data);
-        })
-        .catch((error) => {
-            // Handle any errors that occurred during the request.
-            console.error('Error:', error);
+export async function LogIn(creditials: ILogin): Promise<any> {
+    try {
+        const response = await axios.post(apiUrl + 'auth0/', 
+        {
+            email: creditials.email,
+            password: creditials.password
+        }, 
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
 
-    // Call API to check user creditials in MySQL database
-    // TODO 
-    // Use util method for password hashing and send hashed passwords to API to check creditials
-    // For security reasons never use plain text passwords
-    // Return value of API is interface ICurrentUser which contains newly created token
+        // Check the status code of the response
+        if (response.status === 200) {
+            // Successful login, do something with the response data if needed
+            const responseData = response;
+            console.log('Login successful:', responseData);
 
-    // Set current user in session with new data received from FLASK API
-    // New data contains all fields from ICurrentUser interface
+            // Continue with the rest of your logic here
+        } else {
+            // Handle other status codes if necessary
+            console.log('Login failed');
+        }
 
-    // try {
-    //     // Make an API call to authenticate the user
-    //     const response = 200; //await AuthenticationService.login(email, password);
+        // Handle other logic after the API call here
+    } catch (error) {
+        // Handle network or server errors
+        console.error('API error:', error);
 
-    //     if (response === 200) {
-    //         // Successful login
-    //         // Store the session or token and redirect
-    //         console.log(creditials.email + " " + creditials.password);
-    //         // navigate('/dashboard');
-    //     } else {
-    //         // Handle authentication error
-    //         console.log('Login failed');
-    //     }
-    // } catch (error) {
-    //     // Handle network or server errors
-    //     console.error('API error:', error);
-    // }
-    //sessionStorage.setItem('currentUser', "{uid: 1, token: '122', admin: true}");
-    return { code: 200, payload: { uid: Math.random(), token: '122', admin: true } };
-};
+        // You can return an error object or throw an exception if needed
+        return error;
+    }
+}
 
 export async function LogOut() {
     // Call API to clear session on Flask API and remove pair<uid, ICurrentUser> from database

@@ -22,9 +22,9 @@ const Login: React.FC = () => {
     const loginData: ILogin = { email, password }; // Create the login data object
     let response = await LogIn(loginData); // Call the LogIn function with the login data
 console.log(response)
-    if (response.code === 200) {
-      const { uid, token, admin } = response.payload;
-      setUser({ uid: uid, token: token, admin: admin });
+    // if (response.status === 200) {
+    //   const { uid, token, admin } = response.payload;
+    //   setUser({ uid: uid, token: token, admin: admin });
 
       // Auth user now be redirected to dashboard
       // Note: Dashboard is a page but contains more components that are shown depending on user role.
@@ -34,9 +34,9 @@ console.log(response)
       // If the user is NOT verified, then the dashboard will show an Unverified page
 
       // navigate('/dashboard');
-    } else {
-      // set error
-    }
+    // } else {
+    //   // set error
+    // }
   };
 
   const handleLogout = () => {
@@ -120,7 +120,7 @@ console.log(response)
                     />
                   </div>
                   <div>
-                    <h4 className="text-red-700 dark:text-red-500 -my-2 text-center">dssd</h4>
+                    <h4 className="text-red-700 dark:text-red-500 -my-2 text-center">{error}</h4>
                   </div>
                   <button
                     type="submit"
