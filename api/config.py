@@ -6,7 +6,7 @@ DB_PORT = '3306'
 DB_NAME = 'proddb'
 
 # SQLAlchemy database URI
-SQLALCHEMY_DATABASE_URI = f'mysql+mysqlconnector://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+SQLALCHEMY_DATABASE_URI = f'mysql+mysqlconnector://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}?charset=utf8mb4'
 
 # SQLAlchemy settings
 SQLALCHEMY_TRACK_MODIFICATIONS = False
