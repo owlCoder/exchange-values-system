@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
-import Login from "./pages/Login/Login"; // Login component
-// import Dashboard from './pages/Dashboard/Dashboard'; // Your protected page
+
+import Login from "./pages/Login/Login";
+import Dashboard from './pages/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </Router>
     </AuthProvider>

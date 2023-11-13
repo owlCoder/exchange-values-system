@@ -23,7 +23,7 @@ export function Token(): Promise<boolean> {
     const requestData = { uid, token };
 
     try {
-      const response: AxiosResponse = await axios.post(API_URL + 'token/check/', requestData, {
+      const response: AxiosResponse = await axios.post(API_URL + 'token/check', requestData, {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
         },
