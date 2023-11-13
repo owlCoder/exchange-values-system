@@ -9,7 +9,7 @@ from db_config import db
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
-# Allows all origins to access your API.
+# Allows secure origins to access API
 CORS(app, origins=["http://localhost:3000"], methods=["POST"])
 
 # Initialize database engine

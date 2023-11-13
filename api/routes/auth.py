@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from services.password_hasher import hash_method
 from services.auth import auth_user, unauth_user
 
