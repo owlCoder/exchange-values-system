@@ -1,84 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AiOutlineLogin } from "react-icons/ai";
-import { LiaSignOutAltSolid } from 'react-icons/lia';
+import { LiaSignOutAltSolid, LiaSuperpowers } from 'react-icons/lia';
 import { useAuth } from '../../contexts/AuthContext';
 import { LogIn, LogOut } from '../../service/AuthenticationService';
-import ILogin from '../../interfaces/ILogin'; // Import the ILogin interface
+import ILogin from '../../interfaces/ILogin';
+import ICurrentUser from '../../interfaces/ICurrentUser';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // Add loading state
   const { currentUser, setUser } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const isICurrentUser = (obj: any): obj is ICurrentUser => (
+    typeof obj === 'object' &&
+    'uid' in obj &&
+    'token' in obj &&
+    'admin' in obj &&
+    'verified' in obj
+  );
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent page refresh
+    setLoading(true); // Start loading
+
     try {
       const loginData: ILogin = { email, password };
       const response = await LogIn(loginData);
-  
-      if (response) {
-        console.log(response);
+
+      if (isICurrentUser(response)) {
+        setUser(response);
+        localStorage.setItem('currentUser', JSON.stringify(response));
+        navigate('/dashboard'); // Redirect to the dashboard after successful login
       } else {
-        console.log('Login failed or no response data');
+        setError('Check entered data and try again');
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      setError('Check entered data and try again');
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
-  
-  // Auth user now be redirected to dashboard
-  // Note: Dashboard is a page but contains more components that are shown depending on user role.
-  // On, e.g., if an administrator is signed in, the dashboard will only load the administrator dashboard
-  // On, e.g., if a user is signed in, the dashboard will first check if the user is verified
-  // If the user is verified, then the dashboard will only load user components
-  // If the user is NOT verified, then the dashboard will show an Unverified page
 
-  // navigate('/dashboard');
-  // } else {
-  //   // set error
-  // }
-const handleLogout = () => {
-  LogOut();
-  setUser(null);
-};
+  const handleLogout = () => {
+    LogOut();
+    setUser(null);
+  };
 
-return (
-  <main>
-    {currentUser ? (
-      <>
+  return (
+    <main>
+      {currentUser ? (
+        <>
         <section className="h-screen bgw">
-          <div className=" backdrop-blur-md flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <Link to="/" className="flex items-center mb-6 text-2xl font-semibold text-white dark:text-white">
-              <img className="w-8 h-8 mr-2" src="logo512.png" alt="logo" />
-              Transaction Systems
-            </Link>
-            <div className="w-full bg-white rounded-2xl shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-              <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
-                  Welcome back
-                  <p className="font-light md:-pt-12 text-gray-500 md:text-lg dark:text-gray-400">You're already in.</p>
-                </h1>
-                <form className="space-y-4 md:space-y-6">
-                  <div>
-                    <h4 className="text-emerald-700 dark:text-emerald-500 -my-2 text-center">You have been already logged in.</h4>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-lg text-md font-semibold px-5 py-2.5 text-center dark:bg-sky-600 dark:hover-bg-sky-700 dark:focus:ring-sky-800"
-                    onClick={handleLogout}
-                  >
-                    Sign Out <LiaSignOutAltSolid className="inline ml-1 text-xl -mt-1" />
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
-      </>
-    ) : (
-      <section className="h-screen bgw">
         <div className=" backdrop-blur-md flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <Link to="/" className="flex items-center mb-6 text-2xl font-semibold text-white dark:text-white">
             <img className="w-8 h-8 mr-2" src="logo512.png" alt="logo" />
@@ -88,9 +64,46 @@ return (
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
                 Welcome back
-                <p className="font-light md:-pt-12 text-gray-500 md:text-lg dark:text-gray-400">Please enter your email and password.</p>
+                <p className="font-light md:-pt-12 text-gray-500 md:text-lg dark:text-gray-400">You're already in.</p>
               </h1>
-              <form className="space-y-4 md:space-y-6" action='#'>
+              <form className="space-y-4 md:space-y-6">
+                <div>
+                  <h4 className="text-emerald-700 dark:text-emerald-500 -my-2 text-center">You have been already logged in.</h4>
+                </div>
+                <button
+                  type="submit"
+                  className="w-full text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-lg text-md font-semibold px-5 py-2.5 text-center dark:bg-sky-600 dark:hover-bg-sky-700 dark:focus:ring-sky-800"
+                  onClick={() => navigate('/dashboard')}
+                >
+                  Open Dashboard <LiaSuperpowers className="inline ml-1 text-xl -mt-1" />
+                </button>
+                <button
+                  type="submit"
+                  className="w-full text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-400 rounded-lg text-md font-semibold px-5 py-2.5 text-center dark:bg-rose-800 dark:hover:bg-rose-700 dark:focus:ring-rose-800"
+                  onClick={handleLogout}
+                >
+                  Sign Out <LiaSignOutAltSolid className="inline ml-1 text-xl -mt-1" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+      ) : (
+        // Login form
+        <section className="h-screen bgw">
+          <div className=" backdrop-blur-md flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <Link to="/" className="flex items-center mb-6 text-2xl font-semibold text-white dark:text-white">
+              <img className="w-8 h-8 mr-2" src="logo512.png" alt="logo" />
+              Transaction Systems
+            </Link>
+            <form onSubmit={handleLogin} className="w-full bg-white rounded-2xl shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+              <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
+                  Welcome back
+                  <p className="font-light md:-pt-12 text-gray-500 md:text-lg dark:text-gray-400">Please enter your email and password.</p>
+                </h1>
                 <div>
                   <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Email Address
@@ -126,18 +139,17 @@ return (
                 <button
                   type="submit"
                   className="w-full text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-lg text-md font-semibold px-5 py-2.5 text-center dark:bg-sky-600 dark:hover-bg-sky-700 dark:focus:ring-sky-800"
-                  onClick={handleLogin}
+                  disabled={loading} // Disable the button while loading
                 >
-                  Continue <AiOutlineLogin className="inline ml-1 text-xl -mt-1" />
+                  {loading ? 'Logging in...' : 'Continue'} <AiOutlineLogin className="inline ml-1 text-xl -mt-1" />
                 </button>
-              </form>
-            </div>
+              </div>
+            </form>
           </div>
-        </div>
-      </section>
-    )}
-  </main>
-);
+        </section>
+      )}
+    </main>
+  );
 };
 
 export default Login;

@@ -20,7 +20,7 @@ export function LogIn(credentials: ILogin): Promise<ICurrentUser> {
         if (response.status === 200) {
             resolve(response.data as ICurrentUser);
         } else {
-            reject({ message: 'Login failed' });
+            reject({ message: response.data });
         }
       } catch (error) {
             reject(error);
