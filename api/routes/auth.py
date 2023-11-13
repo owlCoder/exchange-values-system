@@ -13,7 +13,7 @@ def login():
     
     return response
 
-@auth_blueprint.route('/api/auth0/logout', methods = ["POST"])
+@auth_blueprint.route('/api/auth0/logout/', methods = ["POST"])
 def logout():
     creditials = request.get_json()
     uid = creditials['uid']
