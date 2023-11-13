@@ -16,7 +16,7 @@ def login():
 @auth_blueprint.route('/api/auth0/logout', methods = ["POST"])
 def logout():
     creditials = request.get_json()
-    email = creditials['email']
+    uid = creditials['uid']
     token = creditials['token']
 
-    return unauth_user(email, token)
+    return unauth_user(uid, token)

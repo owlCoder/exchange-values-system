@@ -17,11 +17,11 @@ def auth_user(email, password):
         return jsonify({'data': "Check your email and password and try again"}), 401
     
 
-def unauth_user(email, token):
-    if is_token_valid(email, token):
+def unauth_user(uid, token):
+    if is_token_valid(token, uid):
         if delete_token(token):
-            return "You have been signed out", 200
+            return jsonify({'data': "You have been signed out"}), 200
         else:
-            return "Auth service failed to remove a session token", 500
+            return jsonify({'data': "Auth service failed to remove a session token"}), 500
     else:
-        return "Invalid session token. Login again", 401
+        return jsonify({'data': "Invalid session token. Login again"}), 401
