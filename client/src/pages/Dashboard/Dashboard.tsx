@@ -6,20 +6,27 @@ import Verification from "../../components/Verification/Verification";
 import Admin from "../../components/Admin/Admin";
 import User from "../../components/User/User";
 import { IsExistCreditCardPerUser } from "../../service/CreditCardsService";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Dashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const [verified, setVerified] = useState(false);
     const [pending, setPending] = useState(false);
+    const { setUser } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
+        if(!localStorage.getItem("currentUser")) {
+            setUser(null);
+            navigate('/');
+        }
+
         setLoading(true);
 
         const handleLogout = () => {
             LogOut();
-            navigate("/login");
+            navigate("/");
         };
 
         // Check token
@@ -58,19 +65,20 @@ const Dashboard: React.FC = () => {
                                         setPending(false);
                                         setVerified(false);
                                         setLoading(false);
+                                        console.clear();
                                     });
                             }
                         }
                     } else {
                         // Handle the case where there is no user data in local storage, e.g., redirect to login
-                        navigate("/login");
+                        navigate("/");
                     }
                 }
             })
             .catch(() => {
                 handleLogout(); // Handle errors by logging out the user
             });
-    }, [navigate]);
+    }, [setUser, navigate]);
 
     return (
         <main>

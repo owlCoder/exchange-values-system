@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AiOutlineLogin } from "react-icons/ai";
 import { LiaSignOutAltSolid, LiaSuperpowers } from 'react-icons/lia';
@@ -22,6 +22,13 @@ const Login: React.FC = () => {
     'admin' in obj &&
     'verified' in obj
   );
+
+  useEffect(() => {
+    if(!localStorage.getItem("currentUser")) {
+        setUser(null);
+        navigate('/');
+    }
+  }, [setUser, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent page refresh

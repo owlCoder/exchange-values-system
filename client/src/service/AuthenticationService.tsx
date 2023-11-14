@@ -80,6 +80,9 @@ export function LogOut(): Promise<boolean> {
       const { uid, token } = currentUser;
 
       try {
+        // Remove the user from localStorage
+        localStorage.removeItem('currentUser');
+
         // Make a POST request to your Flask API to log the user out
         const response: AxiosResponse = await axios.post(API_URL + 'auth0/logout/', { uid, token }, {
           headers: {
@@ -87,18 +90,15 @@ export function LogOut(): Promise<boolean> {
           },
         });
 
-        // Remove the user from localStorage
-        localStorage.removeItem('currentUser');
-
         if (response.status === 200) {
           resolve(true);
         } else {
           reject({ message: response.data });
         }
       } catch (error) {
-        // Handle API request errors
-        console.error('Error logging out:', error);
-        reject(error);
+        // Remove the user from localStorage
+        localStorage.removeItem('currentUser');
+        reject(error); // Handle API request errors
       }
     } else {
       // If there's no user data in localStorage, no need to call the API
