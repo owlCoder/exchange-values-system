@@ -67,7 +67,6 @@ const Dashboard: React.FC = () => {
                                         setPending(false);
                                         setVerified(false);
                                         setLoading(false);
-                                        console.clear();
                                     });
                             }
                         }

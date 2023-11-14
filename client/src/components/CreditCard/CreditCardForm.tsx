@@ -56,6 +56,7 @@ const CreditCardForm: React.FC = () => {
       if (response && response === 'Success') {
         setFormData(initialFormData);
         setShowMessage(true);
+        setTimeout(() => { window.location.reload(); }, 3000);
       } else {
         setShowMessage(false);
         setError(response ? response : 'Credit card service is unavailable');

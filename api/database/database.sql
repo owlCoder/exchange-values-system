@@ -1,5 +1,3 @@
--- Active: 1698963933767@@127.0.0.1@3306@proddb
--- Active: 1698963933767@@127.0.0.1@3306@proddb
 CREATE TABLE users (
     uid INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
@@ -26,7 +24,8 @@ VALUES
     ('Teodora', 'Stojanović', 'Svetog Save 303', 'Zrenjanin', 'Serbia', '+381641778899', 'teodora.stojanovic@hotmail.com', '1c142b2d01aa34e9a36bde480645a57fd69e14155dacfab5a3f9257b77fdc8d8', true, false);
 
 -- Show all users
-SELECT *FROM users;
+SELECT *FROM users; 
+UPDATE users set verified = 0 where uid =2;
 
 -- Delete all users (use for database clean up purposes)
 DELETE FROM users;
@@ -43,3 +42,22 @@ CREATE TABLE tokens (
 
 -- Show current stored tokens
 SELECT *FROM tokens;
+
+-- Delete all tokens
+DELETE FROM tokens;
+
+-- Table for credit cards
+CREATE TABLE credit_cards (
+    card_number VARCHAR(19) PRIMARY KEY NOT NULL,
+    cardholder_name VARCHAR(40) NOT NULL,
+    expiry_date VARCHAR(5) NOT NULL,
+    cvv VARCHAR(3) NOT NULL,
+    uid INTEGER NOT NULL,
+    FOREIGN KEY (uid) REFERENCES users(uid)
+);
+
+-- Show all credit cards
+SELECT *FROM credit_cards;
+
+-- Delete all credit cards data
+DELETE FROM credit_cards;
