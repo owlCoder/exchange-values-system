@@ -1,3 +1,4 @@
+from models.user import User
 from db_config import db
 from models.token import Token
 
@@ -16,8 +17,9 @@ def is_token_valid(token, uid):
     try:
         token_entry = db.session.query(Token).filter(Token.token == token, Token.uid == uid).first()
         if token_entry:
-            # Token found, it is valid
-            return True
+            # Token found, it is valid, send also user status
+            verified = db.session.query(User.verified).filter(User.uid == uid).scalar()
+            return True, verified
         else:
             return False
     except Exception as e:

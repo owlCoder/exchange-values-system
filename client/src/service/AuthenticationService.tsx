@@ -30,13 +30,23 @@ export function Token(): Promise<boolean> {
       });
 
       if (response.status === 200) {
+        // Retrieve currentUser from localStorage
+        let storedUser = localStorage.getItem('currentUser');
+        let currentUser = storedUser ? JSON.parse(storedUser) : "";
+        var newVerifiedValue = JSON.parse(response.data.data);
+
+        // Update the 'verified' field in the currentUser object
+        currentUser.verified = newVerifiedValue;
+
+        // Update the 'currentUser' in localStorage
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
         resolve(true);
       } else {
         resolve(false);
       }
     } catch (error) {
       resolve(false);
-      console.error('Error checking token:', error);
     }
   });
 }

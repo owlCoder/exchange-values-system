@@ -5,6 +5,7 @@ import PendingVerification from "../../components/PendingVerification/PendingVer
 import Verification from "../../components/Verification/Verification";
 import Admin from "../../components/Admin/Admin";
 import User from "../../components/User/User";
+import { IsExistCreditCardPerUser } from "../../service/CreditCardsService";
 
 const Dashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -14,6 +15,8 @@ const Dashboard: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        setLoading(true);
+
         const handleLogout = () => {
             LogOut();
             navigate("/login");
@@ -25,44 +28,49 @@ const Dashboard: React.FC = () => {
                 if (!isTokenValid) {
                     handleLogout(); // If Token returns false, log out the user
                 }
+                else {
+                    const currentUserData = localStorage.getItem("currentUser");
+                    if (currentUserData) {
+                        const currentUser = JSON.parse(currentUserData);
+
+                        if (currentUser.admin) {
+                            setIsAdmin(true);
+                        } else {
+                            console.log(currentUser)
+                            if (currentUser.verified) { // Check is user verified
+                                setVerified(true);
+                            }
+                            else {
+                                // check if user added a card info and waiting for verification
+                                // call api and check cards table for card with uid
+                                IsExistCreditCardPerUser(currentUser.uid)
+                                    .then(response => {
+                                        if (response) {
+                                            setPending(true);
+                                            setVerified(false);
+                                        } else {
+                                            setPending(false);
+                                            setVerified(false);
+                                        }
+
+                                        setLoading(false)
+                                    })
+                                    .catch((error) => {
+                                        setPending(false);
+                                        setVerified(false);
+                                        setLoading(false);
+                                    });
+                            }
+                        }
+                    } else {
+                        // Handle the case where there is no user data in local storage, e.g., redirect to login
+                        navigate("/login");
+                    }
+                }
             })
             .catch(() => {
                 handleLogout(); // Handle errors by logging out the user
             });
-
-        const currentUserData = localStorage.getItem("currentUser");
-        if (currentUserData) {
-            const currentUser = JSON.parse(currentUserData);
-
-            if (currentUser.admin) {
-                setIsAdmin(true);
-            } else {
-                // Check is user verified
-                if (currentUser.verified) {
-                    setVerified(true);
-                }
-                else {
-                    // check if user added a card info and waiting for verification
-                    // call api and check cards table for card with uid
-                    const response = false;
-                    //// TODO
-
-                    if (response) { // user has been added card info but admin not yet verified it
-                        setPending(true);
-                        setVerified(false);
-                    }
-                    else { // show add card info page
-                        setPending(false);
-                        setVerified(false);
-                    }
-                }
-            }
-        } else {
-            // Handle the case where there is no user data in local storage, e.g., redirect to login
-            navigate("/login");
-        }
-
-        setLoading(false);
     }, [navigate]);
 
     return (
@@ -81,11 +89,10 @@ const Dashboard: React.FC = () => {
                         </Link>
                         {isAdmin ?
                             <Admin />
-                            : pending && !verified ?
-                                <PendingVerification />
-                                : !pending && !verified ?
-                                    <Verification />
-                                    : verified ? <User /> : <></>
+                            : verified ? <User />
+                                : !verified && pending ? <PendingVerification />
+                                    : !verified ? <Verification />
+                                        : <></>
                         }
                     </div>
                 </section>

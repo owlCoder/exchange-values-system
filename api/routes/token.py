@@ -8,8 +8,9 @@ def check_token():
     token = request.json.get('token')
     uid   = request.json.get('uid')
 
-    if is_token_valid(token, uid):
-        return jsonify({'data': 'Token is valid'}), 200
+    valid, verified = is_token_valid(token, uid)
+    if valid:
+        return jsonify({'data': verified}), 200
     else:
         return jsonify({'data': 'Token is not valid'}), 401
 

@@ -28,3 +28,25 @@ export async function SaveCreditCardData(cardData: ICreditCardData): Promise<str
         throw error;
     }
 }
+
+export async function IsExistCreditCardPerUser(uid: number): Promise<string | undefined> {
+    try {
+        if (uid && uid > 0) {
+            const response: AxiosResponse = await axios.post(`${API_URL}cards/checkByUid`, { uid: uid }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.status === 200) {
+                return 'Success';
+            } else {
+                return response.data;
+            }
+        } else {
+            return 'Please login again. Your session expired';
+        }
+    } catch (error) {
+        throw error;
+    }
+}
