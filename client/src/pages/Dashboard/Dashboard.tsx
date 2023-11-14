@@ -85,7 +85,7 @@ const Dashboard: React.FC = () => {
                             <PendingVerification />
                         ) : !pending && !verified ? (
                             <Verification />
-                        ) : (
+                        ) : (verified ? (<User />) : <></></>
                             <></>
                         )}
                     </div>
