@@ -36,7 +36,6 @@ const Dashboard: React.FC = () => {
                         if (currentUser.admin) {
                             setIsAdmin(true);
                         } else {
-                            console.log(currentUser)
                             if (currentUser.verified) { // Check is user verified
                                 setVerified(true);
                             }
