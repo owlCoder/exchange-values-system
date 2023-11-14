@@ -21,3 +21,9 @@
 .bgw {
   background-image: url('../public/bg.jpg');
 }
+
+/* Spinner spining animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

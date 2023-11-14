@@ -7,6 +7,7 @@ import Admin from "../../components/Admin/Admin";
 import User from "../../components/User/User";
 import { IsExistCreditCardPerUser } from "../../service/CreditCardsService";
 import { useAuth } from "../../contexts/AuthContext";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const Dashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -42,6 +43,7 @@ const Dashboard: React.FC = () => {
 
                         if (currentUser.admin) {
                             setIsAdmin(true);
+                            setLoading(false);
                         } else {
                             if (currentUser.verified) { // Check is user verified
                                 setVerified(true);
@@ -83,7 +85,7 @@ const Dashboard: React.FC = () => {
     return (
         <main>
             {loading ? (
-                <p>Loading...</p>
+                <LoadingSpinner />
             ) : (
                 <section className="h-screen bgw">
                     <div className="backdrop-blur-md flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
