@@ -1,0 +1,30 @@
+import axios, { AxiosResponse } from 'axios';
+import { API_URL } from '..';
+import { isCardNumberValid, isExpiryDateValid, isCVVValid } from '../utils/CreditCard/DataValidator';
+import ICreditCardData from '../interfaces/ICreditCardData';
+
+export async function SaveCreditCardData(cardData: ICreditCardData): Promise<string | undefined> {
+    try {
+        if (
+            isCardNumberValid(cardData.cardNumber) &&
+            isExpiryDateValid(cardData.expiryDate) &&
+            isCVVValid(cardData.cvv)
+        ) {
+            const response: AxiosResponse = await axios.post(`${API_URL}cards/create`, cardData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.status === 200) {
+                return 'Success';
+            } else {
+                return response.data;
+            }
+        } else {
+            return 'Please check your credit card information';
+        }
+    } catch (error) {
+        throw error;
+    }
+}

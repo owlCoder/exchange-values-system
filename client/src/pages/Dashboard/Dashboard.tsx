@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LiaSignOutAltSolid } from "react-icons/lia";
 import { LogOut, Token } from "../../service/AuthenticationService";
 import PendingVerification from "../../components/PendingVerification/PendingVerification";
 import Verification from "../../components/Verification/Verification";
 import Admin from "../../components/Admin/Admin";
+import User from "../../components/User/User";
 
 const Dashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -38,7 +38,7 @@ const Dashboard: React.FC = () => {
                 setIsAdmin(true);
             } else {
                 // Check is user verified
-                if(currentUser.verified) {
+                if (currentUser.verified) {
                     setVerified(true);
                 }
                 else {
@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
                     const response = false;
                     //// TODO
 
-                    if(response) { // user has been added card info but admin not yet verified it
+                    if (response) { // user has been added card info but admin not yet verified it
                         setPending(true);
                         setVerified(false);
                     }
@@ -79,15 +79,14 @@ const Dashboard: React.FC = () => {
                             <img className="w-8 h-8 mr-2" src="logo512.png" alt="logo" />
                             Transaction Systems
                         </Link>
-                        {isAdmin ? (
+                        {isAdmin ?
                             <Admin />
-                        ) : pending && !verified ? (
-                            <PendingVerification />
-                        ) : !pending && !verified ? (
-                            <Verification />
-                        ) : (verified ? (<User />) : <></></>
-                            <></>
-                        )}
+                            : pending && !verified ?
+                                <PendingVerification />
+                                : !pending && !verified ?
+                                    <Verification />
+                                    : verified ? <User /> : <></>
+                        }
                     </div>
                 </section>
             )}
