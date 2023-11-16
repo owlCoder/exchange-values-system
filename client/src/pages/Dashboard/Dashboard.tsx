@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { LogOut, Token } from "../../service/AuthenticationService";
 import PendingVerification from "../../components/PendingVerification/PendingVerification";
 import Verification from "../../components/Verification/Verification";
-import Admin from "../../components/Admin/Admin";
-import User from "../../components/User/User";
 import { IsExistCreditCardPerUser } from "../../service/CreditCardsService";
 import { useAuth } from "../../contexts/AuthContext";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
@@ -42,11 +40,10 @@ const Dashboard: React.FC = () => {
                         const currentUser = JSON.parse(currentUserData);
 
                         if (currentUser.admin) {
-                            setIsAdmin(true);
-                            setLoading(false);
+                            navigate('/admin');
                         } else {
                             if (currentUser.verified) { // Check is user verified
-                                setVerified(true);
+                                navigate('/user');
                             }
                             else {
                                 // check if user added a card info and waiting for verification
@@ -95,13 +92,8 @@ const Dashboard: React.FC = () => {
                             <img className="w-8 h-8 mr-2" src="logo512.png" alt="logo" />
                             Transaction Systems
                         </Link>
-                        {isAdmin ?
-                            <Admin />
-                            : verified ? <User />
-                                : !verified && pending ? <PendingVerification />
-                                    : !verified ? <Verification />
-                                        : <></>
-                        }
+                         {/* Conditional rendering based on isAdmin, verified, and pending statuses */}
+                         {isAdmin ? null : verified ? null : pending ? <PendingVerification /> : <Verification />}
                     </div>
                 </section>
             )}

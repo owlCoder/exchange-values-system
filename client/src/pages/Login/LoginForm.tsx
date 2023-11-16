@@ -14,7 +14,7 @@ const LoginForm = () => {
     const { setUser } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault(); // Prevent page refresh
         setLoading(true); // Start loading
 
