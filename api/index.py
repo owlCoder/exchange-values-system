@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
 # Allows secure origins to access API
-CORS(app, origins=["http://localhost:3000"], methods=["POST"])
+CORS(app, origins=["http://localhost:3000"], methods=["POST", "GET", "PUT"])
 
 # Initialize database engine
 db.init_app(app)

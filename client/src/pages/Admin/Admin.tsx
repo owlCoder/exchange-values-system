@@ -57,8 +57,6 @@ const Administrator: React.FC = () => {
     ) : currentUser ? (
         <main className="bg-gray-100 dark:bg-gray-900 h-screen pb-5">
             <Sidebar />
-
-
         </main>
     ) : (
         <div></div>
