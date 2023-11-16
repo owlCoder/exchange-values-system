@@ -9,7 +9,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const Dashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin ] = useState(false);
     const [verified, setVerified] = useState(false);
     const [pending, setPending] = useState(false);
     const { setUser } = useAuth();
