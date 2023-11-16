@@ -17,9 +17,9 @@ CORS(app, origins=["http://localhost:3000"], methods=["POST", "GET", "PUT"])
 db.init_app(app)
 
 # Import and register blueprints
+app.register_blueprint(auth_blueprint)
 app.register_blueprint(user_blueprint)
 app.register_blueprint(token_blueprint)
-app.register_blueprint(auth_blueprint)
 app.register_blueprint(credit_card_blueprint)
 
 # Run app
