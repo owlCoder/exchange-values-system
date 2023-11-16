@@ -53,7 +53,7 @@ const Dashboard: React.FC = () => {
                                 // call api and check cards table for card with uid
                                 IsExistCreditCardPerUser(currentUser.uid)
                                     .then(response => {
-                                        if (response) {
+                                        if (response === 'Success') {
                                             setPending(true);
                                             setVerified(false);
                                         } else {

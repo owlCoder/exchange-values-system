@@ -20,4 +20,4 @@ def exist_credit_card_route():
     if check_credit_card_by_uid(uid):
         return jsonify({ 'data': 'Exists' }), 200
     else:
-        return jsonify({ 'data': 'Credit card info doesn\'t be exist. Check entered information'}), 401
+        return jsonify({ 'data': 'Credit card info doesn\'t exist. Check entered information'}), 401

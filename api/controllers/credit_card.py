@@ -13,7 +13,8 @@ def create_credit_card(data):
         cardholder_name=cardholder_name,
         expiry_date=expiry_date,
         cvv=cvv,
-        uid=uid
+        uid=uid,
+        verified=False
     )
 
     try:
