@@ -60,6 +60,19 @@ def update_user_data(user_id, new_data):
         db.session.rollback()
         return False
 
+# Method to update verified status
+def update_user_verified(user_id, new_verified_status):
+    try:
+        user = db.session.query(User).get(user_id)
+        if user:
+            user.verified = new_verified_status
+            db.session.commit()
+            return True
+        else:
+            return False
+    except Exception as e:
+        db.session.rollback()
+        return False
 
 def create_new_user(new_data):
     try:

@@ -50,6 +50,7 @@ const Administrator: React.FC = () => {
             .finally(() => {
                 setLoading(false); // Set loading to false after the Token check is completed
             });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
         
     return loading === true ? (

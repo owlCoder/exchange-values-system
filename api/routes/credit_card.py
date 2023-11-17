@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from services.verification_service import verify_user_credit_card
 from controllers.credit_card import *
 
 credit_card_blueprint = Blueprint('credit_card_blueprint', __name__)
@@ -40,8 +41,9 @@ def update_verified():
     data = request.get_json()
     card_number = data.get('card_number')
     verified_status = data.get('verified')
+    uid = data.get('uid')
 
-    if update_verified_field(card_number, verified_status):
-        return jsonify({'data': 'Verified field updated successfully'}), 200
+    if verify_user_credit_card(card_number, verified_status, uid):
+        return jsonify({'data': 'Verified status updated successfully'}), 200
     else:
-        return jsonify({'data': 'Error updating verified field'}), 500
+        return jsonify({'data': 'Error updating verified status'}), 403

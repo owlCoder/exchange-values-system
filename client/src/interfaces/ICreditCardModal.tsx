@@ -1,6 +1,7 @@
 interface ICreditCardModal {
     uid: number,
-    setModal: React.Dispatch<React.SetStateAction<JSX.Element>>;
+    ModalClose: React.Dispatch<React.SetStateAction<void>>;
+    RefreshDataBackground: React.Dispatch<React.SetStateAction<void>>;
 };
 
 export default ICreditCardModal;

@@ -11,31 +11,40 @@ const UsersList: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState<JSX.Element>(<div></div>)
 
+    const fetchData = async (mode: boolean) => {
+        setLoading(mode);
+        try {
+            const response = await axios.get<IUser[]>(API_URL + 'users', {
+                headers: {
+                  'Content-Type': 'application/json;charset=UTF-8',
+                },
+              });
+            setData(response.data);
+        } catch (error) {
+            setData([]);
+        }
+        finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        setLoading(true);
-
-        const fetchData = async () => {
-            try {
-                const response = await axios.get<IUser[]>(API_URL + 'users', {
-                    headers: {
-                      'Content-Type': 'application/json;charset=UTF-8',
-                    },
-                  });
-                setData(response.data);
-            } catch (error) {
-                setData([]);
-            }
-            finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
+        fetchData(true);
     }, []);
+
+    // Function to refetch data on modal close
+    function ModalClose(): void {
+        setModal(<div></div>);
+    }
+
+    // Refresh users in background
+    function Refresher(): void {
+        fetchData(false);
+    }
 
     // Function to show all credits card registered by user
     function OpenCardsInfo(uid: number): void {
-        setModal(<CreditCards uid = {uid} setModal = {setModal} />);
+        setModal(<CreditCards uid={uid} ModalClose={ModalClose} RefreshDataBackground={Refresher}/>);
     }
 
     return (
@@ -51,31 +60,31 @@ const UsersList: React.FC = () => {
                     {/* Credits Cards Info Modal */}
                     {modal}
                     {data.length !== 0 ?
-                        <table className="w-full text-md text-left text-black dark:text-white">
-                            <thead className="text-lg text-white bg-cyan-700">
+                        <table className="w-full text-md text-left text-black dark:text-white rounded-lg overflow-hidden">
+                            <thead className="text-lg text-white bg-sky-700">
                                 <tr>
-                                    <th scope="col font-semibold" className="px-6 py-1">
+                                    <th scope="col font-semibold" className="font-semibold px-6 py-1">
                                         First Name
                                     </th>
-                                    <th scope="col" className="px-6 py-1">
+                                    <th scope="col" className="font-semibold px-6 py-1">
                                         Last Name
                                     </th>
-                                    <th scope="col" className="px-6 py-1">
+                                    <th scope="col" className="font-semibold px-6 py-1">
                                         Address
                                     </th>
-                                    <th scope="col" className="px-6 py-1">
+                                    <th scope="col" className="font-semibold px-6 py-1">
                                         City
                                     </th>
-                                    <th scope="col" className="px-6 py-1">
+                                    <th scope="col" className="font-semibold px-6 py-1">
                                         Country
                                     </th>
-                                    <th scope="col" className="px-6 py-1">
+                                    <th scope="col" className="font-semibold px-6 py-1">
                                         Email
                                     </th>
-                                    <th scope="col" className="px-1 py-1">
+                                    <th scope="col" className="font-semibold px-1 py-1">
                                         Account Status
                                     </th>
-                                    <th scope="col" className="px-6 py-1">
+                                    <th scope="col" className="font-semibold px-6 py-1">
                                         Verification
                                     </th>
                                 </tr>
@@ -112,7 +121,7 @@ const UsersList: React.FC = () => {
                                             </td>
                                             <td className="px-6 py-2">
                                                 <div className="flex flex-wrap my-2">
-                                                    <button onClick={() => {OpenCardsInfo(user.uid)}} className="px-5 py-1.5 bg-sky-700 text-white text-md rounded-lg hover:bg-sky-800">
+                                                    <button onClick={() => {OpenCardsInfo(user.uid)}} className="px-5 py-1.5 bg-[#124191] text-white text-md rounded-lg hover:bg-blue-900">
                                                         <AiFillCreditCard className="inline -mt-1 mr-2 text-2xl" /> 
                                                         View Credit Cards Details</button>
                                                 </div>
@@ -123,7 +132,7 @@ const UsersList: React.FC = () => {
                             </tbody>
                         </table>
                         : <div>
-                            <h1 className="border border-cyan-700  bg-cyan-700 p-4 rounded-xl w-full text-xl font-semibold text-center text-white dark:text-white">
+                            <h1 className="border border-sky-700  bg-sky-700 p-4 rounded-xl w-full text-xl font-semibold text-center text-white dark:text-white">
                                 Sorry, there are no users to display at the moment. Check back later for an updated information.
                             </h1>
                         </div>

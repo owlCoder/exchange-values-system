@@ -50,3 +50,55 @@ export async function IsExistCreditCardPerUser(uid: number): Promise<string | un
         throw error;
     }
 }
+
+export async function GetUsersCreditCards(uid: number): Promise<Array<ICreditCardData>> {
+    return new Promise<Array<ICreditCardData>>(async (resolve, reject) => {
+        try {
+            if (uid && uid > 0) {
+                const response: AxiosResponse = await axios.post(`${API_URL}cards/getCardsByUid`, { uid: uid }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.status === 200) {
+                    console.log(response.data)
+                    resolve(response.data);
+                } else {
+                    resolve([]);
+                }
+            } else {
+                resolve([]);
+            }
+        } catch (error) {
+            resolve([]);
+        }
+    });
+}
+
+export function ActivateCreditCard(card_number: string | undefined, uid: number): Promise<string> {
+    return new Promise<string>(async (resolve, reject) => {
+        try {
+            if (card_number !== undefined) {
+                const response = await axios.put(API_URL + 'cards/updateVerified', 
+                    { card_number: card_number, verified: true, uid: uid },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json;charset=UTF-8',
+                        },
+                    }
+                );
+
+                if (response.status === 200) {
+                    resolve('Success');
+                } else {
+                    reject('Credit card couldn\'t be activated. Try again later.');
+                }
+            } else {
+                reject('Invalid card number');
+            }
+        } catch (error) {
+            reject('Credit card couldn\'t be activated. Try again later.');
+        }
+    });
+}
