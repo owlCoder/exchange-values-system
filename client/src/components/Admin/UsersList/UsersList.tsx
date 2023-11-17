@@ -4,10 +4,12 @@ import axios from 'axios';
 import { API_URL } from '../../..';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { AiFillCreditCard } from 'react-icons/ai';
+import CreditCards from '../UserCreditCards/CreditCards';
 
 const UsersList: React.FC = () => {
     const [data, setData] = useState<IUser[]>([]);
     const [loading, setLoading] = useState(false);
+    const [modal, setModal] = useState<JSX.Element>(<div></div>)
 
     useEffect(() => {
         setLoading(true);
@@ -29,6 +31,11 @@ const UsersList: React.FC = () => {
         fetchData();
     }, []);
 
+    // Function to show all credits card registered by user
+    function OpenCardsInfo(uid: number): void {
+        setModal(<CreditCards uid = {uid} setModal = {setModal} />);
+    }
+
     return (
         <>
             {loading ? <LoadingSpinner /> :
@@ -39,6 +46,8 @@ const UsersList: React.FC = () => {
                         Explore the user data, utilize verification process and quickly find the information
                         you need. <br />
                     </p>
+                    {/* Credits Cards Info Modal */}
+                    {modal}
                     {data.length !== 0 ?
                         <table className="w-full text-md text-left text-black dark:text-white">
                             <thead className="text-lg text-white bg-cyan-700">
@@ -101,7 +110,7 @@ const UsersList: React.FC = () => {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex flex-wrap gap-2 mt-4">
-                                                    <button onClick={() => { }} className="px-5 py-1.5 bg-sky-700 text-white text-md rounded-lg hover:bg-sky-800">
+                                                    <button onClick={() => {OpenCardsInfo(user.uid)}} className="px-5 py-1.5 bg-sky-700 text-white text-md rounded-lg hover:bg-sky-800">
                                                         <AiFillCreditCard className="inline -mt-1 mr-2 text-2xl" /> 
                                                         View Credit Cards Details</button>
                                                 </div>

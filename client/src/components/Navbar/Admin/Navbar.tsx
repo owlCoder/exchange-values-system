@@ -11,7 +11,7 @@ const NavigationHeader: React.FC = () => {
     const [RenderComponent, setRenderComponent] = 
                 useState<"transactions" | "users" | "create">("users");
 
-    const renderActiveComponent = () => {
+    const renderActiveComponent = (): JSX.Element => {
         if (RenderComponent === "transactions") return <Transactions />
         else if (RenderComponent === "users") return <UsersList />;
         else return <CreateUser />;
