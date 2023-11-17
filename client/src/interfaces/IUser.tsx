@@ -1,5 +1,5 @@
 interface IUser {
-    uid: number;
+    uid?: number;
     first_name: string;
     surname: string;
     address: string;
@@ -8,8 +8,8 @@ interface IUser {
     phone_number: string;
     email: string;
     password: string;
-    admin: boolean;
-    verified: boolean;
+    admin?: boolean;
+    verified?: boolean;
 }
 
 export default IUser;

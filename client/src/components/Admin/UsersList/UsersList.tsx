@@ -43,7 +43,7 @@ const UsersList: React.FC = () => {
     }
 
     // Function to show all credits card registered by user
-    function OpenCardsInfo(uid: number): void {
+    function OpenCardsInfo(uid?: number): void {
         setModal(<CreditCards uid={uid} ModalClose={ModalClose} RefreshDataBackground={Refresher}/>);
     }
 

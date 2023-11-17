@@ -9,7 +9,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 const NavigationHeader: React.FC = () => {
     const navigate = useNavigate();
     const [RenderComponent, setRenderComponent] = 
-                useState<"transactions" | "users" | "create">("users");
+                useState<"transactions" | "users" | "create">("create");
 
     const renderActiveComponent = (): JSX.Element => {
         if (RenderComponent === "transactions") return <Transactions />

@@ -51,7 +51,7 @@ export async function IsExistCreditCardPerUser(uid: number): Promise<string | un
     }
 }
 
-export async function GetUsersCreditCards(uid: number): Promise<Array<ICreditCardData>> {
+export async function GetUsersCreditCards(uid: number | undefined): Promise<Array<ICreditCardData>> {
     return new Promise<Array<ICreditCardData>>(async (resolve, reject) => {
         try {
             if (uid && uid > 0) {
@@ -76,10 +76,10 @@ export async function GetUsersCreditCards(uid: number): Promise<Array<ICreditCar
     });
 }
 
-export function ActivateCreditCard(card_number: string | undefined, uid: number): Promise<string> {
+export function ActivateCreditCard(card_number: string | undefined, uid: number | undefined): Promise<string> {
     return new Promise<string>(async (resolve, reject) => {
         try {
-            if (card_number !== undefined) {
+            if (card_number !== undefined || uid !== undefined) {
                 const response = await axios.put(API_URL + 'cards/updateVerified', 
                     { card_number: card_number, verified: true, uid: uid },
                     {

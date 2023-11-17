@@ -33,7 +33,7 @@ def update_user(user_id):
         return 'User not found or update failed', 404
     
 
-@user_blueprint.route('/api/user', methods=['POST'])
+@user_blueprint.route('/api/user/create', methods=['POST'])
 def create_user():
     new_user_data = request.get_json()
 

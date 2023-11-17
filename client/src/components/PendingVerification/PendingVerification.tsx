@@ -21,7 +21,7 @@ const PendingVerification: React.FC = () => {
                 <form className="space-y-4 md:space-y-6">
                     <button
                         type="submit"
-                        className="w-full text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:outline-none focus:ring-cyan-300 rounded-lg text-md font-semibold px-5 py-2.5 text-center dark:bg-cyan-700 dark:hover:bg-cyan-800 dark:focus:ring-cyan-800"
+                        className="w-full text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-lg text-md font-semibold px-5 py-2.5 text-center dark:bg-sky-700 dark:hover:bg-sky-800 dark:focus:ring-sky-800"
                         onClick={handleLogout}
                     >
                         Use another account <LiaSignOutAltSolid className="inline ml-1 text-xl -mt-1" />
