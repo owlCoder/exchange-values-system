@@ -6,8 +6,8 @@ import ICreditCardData from '../interfaces/ICreditCardData';
 export async function SaveCreditCardData(cardData: ICreditCardData): Promise<string | undefined> {
     try {
         if (
-            isCardNumberValid(cardData.cardNumber) &&
-            isExpiryDateValid(cardData.expiryDate) &&
+            isCardNumberValid(cardData.card_number) &&
+            isExpiryDateValid(cardData.expiry_date) &&
             isCVVValid(cardData.cvv)
         ) {
             const response: AxiosResponse = await axios.post(`${API_URL}cards/create`, cardData, {

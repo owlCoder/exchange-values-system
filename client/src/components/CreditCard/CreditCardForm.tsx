@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import { useAuth } from '../../contexts/AuthContext';
-import { isCardNumberValid, isExpiryDateValid, isCVVValid } from '../../utils/CreditCard/DataValidator';
+import { isCardNumberValid, isCVVValid, isExpiryDateValid } from '../../utils/CreditCard/DataValidator';
 import ICreditCardData from '../../interfaces/ICreditCardData';
 import { SaveCreditCardData } from '../../service/CreditCardsService';
 
@@ -9,9 +9,9 @@ const CreditCardForm: React.FC = () => {
   const { currentUser } = useAuth();
 
   const initialFormData: ICreditCardData = {
-    cardNumber: '',
-    cardName: '',
-    expiryDate: '',
+    card_number: '',
+    cardholder_name: '',
+    expiry_date: '',
     cvv: '',
     uid: currentUser?.uid,
     verified: false
@@ -25,14 +25,14 @@ const CreditCardForm: React.FC = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    if (name === 'cardNumber') {
+    if (name === 'card_number') {
       const formattedValue = value
         .replace(/\s/g, '')
         .replace(/(\d{4})/g, '$1 ')
         .trim()
         .substring(0, 19);
       setFormData({ ...formData, [name]: formattedValue });
-    } else if (name === 'expiryDate') {
+    } else if (name === 'expiry_date') {
       const cleanedValue = value.replace(/\D/g, '').substring(0, 4);
       if (cleanedValue.length === 4) {
         const month = cleanedValue.substring(0, 2);
@@ -73,38 +73,38 @@ const CreditCardForm: React.FC = () => {
     <form onSubmit={handleSubmit} className="py-4 dark:bg-gray-800">
       {/* Card Number */}
       <div className="mb-4">
-        <label htmlFor="cardNumber" className="block font-medium text-gray-900 dark:text-white pb-1">
+        <label htmlFor="card_number" className="block font-medium text-gray-900 dark:text-white pb-1">
           Card Number
         </label>
         <input
           type="text"
-          id="cardNumber"
-          name="cardNumber"
+          id="card_number"
+          name="card_number"
           placeholder='XXXX XXXX XXXX XXXX'
-          className={`bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ${isCardNumberValid(formData.cardNumber) ? '' : 'border-red-500'
+          className={`bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ${isCardNumberValid(formData.card_number) ? '' : 'border-red-500'
             }`}
-          value={formData.cardNumber}
+          value={formData.card_number}
           onChange={handleInputChange}
           required
           maxLength={19}
         />
-        {!isCardNumberValid(formData.cardNumber) && formData.cardNumber.length > 0 && (
+        {!isCardNumberValid(formData.card_number) && formData.card_number.length > 0 && (
           <p className="text-red-500 mt-1">Please enter a valid 16-digit card number.</p>
         )}
       </div>
 
       {/* Cardholder Name */}
       <div className="mb-4">
-        <label htmlFor="cardName" className="block font-medium text-gray-900 dark:text-white pb-1">
+        <label htmlFor="cardholder_name" className="block font-medium text-gray-900 dark:text-white pb-1">
           Cardholder Name
         </label>
         <input
           type="text"
-          id="cardName"
-          name="cardName"
+          id="cardholder_name"
+          name="cardholder_name"
           placeholder='Antonio Men'
           className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-          value={formData.cardName}
+          value={formData.cardholder_name}
           onChange={handleInputChange}
           required
         />
@@ -113,22 +113,22 @@ const CreditCardForm: React.FC = () => {
       {/* Expiry Date and CVV */}
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
-          <label htmlFor="expiryDate" className="block font-medium text-gray-900 dark:text-white pb-1">
+          <label htmlFor="expiry_date" className="block font-medium text-gray-900 dark:text-white pb-1">
             Expiry Date
           </label>
           <input
             type="text"
-            id="expiryDate"
-            name="expiryDate"
+            id="expiry_date"
+            name="expiry_date"
             placeholder='MM/YY'
-            className={`bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ${isExpiryDateValid(formData.expiryDate) ? '' : 'border-red-500'
+            className={`bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ${isExpiryDateValid(formData.expiry_date) ? '' : 'border-red-500'
               }`}
-            value={formData.expiryDate}
+            value={formData.expiry_date}
             onChange={handleInputChange}
             required
             maxLength={5}
           />
-          {!isExpiryDateValid(formData.expiryDate) && formData.expiryDate.length > 0 && (
+          {!isExpiryDateValid(formData.expiry_date) && formData.expiry_date.length > 0 && (
             <p className="text-red-500 mt-1">Please enter a valid expiry date (MM/YY).</p>
           )}
         </div>

@@ -54,28 +54,28 @@ const UsersList: React.FC = () => {
                         <table className="w-full text-md text-left text-black dark:text-white">
                             <thead className="text-lg text-white bg-cyan-700">
                                 <tr>
-                                    <th scope="col font-semibold" className="px-6 py-3">
+                                    <th scope="col font-semibold" className="px-6 py-1">
                                         First Name
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-6 py-1">
                                         Last Name
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-6 py-1">
                                         Address
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-6 py-1">
                                         City
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-6 py-1">
                                         Country
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-6 py-1">
                                         Email
                                     </th>
-                                    <th scope="col" className="px-1 py-3">
+                                    <th scope="col" className="px-1 py-1">
                                         Account Status
                                     </th>
-                                    <th scope="col" className="px-6 py-3">
+                                    <th scope="col" className="px-6 py-1">
                                         Verification
                                     </th>
                                 </tr>
@@ -87,13 +87,13 @@ const UsersList: React.FC = () => {
                                             className="bg-white border-1 border-b-gray-950 dark:bg-slate-950 dark:border-gray-700"
                                             key={user.uid}
                                         >
-                                            <td className="px-6 py-4">{user.first_name}</td>
-                                            <td className="px-6 py-4">{user.surname}</td>
-                                            <td className="px-6 py-4">{user.address}</td>
-                                            <td className="px-6 py-4">{user.city}</td>
-                                            <td className="px-6 py-4">{user.country}</td>
-                                            <td className="px-6 py-4">{user.email}</td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-6 py-2">{user.first_name}</td>
+                                            <td className="px-6 py-2">{user.surname}</td>
+                                            <td className="px-6 py-2">{user.address}</td>
+                                            <td className="px-6 py-2">{user.city}</td>
+                                            <td className="px-6 py-2">{user.country}</td>
+                                            <td className="px-6 py-2">{user.email}</td>
+                                            <td className="px-6 py-2">
                                                 {user.verified ? (
                                                     <div className='inline'>
                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="green" className="w-6 h-6 inline -mt-0.5">
@@ -110,8 +110,8 @@ const UsersList: React.FC = () => {
                                                     </div>
                                                 )}
                                             </td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex flex-wrap gap-2 mt-4">
+                                            <td className="px-6 py-2">
+                                                <div className="flex flex-wrap my-2">
                                                     <button onClick={() => {OpenCardsInfo(user.uid)}} className="px-5 py-1.5 bg-sky-700 text-white text-md rounded-lg hover:bg-sky-800">
                                                         <AiFillCreditCard className="inline -mt-1 mr-2 text-2xl" /> 
                                                         View Credit Cards Details</button>

@@ -1,6 +1,10 @@
 import React, { CSSProperties } from "react";
 
-const LoadingSpinner: React.FC = () => {
+export interface IBackground {
+  background?: string;
+}
+
+const LoadingSpinner: React.FC<IBackground> = ({ background = 'bg-white dark:bg-gray-900' }) => {
   const containerStyles: CSSProperties = {
     display: "flex",
     alignItems: "center",
@@ -18,7 +22,7 @@ const LoadingSpinner: React.FC = () => {
   };
 
   return (
-    <div style={containerStyles} className="bg-white dark:bg-gray-900">
+    <div style={containerStyles} className={background}>
       <div style={spinnerStyles}></div>
     </div>
   );

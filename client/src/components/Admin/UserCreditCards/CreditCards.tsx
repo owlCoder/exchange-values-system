@@ -21,7 +21,6 @@ const CreditCards: React.FC<ICreditCardModal> = ({ uid, setModal }) => {
                     },
                 });
                 setData(response.data);
-                console.log(response.data)
             } catch (error) {
                 setData([]);
             }
@@ -39,28 +38,31 @@ const CreditCards: React.FC<ICreditCardModal> = ({ uid, setModal }) => {
 
     return (
         <>
+        {loading ? 
             <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-2xl backdrop-filter dark:backdrop-blur-md dark:backdrop-filter">
-                <div className="bg-white dark:bg-gray-900 w-1/2 rounded-lg p-6 shadow-lg transition-opacity duration-300">
+                <LoadingSpinner background='bg-transparent' />
+            </div> 
+            :
+            <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-2xl backdrop-filter dark:backdrop-blur-md dark:backdrop-filter">
+                <div className="bg-white dark:bg-gray-900 w-3/4 rounded-lg p-6 shadow-lg transition-opacity duration-300">
                     <h2 className="text-2xl font-semibold text-cyan-600 dark:text-cyan-700 mb-4">
                         Credit Cards
                     </h2>
-
-                    {loading ? <LoadingSpinner /> :
                         <div>
                             {data.length !== 0 ?
                                 <table className="w-full text-md text-left text-black dark:text-white">
-                                    <thead className="text-lg text-white bg-cyan-700">
+                                    <thead className="text-lg text-white bg-sky-700">
                                         <tr>
-                                            <th scope="col font-semibold" className="px-6 py-3">
+                                            <th scope="col font-semibold" className="px-6 py-1">
                                                 Card Number
                                             </th>
-                                            <th scope="col" className="px-6 py-3">
+                                            <th scope="col" className="px-6 py-1">
                                                 Cardholder Name
                                             </th>
-                                            <th scope="col" className="px-6 py-3">
+                                            <th scope="col" className="px-6 py-1">
                                                 Expiration
                                             </th>
-                                            <th scope="col" className="px-6 py-3">
+                                            <th scope="col" className="px-6 py-1">
                                                 Activation Status
                                             </th>
                                         </tr>
@@ -69,10 +71,12 @@ const CreditCards: React.FC<ICreditCardModal> = ({ uid, setModal }) => {
                                         {data.map((card: ICreditCardData) => (
                                             <tr
                                                 className="bg-white border-1 border-b-gray-950 dark:bg-slate-950 dark:border-gray-700"
-                                                key={card.cardNumber}
+                                                key={card.card_number}
                                             >
-                                                <td className="px-6 py-4">{card.cardName}</td>
-                                                <td className="px-6 py-4">{card.expiryDate}</td>
+                                                
+                                                <td className="px-6 py-4">{card.card_number.replace(/\d(?=.{4,13}$)/g, '*')}</td>
+                                                <td className="px-6 py-4">{card.cardholder_name}</td>
+                                                <td className="px-6 py-4">{card.expiry_date}</td>
                                                 <td className="px-6 py-4">
                                                     {card.verified ? (
                                                         <div className='inline'>
@@ -95,7 +99,6 @@ const CreditCards: React.FC<ICreditCardModal> = ({ uid, setModal }) => {
                                 </table> : <></>
                             }
                         </div>
-                    }
                     <div className="flex justify-end mt-5">
                         <button
                             onClick={() => setModal(<div></div>)}
@@ -106,6 +109,7 @@ const CreditCards: React.FC<ICreditCardModal> = ({ uid, setModal }) => {
                     </div>
                 </div>
             </div>
+        }
         </>
     );
 };
