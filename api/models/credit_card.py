@@ -11,4 +11,13 @@ class CreditCard(Base):
     verified = Column(Boolean, nullable=False)
     uid = Column(Integer, ForeignKey('users.uid'), nullable=False)
 
+    def serialize(self):
+        return {
+            'card_number': self.card_number,
+            'cardholder_name': self.cardholder_name,
+            'expiry_date': self.expiry_date,
+            'cvv': self.cvv,
+            'verified': self.verified,
+        }
+
 Base.metadata.create_all(engine)

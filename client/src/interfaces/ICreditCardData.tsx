@@ -4,6 +4,7 @@ interface ICreditCardData {
     expiryDate: string;
     cvv: string;
     uid: number | undefined;
+    verified: boolean;
   }
 
   export default ICreditCardData;

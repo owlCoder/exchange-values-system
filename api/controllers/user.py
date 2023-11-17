@@ -6,23 +6,11 @@ def user_exists(email, hashed_password):
     user = db.session.query(User).filter(User.email == email, User.password == hashed_password).first()
     return user is not None  # Return True if user exists, False otherwise
 
-
 def get_user_by_id(user_id):
     try:
         user = db.session.query(User).get(user_id)
         if user:
-            return {
-                "uid": user.uid,
-                "first_name": user.first_name,
-                "surname": user.surname,
-                "address": user.address,
-                "city": user.city,
-                "country": user.country,
-                "phone_number": user.phone_number,
-                "email": user.email,
-                "admin": user.admin,
-                "verified": user.verified,
-            }
+            return user.serialize()
         else:
             return None
     except NoResultFound as e:
@@ -45,23 +33,7 @@ def get_user_by_email(email):
 def get_all_users_data():
     try:
         users = db.session.query(User).all()
-        user_list = []
-        for user in users:
-            user_list.append(
-                {
-                    "uid": user.uid,
-                    "first_name": user.first_name,
-                    "surname": user.surname,
-                    "address": user.address,
-                    "city": user.city,
-                    "country": user.country,
-                    "phone_number": user.phone_number,
-                    "email": user.email,
-                    "admin": user.admin,
-                    "verified": user.verified,
-                }
-            )
-        return user_list
+        return [user.serialize() for user in users]
     except Exception as e:
         return None
 

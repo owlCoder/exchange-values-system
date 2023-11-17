@@ -14,6 +14,7 @@ const CreditCardForm: React.FC = () => {
     expiryDate: '',
     cvv: '',
     uid: currentUser?.uid,
+    verified: false
   };
 
   const [formData, setFormData] = useState<ICreditCardData>(initialFormData);

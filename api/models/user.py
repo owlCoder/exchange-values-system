@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.ext.declarative import declarative_base
 from db_config import Base, engine
 
 class User(Base):
@@ -16,5 +15,19 @@ class User(Base):
     password = Column(String(255), nullable=False)
     admin = Column(Boolean, nullable=False)
     verified = Column(Boolean, nullable=False)
+
+    def serialize(self):
+        return {
+            'uid': self.uid,
+                'first_name': self.first_name,
+                'surname': self.surname,
+                'address': self.address,
+                'city': self.city,
+                'country': self.country,
+                'phone_number': self.phone_number,
+                'email': self.email,
+                'admin': self.admin,
+                'verified': self.verified,
+        }
 
 Base.metadata.create_all(engine)

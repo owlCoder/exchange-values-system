@@ -16,12 +16,14 @@ const UsersList: React.FC = () => {
 
         const fetchData = async () => {
             try {
-                const response = await axios.get<IUser[]>(API_URL + 'users');
+                const response = await axios.get<IUser[]>(API_URL + 'users', {
+                    headers: {
+                      'Content-Type': 'application/json;charset=UTF-8',
+                    },
+                  });
                 setData(response.data);
             } catch (error) {
                 setData([]);
-                //console.error('Error fetching data:', error);
-                // Handle errors, display a message, or perform appropriate actions
             }
             finally {
                 setLoading(false);

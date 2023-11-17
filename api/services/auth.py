@@ -8,7 +8,7 @@ def auth_user(email, password):
         token = generate_token()
         uid = get_user_by_email(email)
         user = get_user_by_id(uid)
-        
+
         if create_token(token, email, uid):
             return jsonify({ 'token': token, 'admin': user['admin'], 'uid': uid, 'verified': user['verified'] }), 200
         else:
