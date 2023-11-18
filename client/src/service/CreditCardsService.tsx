@@ -62,7 +62,6 @@ export async function GetUsersCreditCards(uid: number | undefined): Promise<Arra
                 });
 
                 if (response.status === 200) {
-                    console.log(response.data)
                     resolve(response.data);
                 } else {
                     resolve([]);

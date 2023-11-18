@@ -2,6 +2,29 @@ from models.user import User
 from db_config import db
 from sqlalchemy.orm.exc import NoResultFound
 
+# Method to create a new user
+def create_new_user(new_data):
+    try:
+        new_user = User(
+            first_name = new_data.get("first_name"),
+            surname = new_data.get("surname"),
+            address = new_data.get("address"),
+            city = new_data.get("city"),
+            country = new_data.get("country"),
+            phone_number = new_data.get("phone_number"),
+            email = new_data.get("email"),
+            password = new_data.get("password"),
+            admin =False,
+            verified = False,
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+        return True
+    except Exception as e:
+        db.session.rollback()
+        return False
+
 # Method to check if user exists in system with entered email and passwords
 def user_exists(email, hashed_password):
     user = db.session.query(User).filter(User.email == email, User.password == hashed_password).first()
@@ -78,25 +101,19 @@ def update_user_verified(user_id, new_verified_status):
         db.session.rollback()
         return False
 
-# Method to create a new user
-def create_new_user(new_data):
+# Method to delete a user by email
+def delete_user_by_email(email):
     try:
-        new_user = User(
-            first_name = new_data.get("first_name"),
-            surname = new_data.get("surname"),
-            address = new_data.get("address"),
-            city = new_data.get("city"),
-            country = new_data.get("country"),
-            phone_number = new_data.get("phone_number"),
-            email = new_data.get("email"),
-            password = new_data.get("password"),
-            admin =False,
-            verified = False,
-        )
+        # Query the database for the user by email
+        user = db.session.query(User).filter(User.email == email).first()
 
-        db.session.add(new_user)
-        db.session.commit()
-        return True
+        if user:
+            # If the user exists, delete it from the database
+            db.session.delete(user)
+            db.session.commit()
+            return True  # Return True indicating successful deletion
+        else:
+            return False  # Return False if user does not exist
     except Exception as e:
         db.session.rollback()
-        return False
+        return False  # Return False for any exception during deletion

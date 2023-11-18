@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ICreditCardModal from '../../../interfaces/ICreditCardModal';
 import ICreditCardData from '../../../interfaces/ICreditCardData';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
-import { AiFillCheckCircle, AiFillInfoCircle, AiOutlineInfoCircle } from 'react-icons/ai';
+import { AiFillCheckCircle, AiFillInfoCircle } from 'react-icons/ai';
 import { ActivateCreditCard, GetUsersCreditCards } from '../../../service/CreditCardsService';
 
 const CreditCards: React.FC<ICreditCardModal> = ({ uid, ModalClose, RefreshDataBackground }) => {

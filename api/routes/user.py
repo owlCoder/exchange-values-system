@@ -17,11 +17,13 @@ def create_user():
 
     if create_new_user(new_user_data):
         if send_email(email, email, password):
-            return 'User created successfully', 201
+            return jsonify({ 'data': 'User created successfully'}), 201
         else:
-            return 'User can\'n be created. Check entered data', 400
+            # Email send failed so delete created user
+            delete_user_by_email(email)
+            return jsonify({ 'data': 'User can\'n be created. Check entered data'}), 401
     else:
-        return 'User can\'n be created. Entered email address already registered', 401
+        return jsonify({ 'data': 'User can\'n be created. Entered email address already registered'}), 400
 
 # Route to get specific user by user ID
 @user_blueprint.route('/api/user/<int:user_id>', methods=['GET'])
@@ -31,7 +33,7 @@ def get_user(user_id):
     if user_data:
         return jsonify(user_data), 200
     else:
-        return 'User not found', 404
+        return jsonify({ 'data': 'User not found'}), 404
 
 # Route to get all users in database
 @user_blueprint.route('/api/users', methods=['GET'])
@@ -41,7 +43,7 @@ def get_all_users():
     if users:
         return jsonify(users), 200
     else:
-        return 'No users found', 404
+        return jsonify({ 'data': 'No users found'}), 404
     
 # Route to update specific user by user ID
 @user_blueprint.route('/api/user/<int:user_id>', methods=['PUT'])
@@ -49,6 +51,6 @@ def update_user(user_id):
     new_user_data = request.get_json()  # The updated data is in the request
 
     if update_user_data(user_id, new_user_data):
-        return 'User updated successfully', 200
+        return jsonify({ 'data': 'User updated successfully'}), 200
     else:
-        return 'User not found or update failed', 404
+        return jsonify({ 'data': 'User not found or update failed'}), 404

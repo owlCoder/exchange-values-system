@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { MdClear } from 'react-icons/md';
 import IUser from '../../../interfaces/IUser';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { CreateUserAccount } from '../../../service/UserService';
+import Info from '../../Popup/Informative/Info';
 
 const CreateUser: React.FC = () => {
   const [error, setError] = useState<string>('');
@@ -18,7 +18,8 @@ const CreateUser: React.FC = () => {
     password: '',
   };
   const [formData, setFormData] = useState<IUser>(initialFormData);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [infoModal, setInfoModal] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,11 +32,16 @@ const CreateUser: React.FC = () => {
     setError('');
     setLoading(true);
 
+
     // Call service to create new user account
     CreateUserAccount(formData)
       .then((response: string) => {
-        if (response === 'Success')
+        if (response === 'Success') {
+          setInfoModal(true);
           setFormData(initialFormData);
+        }
+        else
+          setError(response)
       })
       .catch((error: string) => {
         setError(error.toString());
@@ -47,7 +53,8 @@ const CreateUser: React.FC = () => {
 
   return (
     <div>
-      <div className="overflow-y-auto  h-screen overflow-x-hidden justify-center items-center w-full md:inset-0 md:h-full">
+      {infoModal && <Info title='User has been created successfully' closeModalMethod={setInfoModal} />}
+      <div className="overflow-y-auto h-screen overflow-x-hidden justify-center items-center w-full md:inset-0 md:h-full">
         <div className="relative p-4 w-full h-full md:h-auto">
           <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
@@ -209,15 +216,17 @@ const CreateUser: React.FC = () => {
               </div>
               <button
                 type="submit"
+                disabled={loading}
                 className="text-white inline-flex items-center text-md bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg px-5 py-2 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 <AiOutlineUserAdd className='inline mr-2 text-lg' />
-                Create account
+                {loading ? 'Creating account...' : 'Create account'}
               </button>
               <div className='ml-5 inline'>
                 <button
                   type="reset"
-                  onClick={() => { setFormData(initialFormData) }}
+                  disabled={loading}
+                  onClick={() => { setFormData(initialFormData); setError(''); }}
                   className="text-white inline-flex items-center bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg px-5 py-2 text-center dark:bg-rose-700 dark:hover:bg-rose-800 dark:focus:ring-red-800"
                 >
                   <MdClear className='inline mr-2 text-lg' />
