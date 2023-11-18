@@ -37,8 +37,10 @@ body {
 .slick-prev:before {
   color: #0369a1 !important;
   background-color: transparent;
+  font-size: 30px !important;
 }
 .slick-next:before {
   color: #0369a1 !important;
   background-color: transparent;
+  font-size: 30px !important;
 }
