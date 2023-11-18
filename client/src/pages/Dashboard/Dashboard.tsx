@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
             {loading ? (
                 <LoadingSpinner />
             ) : (
-                <section className="h-screen bgw">
+                <section className="h-screen">
                     <div className="backdrop-blur-md flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                         <Link
                             to="/"

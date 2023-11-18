@@ -87,7 +87,7 @@ const NavigationHeader: React.FC = () => {
                     </div>
                 </nav>
             </header>
-            <div className="bg-gray-100 dark:bg-slate-800 py-1 h-screen">
+            <div className="bg-gray-100 dark:bg-slate-800 py-1 min-h-screen">
                 <div className="bg-gray-100 dark:bg-gray-900 m-5 rounded-lg p-5">
                     {renderActiveComponent()}
                 </div>
