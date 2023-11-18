@@ -35,7 +35,7 @@ const User: React.FC = () => {
                         const currentUser = JSON.parse(currentUserData);
                         setUser(currentUser);
     
-                        if (!currentUser.admin) {
+                        if (currentUser.admin) {
                             navigate('/');
                         }
                     } else {
@@ -50,6 +50,7 @@ const User: React.FC = () => {
             .finally(() => {
                 setLoading(false); // Set loading to false after the Token check is completed
             });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
         
     return loading === true ? (

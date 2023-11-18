@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { LogOut } from "../../../service/AuthenticationService";
 import { useNavigate } from "react-router-dom";
+import CreateUser from "../../Admin/CreateUser/CreateUser";
+import UsersList from "../../Admin/UsersList/UsersList";
+import Transactions from "../../Admin/Transactions/Transactions";
+import { AiOutlineLogout } from "react-icons/ai";
+import Cards from "../../User/Cards/Cards";
 
 const NavigationHeader: React.FC = () => {
     const navigate = useNavigate();
-    const [RenderComponent, setRenderComponent] = useState<"transactions" | "users" | "create">("transactions");
+    const [RenderComponent, setRenderComponent] = 
+                useState<"cards" | "profile">("cards");
 
-    const renderActiveComponent = () => {
-        if (RenderComponent === "transactions")
-            return <h1 className="text-white">1</h1>;
-        else if (RenderComponent === "users")
-            return <h1>2</h1>;
-        else
-            return <h1>3</h1>;;
+    const renderActiveComponent = (): JSX.Element => {
+        if (RenderComponent === "cards") return <Cards />
+        else if (RenderComponent === "profile") return <br />;
+        else return <CreateUser />;
     };
 
     const SignOut = () => {
@@ -38,8 +41,9 @@ const NavigationHeader: React.FC = () => {
                         <div className="flex items-center lg:order-2">
                             <button
                                 onClick={SignOut}
-                                className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                                className="text-white bg-[#8E0000] hover:bg-[#A43232] focus:ring-4 focus:ring-[#8E0000] font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2 mr-2 dark:bg-[#8E0000] dark:hover:bg-[#A43232] focus:outline-none dark:focus:ring-[#8E0000]"
                             >
+                                <AiOutlineLogout className="inline -mt-1 mr-2 text-2xl" />
                                 Sign Out
                             </button>
                         </div>
@@ -50,27 +54,19 @@ const NavigationHeader: React.FC = () => {
                             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                                 <li>
                                     <button
-                                        onClick={() => setRenderComponent("transactions")}
-                                        className="block py-2 pr-4 pl-3 text-gray-400 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                                        onClick={() => setRenderComponent("profile")}
+                                        className="block py-2 pr-4 pl-3 text-gray-400 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-sky-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                                         aria-current="page"
                                     >
-                                        Transactions
+                                        Edit Profile
                                     </button>
                                 </li>
                                 <li>
                                     <button
-                                        onClick={() => setRenderComponent("users")}
-                                        className="block py-2 pr-4 pl-3 text-gray-400 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                                        onClick={() => setRenderComponent("cards")}
+                                        className="block py-2 pr-4 pl-3 text-gray-400 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-sky-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                                     >
-                                        Users
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
-                                        onClick={() => setRenderComponent("create")}
-                                        className="block py-2 pr-4 pl-3 text-gray-400 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                                    >
-                                        User Registration
+                                        Credit  Cards
                                     </button>
                                 </li>
                             </ul>
@@ -84,7 +80,7 @@ const NavigationHeader: React.FC = () => {
                     </div>
                 </nav>
             </header>
-            <div className="bg-gray-100 dark:bg-slate-800 py-1 h-screen">
+            <div className="bg-gray-100 dark:bg-slate-800 py-1 min-h-screen">
                 <div className="bg-gray-100 dark:bg-gray-900 m-5 rounded-lg p-5">
                     {renderActiveComponent()}
                 </div>
