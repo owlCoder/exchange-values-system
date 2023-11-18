@@ -76,8 +76,7 @@ def update_user_data(user_id, new_data):
             user.country = new_data.get("country", user.country)
             user.phone_number = new_data.get("phone_number", user.phone_number)
             user.email = new_data.get("email", user.email)
-            user.admin = new_data.get("admin", user.admin)
-            user.verified = new_data.get("verified", user.verified)
+            user.password = new_data.get("password", user.password)
 
             db.session.commit()
             return True

@@ -53,4 +53,4 @@ def update_user(user_id):
     if update_user_data(user_id, new_user_data):
         return jsonify({ 'data': 'User updated successfully'}), 200
     else:
-        return jsonify({ 'data': 'User not found or update failed'}), 404
+        return jsonify({ 'data': 'Profile info can\'t be updated. Check entered email'}), 404

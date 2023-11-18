@@ -26,6 +26,7 @@ class User(Base):
                 'country': self.country,
                 'phone_number': self.phone_number,
                 'email': self.email,
+                'password': self.password,
                 'admin': self.admin,
                 'verified': self.verified,
         }
