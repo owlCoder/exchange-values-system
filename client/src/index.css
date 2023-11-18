@@ -28,6 +28,17 @@
   100% { transform: rotate(360deg); }
 }
 
+/* Body color */
 body {
   background-color: rgb(30 41 59);
+}
+
+/* Slider arrows colors */
+.slick-prev:before {
+  color: #0369a1 !important;
+  background-color: transparent;
+}
+.slick-next:before {
+  color: #0369a1 !important;
+  background-color: transparent;
 }

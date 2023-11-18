@@ -1,16 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
-import ICreditCardData from '../../interfaces/ICreditCardData';
+import ICroseitCardData from '../../interfaces/ICreditCardData';
 import PaymentCard from '../PaymentCard/PaymentCard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
-interface CardSliderData {
-    cards: ICreditCardData[];
-}
+import CardSliderData from '../../interfaces/ICardSliderData';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { GoBlocked } from 'react-icons/go';
 
 const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
 
     const changeCard = (direction: string) => {
         if (sliderRef.current) {
@@ -33,7 +33,7 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     };
 
     return (
-        <main className="bg-gray-100 dark:bg-gray-900 h-screen pb-5 pt-2">
+        <div className="bg-transparent h-screen pb-5 pt-2">
             <div className="w-full max-w-xl mx-auto">
                 <Slider
                     ref={sliderRef}
@@ -45,10 +45,13 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                         slidesToScroll: 1,
                         nextArrow: <CustomArrow direction="right" />,
                         prevArrow: <CustomArrow direction="left" />,
+                        afterChange: (index) => {
+                            setCurrentIndex(index); // Update the current index in the state after slide change
+                        },
                     }}
                 >
-                    {cards.map((card: ICreditCardData, index: number) => (
-                        <div>
+                    {cards.map((card: ICroseitCardData, index: number) => (
+                        <div key={index}>
                             <PaymentCard
                                 card_number={card.card_number}
                                 cardholder_name={card.cardholder_name}
@@ -56,11 +59,28 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                                 cvv={card.cvv}
                                 uid={index}
                                 verified={card.verified} />
+
+                            {card.verified ?
+                                <button
+                                    type="submit"
+                                    className="w-1/2 mx-auto flex justify-center uppercase font-medium items-center mt-12 text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-sky-700 dark:hover:bg-sky-800 dark:focus:ring-sky-800"
+                                    onClick={() => alert(cards[index].card_number)}
+                                >
+                                    <AiOutlinePlus className="inline mr-2 mt-1 text-xl" /> Top up the balance
+                                </button> :
+                                <button
+                                    type="button"
+                                    disabled={true}
+                                    className="w-1/2 mx-auto flex justify-center uppercase font-medium items-center mt-12 text-white bg-rose-600 focus:ring-4 focus:outline-none focus:ring-rose-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-rose-700 opacity-50 dark:focus:ring-rose-800"
+                                >
+                                    <GoBlocked className="inline mr-2 mt-1 text-xl" /> Unverified
+                                </button>
+                            }
                         </div>
                     ))}
                 </Slider>
             </div>
-        </main>
+        </div>
     );
 };
 

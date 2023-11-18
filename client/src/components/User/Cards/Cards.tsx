@@ -20,17 +20,17 @@ const Cards: React.FC = () => {
         }
 
         setLoading(true);
-        if(currentUser != null) {
+        if (currentUser != null) {
             GetUsersCreditCards(currentUser.uid)
-            .then((result) => {
-                setData(result);
-            })
-            .catch((error) => {
-                setData([]);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+                .then((result) => {
+                    setData(result);
+                })
+                .catch((error) => {
+                    setData([]);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -38,7 +38,10 @@ const Cards: React.FC = () => {
     return loading ? (
         <LoadingSpinner />
     ) : currentUser ? (
-        <main className="bg-gray-100 dark:bg-gray-900 h-screen pb-5 pt-12">
+        <main className="bg-white dark:bg-gray-900 h-screen pb-5 pt-12 rounded-xl">
+            <h2 className="text-3xl font-semibold dark:text-white -mt-10 text-center mb-8 pt-6">
+                Credit Cards
+            </h2>
             {/* slider goes here */}
             <CardSlider cards={data} />
 

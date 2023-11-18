@@ -55,7 +55,7 @@ const CreditCards: React.FC<ICreditCardModal> = ({ uid, ModalClose, RefreshDataB
                 :
                 <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-2xl backdrop-filter dark:backdrop-blur-md dark:backdrop-filter">
                     <div className="bg-white dark:bg-gray-900 w-3/4 rounded-xl p-6 shadow-lg transition-opacity duration-300">
-                        <h2 className="text-2xl font-semibold dark:text-white dark:text-sky-6 00 mb-4">
+                        <h2 className="text-2xl font-semibold dark:text-white mb-4">
                             Credit Cards
                         </h2>
                         <h3 className='mb-3 text-red-600 text-center'>{error}</h3>
