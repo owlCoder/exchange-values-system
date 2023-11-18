@@ -1,38 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { GetUsersCreditCards } from '../../../service/CreditCardsService';
+import ICreditCardData from '../../../interfaces/ICreditCardData';
+import CardSlider from '../../CreditCardSlider/CardSlider';
+
 const Cards: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const { currentUser, setUser } = useAuth();
+    const [data, setData] = useState<ICreditCardData[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!localStorage.getItem("currentUser")) {
+        if (!localStorage.getItem('currentUser')) {
             setUser(null);
             navigate('/');
-            return; // Exit early if there's no user data
+            return;
         }
 
         setLoading(true);
-        
-        
-
-        setLoading(false);
+        if(currentUser != null) {
+            GetUsersCreditCards(currentUser.uid)
+            .then((result) => {
+                setData(result);
+            })
+            .catch((error) => {
+                setData([]);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return loading === true ? (
+    return loading ? (
         <LoadingSpinner />
     ) : currentUser ? (
-        <main className="bg-gray-100 dark:bg-gray-900 h-screen pb-5">
-            <>
-                
-            </>
+        <main className="bg-gray-100 dark:bg-gray-900 h-screen pb-5 pt-12">
+            {/* slider goes here */}
+            <CardSlider cards={data} />
 
+            {/* all invoices goes here - connected by credit card */}
         </main>
     ) : (
         <div></div>
