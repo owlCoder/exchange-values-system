@@ -11,7 +11,7 @@ const NavigationHeader: React.FC = () => {
     const [infoModal, setInfoModal] = useState<boolean>(false);
     const navigate = useNavigate();
     const [RenderComponent, setRenderComponent] =
-        useState<"cards" | "profile" | 'add-card'>("profile");
+        useState<"cards" | "profile" | 'add-card'>("cards");
 
     const renderActiveComponent = (): JSX.Element => {
         if (RenderComponent === "cards") return <Cards />

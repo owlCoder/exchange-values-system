@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
-
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 const Cards: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const { currentUser, setUser } = useAuth();
