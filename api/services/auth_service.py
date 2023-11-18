@@ -3,6 +3,7 @@ from controllers.user import user_exists, get_user_by_email, get_user_by_id
 from controllers.token import create_token, is_token_valid, delete_token
 from services.token_generator import generate_token
 
+# Auth0 method to sign in user
 def auth_user(email, password):
     if user_exists(email, password):
         token = generate_token()
@@ -16,7 +17,7 @@ def auth_user(email, password):
     else:
         return jsonify({'data': "Check your email and password and try again"}), 401
     
-
+# Auth0 method to sign out user
 def unauth_user(uid, token):
     if is_token_valid(token, uid):
         if delete_token(token):

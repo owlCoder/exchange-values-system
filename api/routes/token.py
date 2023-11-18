@@ -3,6 +3,7 @@ from controllers.token import is_token_valid, delete_token
 
 token_blueprint = Blueprint('token_blueprint', __name__)
 
+# Route to check token and session
 @token_blueprint.route('/api/token/check', methods=['POST'])
 def check_token():
     token = request.json.get('token')
@@ -15,6 +16,7 @@ def check_token():
         return jsonify({'data': 'Token is not valid'}), 401
 
 
+# Route to revoke a session and remove token from database
 @token_blueprint.route('/api/token/delete', methods=['DELETE'])
 def delete_token():
     token = request.json.get('token')

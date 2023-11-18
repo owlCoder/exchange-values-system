@@ -2,6 +2,7 @@ from models.user import User
 from db_config import db
 from models.token import Token
 
+# Method to create a new token in database and create a new session
 def create_token(token, user_email, user_uid):
     try:
         new_token = Token(token = token, email = user_email, uid = user_uid)
@@ -12,7 +13,7 @@ def create_token(token, user_email, user_uid):
         db.session.rollback()
         return False
 
-
+# Method to check is token still valid
 def is_token_valid(token, uid):
     try:
         token_entry = db.session.query(Token).filter(Token.token == token, Token.uid == uid).first()
@@ -24,8 +25,8 @@ def is_token_valid(token, uid):
             return False
     except Exception as e:
         return False
-
-
+    
+# Method to delete token from database
 def delete_token(token):
     try:
         token_entry = db.session.query(Token).filter(Token.token == token).first()

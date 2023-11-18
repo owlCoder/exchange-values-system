@@ -3,9 +3,9 @@ from models.credit_card import CreditCard
 
 # Method to create a credit card submitted by user via form
 def create_credit_card(data):
-    card_number = data.get('cardNumber')
-    cardholder_name = data.get('cardName')
-    expiry_date = data.get('expiryDate')
+    card_number = data.get('card_number')
+    cardholder_name = data.get('cardholder_name')
+    expiry_date = data.get('expiry_date')
     cvv = data.get('cvv')
     uid = data.get('uid')
 
@@ -23,6 +23,7 @@ def create_credit_card(data):
         db.session.commit()
         return True
     except Exception as e:
+        print(str(e))
         db.session.rollback()
         return False
 

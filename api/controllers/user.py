@@ -2,10 +2,12 @@ from models.user import User
 from db_config import db
 from sqlalchemy.orm.exc import NoResultFound
 
+# Method to check if user exists in system with entered email and passwords
 def user_exists(email, hashed_password):
     user = db.session.query(User).filter(User.email == email, User.password == hashed_password).first()
     return user is not None  # Return True if user exists, False otherwise
 
+# Method to get user by user ID
 def get_user_by_id(user_id):
     try:
         user = db.session.query(User).get(user_id)
@@ -18,6 +20,7 @@ def get_user_by_id(user_id):
     except Exception as e:
         return None  # Handle other exceptions
 
+# Method to get a user by email address
 def get_user_by_email(email):
     try:
         user = db.session.query(User).filter(User.email == email).first()
@@ -30,6 +33,7 @@ def get_user_by_email(email):
     except Exception as e:
         return None  # Handle other exceptions
 
+# Method to get all users from database
 def get_all_users_data():
     try:
         users = db.session.query(User).all()
@@ -37,7 +41,7 @@ def get_all_users_data():
     except Exception as e:
         return None
 
-
+# Method to update a user by user ID
 def update_user_data(user_id, new_data):
     try:
         user = db.session.query(User).get(user_id)
@@ -74,6 +78,7 @@ def update_user_verified(user_id, new_verified_status):
         db.session.rollback()
         return False
 
+# Method to create a new user
 def create_new_user(new_data):
     try:
         new_user = User(
@@ -84,8 +89,9 @@ def create_new_user(new_data):
             country = new_data.get("country"),
             phone_number = new_data.get("phone_number"),
             email = new_data.get("email"),
-            admin =new_data.get("admin"),
-            verified = new_data.get("verified"),
+            password = new_data.get("password"),
+            admin =False,
+            verified = False,
         )
 
         db.session.add(new_user)

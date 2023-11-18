@@ -10,9 +10,9 @@ export function CreateUserAccount(new_user: IUser): Promise<string> {
             'Content-Type': 'application/json;charset=UTF-8',
           },
         });
-  
+
         if (response.status === 200) {
-          resolve(response.data);
+          resolve("Success");
         } else {
           reject(response.data);
         }

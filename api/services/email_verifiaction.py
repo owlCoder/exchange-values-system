@@ -1,6 +1,7 @@
 import smtplib
 from email.mime.text import MIMEText
 
+# Method to send an email to newly registed user
 def send_email(receiver_email, email, password):
     smtp_server = 'smtp-mail.outlook.com'
     port = 587
