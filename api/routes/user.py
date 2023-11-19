@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from controllers.user import *
-from services.email_verifiaction import send_email
+from services.email_service import prepare
+from services.email_message import activation_message
 from services.password_hasher import hash_method
 
 user_blueprint = Blueprint('user_blueprint', __name__)
@@ -43,7 +44,7 @@ class UserBlueprintDocumentation:
         new_user_data['password'] = hash_method(new_user_data['password'])
 
         if create_new_user(new_user_data):
-            if send_email(email, email, password):
+            if prepare(email, activation_message(email, password), 'Account Registration'):
                 return jsonify({ 'data': 'User created successfully'}), 201
             else:
                 # Email send failed so delete created user
