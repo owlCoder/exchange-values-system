@@ -1,9 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
+from routes.auth import auth_blueprint
+from routes.credit_card import credit_card_blueprint
+from routes.current_account import current_account_blueprint
 from routes.user import user_blueprint
 from routes.token import token_blueprint
-from routes.credit_card import credit_card_blueprint
-from routes.auth import auth_blueprint
 from db_config import db
 
 # Initialize app
@@ -21,6 +22,7 @@ app.register_blueprint(auth_blueprint)
 app.register_blueprint(user_blueprint)
 app.register_blueprint(token_blueprint)
 app.register_blueprint(credit_card_blueprint)
+app.register_blueprint(current_account_blueprint)
 
 # Run app
 if __name__ == '__main__':
