@@ -7,9 +7,11 @@ import 'slick-carousel/slick/slick-theme.css';
 import CardSliderData from '../../interfaces/ICardSliderData';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GoBlocked } from 'react-icons/go';
+import TopUpBalance from '../Popup/TopUpBalance/TopUpBalance';
 
 const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
+    const [topUpPopuo, setTopUpPopup] = useState<JSX.Element>(<div></div>)
     const [currentIndex, setCurrentIndex] = useState<number>(0);
 
     const changeCard = (direction: string) => {
@@ -32,8 +34,14 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
         );
     };
 
+    function RenderTopUpModal(card_number: string): void {
+        if (card_number === "") setTopUpPopup(<div></div>)
+        else setTopUpPopup(<TopUpBalance closeModalMethod={setTopUpPopup} />)
+    }
+
     return (
         <div className="bg-transparent h-screen pb-5 pt-2">
+            {topUpPopuo}
             <div className="w-full max-w-xl mx-auto">
                 <Slider
                     ref={sliderRef}
@@ -64,7 +72,7 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                                 <button
                                     type="submit"
                                     className="w-1/2 mx-auto flex justify-center uppercase font-medium items-center mt-12 text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-sky-700 dark:hover:bg-sky-800 dark:focus:ring-sky-800"
-                                    onClick={() => alert(cards[index].card_number)}
+                                    onClick={() => RenderTopUpModal(cards[index].card_number)}
                                 >
                                     <AiOutlinePlus className="inline mr-2 mt-1 text-xl" /> Top up the balance
                                 </button> :
