@@ -12,7 +12,6 @@ import TopUpBalance from '../Popup/TopUpBalance/TopUpBalance';
 const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
     const [topUpPopuo, setTopUpPopup] = useState<JSX.Element>(<div></div>)
-    const [currentIndex, setCurrentIndex] = useState<number>(0);
 
     const changeCard = (direction: string) => {
         if (sliderRef.current) {
@@ -53,9 +52,6 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                         slidesToScroll: 1,
                         nextArrow: <CustomArrow direction="right" />,
                         prevArrow: <CustomArrow direction="left" />,
-                        afterChange: (index) => {
-                            setCurrentIndex(index); // Update the current index in the state after slide change
-                        },
                     }}
                 >
                     {cards.map((card: ICroseitCardData, index: number) => (

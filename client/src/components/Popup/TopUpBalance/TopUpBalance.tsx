@@ -20,15 +20,22 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ closeModalMethod }) => {
                                 clipRule="evenodd"
                             />
                         </svg>
-                        <span className="sr-only">dddsd</span>
+                        <span className="sr-only">Top Up Account Balance</span>
                     </div>
-                    <p className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">{'title'}</p>
+                    <p className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Top Up Account Balance</p>
                     <button
                         onClick={() => closeModalMethod(<div></div>)}
                         type="button"
-                        className="py-2 px-3 text-sm font-medium text-center text-white rounded-lg bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:focus:ring-primary-900"
+                        className="bg-sky-700 ml-2 text-white font-semibold px-4 py-1 rounded hover:bg-sky-800"
                     >
-                        Got it
+                        Confirm
+                    </button>
+                    <button
+                        onClick={() => closeModalMethod(<div></div>)}
+                        type="button"
+                        className="bg-gray-300 ml-2 text-gray-700 font-semibold px-4 py-1 rounded hover:bg-gray-400"
+                    >
+                        Cancel
                     </button>
                 </div>
             </div>
