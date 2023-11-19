@@ -4,21 +4,52 @@ from services.auth_service import auth_user, unauth_user
 
 auth_blueprint = Blueprint("auth_blueprint", __name__)
 
-# Base Auth0 route to authenticate user with email and password
-@auth_blueprint.route('/api/auth0/', methods = ["POST"])
-def login():
-    creditials = request.get_json()
-    email = creditials['email']
-    password_hash = hash_method(creditials['password'])
-    response = auth_user(email, password_hash)
-    
-    return response
+class AuthBlueprintDocumentation:
+    """
+    AuthBlueprintDocumentation provides authentication routes to validate and manage user sessions.
 
-# Base Auth0 route to sign out user and remove a token
-@auth_blueprint.route('/api/auth0/logout/', methods = ["POST"])
-def logout():
-    creditials = request.get_json()
-    uid = creditials['uid']
-    token = creditials['token']
+    Routes:
+        - POST /api/auth0/
+            - Authenticate user with email and password.
+        - POST /api/auth0/logout/
+            - Sign out user and remove a token.
+    """
 
-    return unauth_user(uid, token)
+    @auth_blueprint.route('/api/auth0/', methods=["POST"])
+    def login():
+        """
+        Authenticate user with email and password.
+
+        Request:
+            - Method: POST
+            - Route: /api/auth0/
+            - Payload: JSON object containing 'email' and 'password'
+
+        Returns:
+            JSON: Response containing user authentication status and details.
+        """
+        credentials = request.get_json()
+        email = credentials['email']
+        password_hash = hash_method(credentials['password'])
+        response = auth_user(email, password_hash)
+        
+        return response
+
+    @auth_blueprint.route('/api/auth0/logout/', methods=["POST"])
+    def logout():
+        """
+        Sign out user and remove a token.
+
+        Request:
+            - Method: POST
+            - Route: /api/auth0/logout/
+            - Payload: JSON object containing 'uid' and 'token'
+
+        Returns:
+            str: Response indicating the status of user sign out.
+        """
+        credentials = request.get_json()
+        uid = credentials['uid']
+        token = credentials['token']
+
+        return unauth_user(uid, token)
