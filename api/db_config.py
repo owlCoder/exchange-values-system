@@ -7,4 +7,4 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=False)
 Base = declarative_base()
 db = SQLAlchemy()
 
-CURRENCY_API_URL = 'http://localhost:4200'
+CURRENCY_API_URL = 'https://currency-exchange-api-six.vercel.app/'
