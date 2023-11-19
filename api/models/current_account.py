@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DECIMAL
-from sqlalchemy.orm import relationship
 from db_config import Base, engine
 
 class CurrentAccount(Base):

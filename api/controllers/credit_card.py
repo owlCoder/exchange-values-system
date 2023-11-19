@@ -1,6 +1,7 @@
 from db_config import db
 from models.credit_card import CreditCard
 
+# Method to create a new credit card
 def create_credit_card(data):
     """
     Create a credit card record submitted by a user via form.
@@ -46,6 +47,7 @@ def create_credit_card(data):
         db.session.rollback()
         return False
 
+# Method to check is credit card exist
 def check_credit_card_by_uid(uid):
     """
     Check if a user has a credit card by user ID.
@@ -66,6 +68,7 @@ def check_credit_card_by_uid(uid):
     except Exception as e:
         return False
 
+# Method to get all credit cards owned by user
 def get_all_credit_cards_by_uid(uid):
     """
     Retrieve all credit cards associated with a user ID.
@@ -86,6 +89,7 @@ def get_all_credit_cards_by_uid(uid):
     except Exception as e:
         return None
 
+# Method to verify user's credit card
 def update_verified_field(card_number, verified_status):
     """
     Update the 'verified' field of a credit card by card number.
