@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slick';
 import PaymentCard from '../PaymentCard/PaymentCard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import CardSliderData from '../../interfaces/ICardSliderData';
-import { AiOutlinePlus, AiOutlineTransaction } from 'react-icons/ai';
-import { TbTransferVertical } from 'react-icons/tb';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { GoBlocked } from 'react-icons/go';
 import TopUpBalance from '../Popup/TopUpBalance/TopUpBalance';
 import ICreditCardData from '../../interfaces/ICreditCardData';
@@ -13,9 +12,15 @@ import AccountsTable from '../AccountsTable/AccountsTable';
 
 const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
+    const [refresh, setRefresh] = useState(false);
+    const [index, setIndex] = useState<number>(0);
     const [topUpPopup, setTopUpPopup] = useState<JSX.Element>(<div></div>);
     const [accountsTable, setAccountsTable] = useState<JSX.Element>(cards.length > 0 ?
-        <AccountsTable card_number={cards[0].card_number} /> : <div></div>);
+        <AccountsTable card_number={cards[0].card_number} refresh={refresh} /> : <div></div>);
+
+    const handleRefresh = () => {
+        setRefresh(!refresh);
+    };
 
     const changeCard = (direction: string) => {
         if (sliderRef.current) {
@@ -39,11 +44,22 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
 
     function RenderTopUpModal(card_number: string, uid: number | undefined): void {
         if (card_number === "") setTopUpPopup(<div></div>)
-        else setTopUpPopup(<TopUpBalance card_number={card_number} uid={uid} closeModalMethod={setTopUpPopup} />)
+        else setTopUpPopup(<TopUpBalance card_number={card_number} uid={uid} closeModalMethod={RefreshData} onRefresh={handleRefresh} />)
     }
 
-    function setAccountsData(index: number) {
-        setAccountsTable(<AccountsTable card_number={cards[index].card_number} />)
+    function setAccountsData(index: number): void {
+        setAccountsTable(<AccountsTable card_number={cards[index].card_number} refresh={refresh} />);
+    }
+
+    // Function to refresh accounts table data upon modal closure
+    function RefreshData(close: boolean): void {
+        if (close === true) {
+            setTopUpPopup(<div></div>);
+            setAccountsTable(<AccountsTable card_number={cards[index].card_number} refresh={refresh} />);
+        }
+
+        setAccountsTable(<AccountsTable card_number={cards[index].card_number} refresh={refresh} />);
+
     }
 
     return (
@@ -62,6 +78,7 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                         prevArrow: <CustomArrow direction="left" />,
                         afterChange: (index) => {
                             setAccountsData(index);
+                            setIndex(index);
                         },
                     }}
                 >

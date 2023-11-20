@@ -4,14 +4,28 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { TbTransferVertical } from 'react-icons/tb';
 import { AiOutlineTransaction } from 'react-icons/ai';
 import ICurrentAccount from '../../interfaces/ICurrentAccount';
+import { GetAccountsByCardNumber } from '../../service/CurrentAccountService';
 
-const AccountsTable: React.FC<IAccountsTableData> = ({ card_number }) => {
+const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, refresh }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [accounts, setAccounts] = useState<ICurrentAccount[]>([]);
 
     useEffect(() => {
-
-    }, []);
+        setLoading(true);
+        const GetAccountsData = async () => {
+            try {
+              const data = await GetAccountsByCardNumber(card_number);
+              setAccounts(data);
+            } catch (error) {
+              setAccounts([]);
+            }
+            finally {
+                setLoading(false);    
+            }
+          };
+      
+          GetAccountsData();
+    }, [card_number, refresh]);
 
     return (
         <div>

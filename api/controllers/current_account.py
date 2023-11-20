@@ -83,3 +83,26 @@ def update_account_balance(account_id, amount):
     except Exception as e:
         db.session.rollback()
         return False
+
+def get_all_current_accounts(card_number):
+    """
+    Retrieves all accounts associated with a specified credit card number.
+
+    Args:
+        card_number (str): The credit card number to search for.
+
+    Returns:
+        list or None: A list of CurrentAccount objects associated with the specified card_number.
+                      Returns None if an error occurs during the query.
+
+    Example:
+        accounts = get_all_current_accounts('1234567890123456')
+        if accounts:
+            for account in accounts:
+                print(f"Account ID: {account.account_id}, Balance: {account.balance}, Currency: {account.currency}")
+    """
+    try:
+        accounts = db.session.query(CurrentAccount).filter(CurrentAccount.card_number == card_number).all()
+        return accounts
+    except Exception as e:
+        return None

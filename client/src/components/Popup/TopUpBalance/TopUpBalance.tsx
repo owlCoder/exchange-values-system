@@ -6,7 +6,7 @@ import { AiOutlineArrowUp } from 'react-icons/ai';
 import ITopUpAccountData from '../../../interfaces/ITopUpAccountData';
 import { TopUp } from '../../../service/CurrentAccountService';
 
-const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMethod }) => {
+const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMethod, onRefresh }) => {
     const initialFormData: ITopUpAccountData = {
         currency: '',
         amount: 0,
@@ -115,13 +115,14 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMetho
                                 <h4 className="text-emerald-700 dark:text-emerald-500 -mt-4 mb-4 text-lg">{message}</h4>
                             </div>}
                             <button
+                                onClick={() => onRefresh()}
                                 type="submit"
                                 className="bg-sky-700 ml-2 text-white font-semibold px-4 py-1 rounded-lg hover:bg-sky-800"
                             >
                                 Confirm
                             </button>
                             <button
-                                onClick={() => closeModalMethod(<div></div>)}
+                                onClick={() => { closeModalMethod(true); onRefresh();}}
                                 type="button"
                                 className="bg-gray-300 ml-4 text-gray-700 font-semibold px-4 py-1 rounded-lg hover:bg-gray-400"
                             >
