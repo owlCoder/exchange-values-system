@@ -37,12 +37,13 @@ def create_current_account(account_number, balance, currency, card_number, uid):
         return False
 
 # Method to check if an account exists based on UID and currency
-def check_account_exists(uid, currency):
+def check_account_exists(uid, card_number, currency):
     """
-    Checks if an account exists based on UID and currency.
+    Checks if an account exists based on user ID, card number and currency.
 
     Args:
         uid (int): The user ID associated with the account.
+        card_number (str): The user card number associated with the account.
         currency (str): The currency type of the account.
 
     Returns:
@@ -52,7 +53,7 @@ def check_account_exists(uid, currency):
         account_id = check_account_exists(1, "USD")
     """
     try:
-        account = db.session.query(CurrentAccount).filter_by(uid=uid, currency=currency).first()
+        account = db.session.query(CurrentAccount).filter_by(card_number=card_number, uid=uid, currency=currency).first()
         return account.account_id if account else None
     except Exception as e:
         return None

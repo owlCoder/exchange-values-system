@@ -33,7 +33,7 @@ def top_up_current_account():
     if not card_number or not uid or not amount or not currency:
         return jsonify({'data': 'Please provide valid data'}), 400
     
-    account_id = check_account_exists(uid, currency)
+    account_id = check_account_exists(uid, card_number, currency)
 
     if account_id:
         if update_account_balance(account_id, amount):

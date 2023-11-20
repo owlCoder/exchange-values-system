@@ -12,7 +12,7 @@ import AccountsTable from '../AccountsTable/AccountsTable';
 
 const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
-    const [refresh, setRefresh] = useState(false);
+    const [refresh, setRefresh] = useState(true);
     const [index, setIndex] = useState<number>(0);
     const [topUpPopup, setTopUpPopup] = useState<JSX.Element>(<div></div>);
     const [accountsTable, setAccountsTable] = useState<JSX.Element>(cards.length > 0 ?

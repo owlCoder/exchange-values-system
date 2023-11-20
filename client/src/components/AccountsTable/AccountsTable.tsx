@@ -14,23 +14,28 @@ const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, refresh }) =
         setLoading(true);
         const GetAccountsData = async () => {
             try {
-              const data = await GetAccountsByCardNumber(card_number);
-              setAccounts(data);
+                const data = await GetAccountsByCardNumber(card_number);
+                setAccounts(data);
             } catch (error) {
-              setAccounts([]);
+                setAccounts([]);
             }
             finally {
-                setLoading(false);    
+                setLoading(false);
             }
-          };
-      
-          GetAccountsData();
+        };
+
+        GetAccountsData();
     }, [card_number, refresh]);
 
     return (
         <div>
             {loading ? <LoadingSpinner background='bg-transparent' minH='0' /> :
-                accounts.length === 0 ? <div>No data</div> :
+                accounts.length === 0 ?
+                    <div className='mx-auto text-md text-left text-black dark:text-white rounded-lg overflow-hidden w-3/5'>
+                        <h1 className="border border-sky-600  bg-sky-600 p-2 rounded-xl w-full text-lg font-semibold text-center text-white dark:text-white">
+                            There are no current accounts to display at the moment. Use TOP UP BALANCE option to create a new account.
+                        </h1>
+                    </div> :
                     <table className="mx-auto text-md text-left text-black dark:text-white rounded-lg overflow-hidden w-3/5">
                         <thead className="text-lg text-white bg-sky-800">
                             <tr>
