@@ -1,3 +1,4 @@
+from decimal import Decimal
 from models.current_account import CurrentAccount
 from db_config import db
 
@@ -57,13 +58,13 @@ def check_account_exists(uid, currency):
         return None
 
 # Method to update the balance of an account by account ID
-def update_account_balance(account_id, new_balance):
+def update_account_balance(account_id, amount):
     """
     Updates the balance of an account by account ID.
 
     Args:
         account_id (int): The unique identifier for the account.
-        new_balance (float): The new balance to be updated in the account.
+        amount (float): The new amout to be added in the account.
 
     Returns:
         bool: True if the account balance is successfully updated, otherwise False.
@@ -74,7 +75,7 @@ def update_account_balance(account_id, new_balance):
     try:
         account = db.session.query(CurrentAccount).get(account_id)
         if account:
-            account.balance = new_balance
+            account.balance = account.balance +  Decimal(str(amount))
             db.session.commit()
             return True
         else:

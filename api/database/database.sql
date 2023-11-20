@@ -1,3 +1,4 @@
+-- Active: 1698963933767@@127.0.0.1@3306@proddb
 CREATE TABLE users (
     uid INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
@@ -25,7 +26,6 @@ VALUES
 
 -- Show all users
 SELECT *FROM users; 
-UPDATE users set verified = 0 where uid =2;
 
 -- Delete all users (use for database clean up purposes)
 DELETE FROM users;
@@ -52,6 +52,7 @@ CREATE TABLE credit_cards (
     cardholder_name VARCHAR(40) NOT NULL,
     expiry_date VARCHAR(5) NOT NULL,
     cvv VARCHAR(3) NOT NULL,
+    verified BOOLEAN NOT NULL,
     uid INTEGER NOT NULL,
     FOREIGN KEY (uid) REFERENCES users(uid)
 );
@@ -61,3 +62,18 @@ SELECT *FROM credit_cards;
 
 -- Delete all credit cards data
 DELETE FROM credit_cards;
+
+-- Table for currents account
+CREATE TABLE current_account (
+    account_id INT PRIMARY KEY AUTO_INCREMENT,
+    account_number VARCHAR(20) UNIQUE,
+    balance DECIMAL(15, 2) DEFAULT 0.00,
+    currency VARCHAR(5),
+    card_number VARCHAR(19) NOT NULL,
+    uid INTEGER NOT NULL,
+    FOREIGN KEY (uid) REFERENCES users(uid),
+    FOREIGN KEY (card_number) REFERENCES credit_cards(card_number)
+);
+
+-- Show all accounts in system
+SELECT *FROM current_account;

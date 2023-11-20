@@ -3,7 +3,7 @@ interface ICreditCardData {
     cardholder_name: string;
     expiry_date: string;
     cvv: string;
-    uid: number | undefined;
+    uid: number;
     verified: boolean;
   }
 

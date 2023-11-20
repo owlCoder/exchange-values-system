@@ -13,7 +13,7 @@ const CreditCardForm: React.FC = () => {
     cardholder_name: '',
     expiry_date: '',
     cvv: '',
-    uid: currentUser?.uid,
+    uid: currentUser ? currentUser.uid : 0,
     verified: false
   };
 

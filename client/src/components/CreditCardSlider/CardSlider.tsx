@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
-import ICroseitCardData from '../../interfaces/ICreditCardData';
 import PaymentCard from '../PaymentCard/PaymentCard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -8,6 +7,7 @@ import CardSliderData from '../../interfaces/ICardSliderData';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GoBlocked } from 'react-icons/go';
 import TopUpBalance from '../Popup/TopUpBalance/TopUpBalance';
+import ICreditCardData from '../../interfaces/ICreditCardData';
 
 const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
@@ -33,9 +33,9 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
         );
     };
 
-    function RenderTopUpModal(card_number: string): void {
+    function RenderTopUpModal(card_number: string, uid: number | undefined): void {
         if (card_number === "") setTopUpPopup(<div></div>)
-        else setTopUpPopup(<TopUpBalance closeModalMethod={setTopUpPopup} />)
+        else setTopUpPopup(<TopUpBalance card_number={card_number} uid={uid} closeModalMethod={setTopUpPopup} />)
     }
 
     return (
@@ -54,21 +54,21 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                         prevArrow: <CustomArrow direction="left" />,
                     }}
                 >
-                    {cards.map((card: ICroseitCardData, index: number) => (
+                    {cards.map((card: ICreditCardData, index: number) => (
                         <div key={index}>
                             <PaymentCard
                                 card_number={card.card_number}
                                 cardholder_name={card.cardholder_name}
                                 expiry_date={card.expiry_date}
                                 cvv={card.cvv}
-                                uid={index}
+                                uid={card.uid}
                                 verified={card.verified} />
 
                             {card.verified ?
                                 <button
                                     type="submit"
                                     className="w-1/2 mx-auto flex justify-center uppercase font-medium items-center mt-12 text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-sky-700 dark:hover:bg-sky-800 dark:focus:ring-sky-800"
-                                    onClick={() => RenderTopUpModal(cards[index].card_number)}
+                                    onClick={() => RenderTopUpModal(card.card_number, card.uid)}
                                 >
                                     <AiOutlinePlus className="inline mr-2 mt-1 text-xl" /> Top up the balance
                                 </button> :

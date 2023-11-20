@@ -57,6 +57,7 @@ class CreditCard(Base):
             'expiry_date': self.expiry_date,
             'cvv': self.cvv,
             'verified': self.verified,
+            'uid': self.uid,
         }
 
 Base.metadata.create_all(engine)
