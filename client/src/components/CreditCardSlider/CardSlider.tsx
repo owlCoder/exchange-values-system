@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
 import PaymentCard from '../PaymentCard/PaymentCard';
 import 'slick-carousel/slick/slick.css';
@@ -112,11 +112,9 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                     ))}
                 </Slider>
             </div>
-
             <div className='mt-10 pb-12 bg-gray-900 -mx-5 rounded-xl'>
                 {accountsTable}
             </div>
-
         </div>
     );
 };
