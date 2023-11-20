@@ -16,7 +16,7 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const [index, setIndex] = useState<number>(0);
     const [topUpPopup, setTopUpPopup] = useState<JSX.Element>(<div></div>);
     const [accountsTable, setAccountsTable] = useState<JSX.Element>(cards.length > 0 ?
-        <AccountsTable card_number={cards[0].card_number} refresh={refresh} /> : <div></div>);
+        <AccountsTable card_number={cards[0].card_number} verified={cards[0].verified} refresh={refresh} /> : <div></div>);
 
     const handleRefresh = () => {
         setRefresh(!refresh);
@@ -48,17 +48,17 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     }
 
     function setAccountsData(index: number): void {
-        setAccountsTable(<AccountsTable card_number={cards[index].card_number} refresh={refresh} />);
+        setAccountsTable(<AccountsTable card_number={cards[index].card_number} verified={cards[index].verified} refresh={refresh} />);
     }
 
     // Function to refresh accounts table data upon modal closure
     function RefreshData(close: boolean): void {
         if (close === true) {
             setTopUpPopup(<div></div>);
-            setAccountsTable(<AccountsTable card_number={cards[index].card_number} refresh={refresh} />);
+            setAccountsTable(<AccountsTable card_number={cards[index].card_number} verified={cards[index].verified} refresh={refresh} />);
         }
 
-        setAccountsTable(<AccountsTable card_number={cards[index].card_number} refresh={refresh} />);
+        setAccountsTable(<AccountsTable card_number={cards[index].card_number} verified={cards[index].verified} refresh={refresh} />);
 
     }
 
@@ -95,7 +95,7 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                             {card.verified ?
                                 <button
                                     type="submit"
-                                    className="w-1/2 mx-auto flex justify-center uppercase font-medium items-center mt-12 text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-sky-700 dark:hover:bg-sky-800 dark:focus:ring-sky-800"
+                                    className="w-1/2 mx-auto flex justify-center uppercase font-medium items-center mt-12 text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-sky-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-sky-700 dark:hover:bg-sky-800 dark:focus:ring-sky-700"
                                     onClick={() => RenderTopUpModal(card.card_number, card.uid)}
                                 >
                                     <AiOutlinePlus className="inline mr-2 mt-1 text-xl" /> Top up the balance

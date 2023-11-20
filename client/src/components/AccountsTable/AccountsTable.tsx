@@ -6,7 +6,7 @@ import { AiOutlineTransaction } from 'react-icons/ai';
 import ICurrentAccount from '../../interfaces/ICurrentAccount';
 import { GetAccountsByCardNumber } from '../../service/CurrentAccountService';
 
-const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, refresh }) => {
+const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, refresh }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [accounts, setAccounts] = useState<ICurrentAccount[]>([]);
 
@@ -32,9 +32,12 @@ const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, refresh }) =
             {loading ? <LoadingSpinner background='bg-transparent' minH='0' /> :
                 accounts.length === 0 ?
                     <div className='mx-auto text-md text-left text-black dark:text-white rounded-lg overflow-hidden w-3/5'>
-                        <h1 className="border border-sky-600  bg-sky-600 p-2 rounded-xl w-full text-lg font-semibold text-center text-white dark:text-white">
+                        {verified ? <h1 className="border border-sky-700  bg-sky-700 p-2 rounded-xl w-full text-lg font-semibold text-center text-white dark:text-white">
                             There are no current accounts to display at the moment. Use TOP UP BALANCE option to create a new account.
-                        </h1>
+                        </h1> :
+                        <h1 className="border border-rose-800  bg-rose-800 p-2 rounded-xl w-full text-lg font-semibold text-center text-white dark:text-white">
+                        Credit card isn't accepted by an administrator.
+                    </h1>}
                     </div> :
                     <table className="mx-auto text-md text-left text-black dark:text-white rounded-lg overflow-hidden w-3/5">
                         <thead className="text-lg text-white bg-sky-800">
