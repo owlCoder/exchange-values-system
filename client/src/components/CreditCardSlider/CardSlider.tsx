@@ -4,14 +4,18 @@ import PaymentCard from '../PaymentCard/PaymentCard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import CardSliderData from '../../interfaces/ICardSliderData';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineTransaction } from 'react-icons/ai';
+import { TbTransferVertical } from 'react-icons/tb';
 import { GoBlocked } from 'react-icons/go';
 import TopUpBalance from '../Popup/TopUpBalance/TopUpBalance';
 import ICreditCardData from '../../interfaces/ICreditCardData';
+import AccountsTable from '../AccountsTable/AccountsTable';
 
 const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
-    const [topUpPopuo, setTopUpPopup] = useState<JSX.Element>(<div></div>)
+    const [topUpPopup, setTopUpPopup] = useState<JSX.Element>(<div></div>);
+    const [accountsTable, setAccountsTable] = useState<JSX.Element>(cards.length > 0 ?
+        <AccountsTable card_number={cards[0].card_number} /> : <div></div>);
 
     const changeCard = (direction: string) => {
         if (sliderRef.current) {
@@ -38,9 +42,13 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
         else setTopUpPopup(<TopUpBalance card_number={card_number} uid={uid} closeModalMethod={setTopUpPopup} />)
     }
 
+    function setAccountsData(index: number) {
+        setAccountsTable(<AccountsTable card_number={cards[index].card_number} />)
+    }
+
     return (
-        <div className="bg-transparent h-screen pb-5 pt-2">
-            {topUpPopuo}
+        <div className="bg-transparent min-h-screen pb-5 pt-2">
+            {topUpPopup}
             <div className="w-full max-w-xl mx-auto">
                 <Slider
                     ref={sliderRef}
@@ -52,6 +60,9 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                         slidesToScroll: 1,
                         nextArrow: <CustomArrow direction="right" />,
                         prevArrow: <CustomArrow direction="left" />,
+                        afterChange: (index) => {
+                            setAccountsData(index);
+                        },
                     }}
                 >
                     {cards.map((card: ICreditCardData, index: number) => (
@@ -84,6 +95,11 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                     ))}
                 </Slider>
             </div>
+
+            <div className='mt-10 pb-12 bg-gray-900 -mx-5 rounded-xl'>
+                {accountsTable}
+            </div>
+
         </div>
     );
 };

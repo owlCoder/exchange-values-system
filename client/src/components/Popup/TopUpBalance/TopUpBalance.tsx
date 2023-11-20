@@ -100,6 +100,7 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMetho
                                     type="number"
                                     id="amount"
                                     name="amount"
+                                    min={0}
                                     value={formData.amount}
                                     onChange={handleInputChange}
                                     placeholder='1000,00'
