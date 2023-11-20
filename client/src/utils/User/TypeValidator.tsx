@@ -1,5 +1,11 @@
 import IUser from "../../interfaces/IUser";
 
+/**
+ * Type guard function to check if an object matches the IUser interface.
+ * @module isUser
+ * @param {any} obj - The object to be checked against the IUser interface.
+ * @returns {boolean} Returns true if the object matches the IUser interface; otherwise, returns false.
+ */
 const isUser = (obj: any): obj is IUser => (
     typeof obj === 'object' &&
     'uid' in obj &&
