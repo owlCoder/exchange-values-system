@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slick';
 import PaymentCard from '../PaymentCard/PaymentCard';
 import 'slick-carousel/slick/slick.css';
@@ -19,8 +19,13 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
         <AccountsTable card_number={cards[0].card_number} verified={cards[0].verified} refresh={refresh} /> : <div></div>);
 
     const handleRefresh = () => {
-        setRefresh(!refresh);
+        setRefresh(refresh => !refresh);
     };
+
+    useEffect(() => {
+        setAccountsTable(<AccountsTable card_number={cards[index].card_number} verified={cards[index].verified} refresh={refresh} />);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [refresh]);
 
     const changeCard = (direction: string) => {
         if (sliderRef.current) {
