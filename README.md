@@ -2,7 +2,7 @@
 
 ## Gettings started
 
-This project provides a basic structure for building a RESTful API using Flask, a popular Python web framework and React.JS (TypeScript) to make modern and flexible application. 
+Project provides a basic structure for building a RESTful API using Flask, a popular Python web framework and React.JS (TypeScript) to make modern and flexible application. 
 
 This README will guide you through setting up a virtual environment, installing the required dependencies, and activating it on a Windows system, setting up and running React.JS project.
 
