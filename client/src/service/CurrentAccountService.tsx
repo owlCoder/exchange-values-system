@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import ITopUpAccountData from '../interfaces/ITopUpAccountData';
 import { API_URL } from '..';
 import ICurrentAccount from '../interfaces/ICurrentAccount';
+import IExchangeFundsData from '../interfaces/IExchangeFundsData';
 
 /**
  * Tops up the account balance with provided data.
@@ -35,5 +36,28 @@ export async function GetAccountsByCardNumber(card_number: string): Promise<ICur
     return [];
   } catch (error) {
     return [];
+  }
+}
+
+/**
+ * Function to exchange funds between currencies.
+ * @param data - Object containing details required for the funds exchange.
+ * @returns Promise<string> - A Promise resolving to a string indicating the status of the exchange.
+ *
+ * @remarks
+ * This function sends a POST request to the API endpoint to exchange funds between currencies based on the provided data.
+ */
+export async function Exchange(data: IExchangeFundsData): Promise<string> {
+  try {
+    const response: AxiosResponse = await axios.post(API_URL + 'account/exchange', data);
+
+    // Check if the response status is successful (201 - Created)
+    if (response.status === 201) {
+      return 'OK'; // Exchange successful
+    } else {
+      return 'Failed to exchange currencies. Account balance won\'t be charged'; // Exchange failed
+    }
+  } catch (error) {
+    return 'Error while exchanging currencies'; // Error during the exchange process
   }
 }

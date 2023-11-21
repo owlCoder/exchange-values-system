@@ -20,6 +20,15 @@ interface IAccountsTableData {
      * @type {boolean}
      */
     refresh: boolean;
+
+    /**
+     * Method to render an exchange funds popup.
+     * @param account_id - The ID of the account involved in the fund exchange.
+     * @param balance - The current balance of the account.
+     * @param currency - The currency associated with the account balance.
+     * @returns void
+     */
+    renderExchangeFundsPopup: (account_id: number, balance: number, currency: string) => void;
   }
   
   export default IAccountsTableData;

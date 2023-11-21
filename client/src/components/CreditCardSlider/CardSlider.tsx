@@ -10,11 +10,13 @@ import TopUpBalance from '../Popup/TopUpBalance/TopUpBalance';
 import ICreditCardData from '../../interfaces/ICreditCardData';
 import AccountsTable from '../AccountsTable/AccountsTable';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import ExchangeFunds from '../Popup/ExchangeFunds/ExchangeFunds';
 
 const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
     const [index, setIndex] = useState<number>(0);
     const [topUpPopup, setTopUpPopup] = useState<JSX.Element>(<div />);
+    const [exchangePopup, setExchangePopup] = useState<JSX.Element>(<div />);
     const [accountsTable, setAccountsTable] = useState<JSX.Element>(<div />);
     const [refresh, setRefresh] = useState(true);
     const [loading, setLoading] = useState<boolean>(false);
@@ -28,6 +30,7 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                     card_number={cards[index].card_number}
                     verified={cards[index].verified}
                     refresh={refresh}
+                    renderExchangeFundsPopup={renderExchangeFundsPopup}
                 />
             );
             setLoading(false);
@@ -66,9 +69,24 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
         setTopUpPopup(newTopUpPopup);
     };
 
+    const renderExchangeFundsPopup = (account_id: number, balance: number, currency: string): void => {
+        const newExchangePopup = account_id !== -1 ? (
+            <ExchangeFunds
+                account_id={account_id}
+                balance={balance}
+                currency={currency}
+                closeModalMethod={() => setExchangePopup(<div />)}
+                onRefresh={() => handleRefresh()}
+            />
+        ) : <div />;
+
+        setExchangePopup(newExchangePopup);
+    };
+
     return (
         <div className="bg-transparent min-h-screen pb-5 pt-2">
             {topUpPopup}
+            {exchangePopup}
             <div className="w-full max-w-xl mx-auto">
                 <Slider
                     ref={sliderRef}

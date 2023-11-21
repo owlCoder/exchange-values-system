@@ -6,7 +6,7 @@ import { AiOutlineTransaction } from 'react-icons/ai';
 import ICurrentAccount from '../../interfaces/ICurrentAccount';
 import { GetAccountsByCardNumber } from '../../service/CurrentAccountService';
 
-const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, refresh }) => {
+const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, refresh, renderExchangeFundsPopup }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [accounts, setAccounts] = useState<ICurrentAccount[]>([]);
 
@@ -65,7 +65,7 @@ const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, re
                                 <td className="px-4 py-2">{account.currency}</td>
                                 <td className='px-8 py-2 flex space-x-6'>
                                     <div className="flex flex-wrap my-2">
-                                        <button onClick={() => { console.log(account.account_id) }} className="px-5 py-1.5 bg-[#124191] text-white text-md rounded-lg hover:bg-blue-900">
+                                        <button onClick={() => { renderExchangeFundsPopup(account.account_id, account.balance, account.currency) }} className="px-5 py-1.5 bg-[#124191] text-white text-md rounded-lg hover:bg-blue-900">
                                             <AiOutlineTransaction className="inline -mt-1 mr-2 text-2xl" />
                                             Exchange Funds</button>
                                     </div>
