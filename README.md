@@ -57,7 +57,6 @@ Sign out a user and remove their token.
 Request body:
 
 ```json
-Copy code
 {
   "token": "user_token",
   "uid": "user_id"
