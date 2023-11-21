@@ -3,6 +3,8 @@ from controllers.user import *
 from services.email_service import prepare
 from services.email_message import activation_message
 from services.password_hasher import hash_method
+from config.exlude_docs_str import exclude_docstring
+from flasgger import swag_from
 
 user_blueprint = Blueprint('user_blueprint', __name__)
 
@@ -24,6 +26,31 @@ class UserBlueprintDocumentation:
     """
 
     @user_blueprint.route('/api/user/create', methods=['POST'])
+    @swag_from({
+        'tags': ['User'],
+        'summary': 'Create a new user',
+        'description': 'Endpoint to create a new user in the database.',
+        'parameters': [
+            {
+                'name': 'body',
+                'in': 'body',
+                'required': True,
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'email': {'type': 'string'},
+                        'password': {'type': 'string'}
+                    },
+                    'required': ['email', 'password']
+                }
+            }
+        ],
+        'responses': {
+            201: {'description': 'User created successfully'},
+            401: {'description': 'User creation failed'}
+        }
+    })
+    @exclude_docstring
     def create_user():
         """
         Create a new user.
@@ -53,8 +80,25 @@ class UserBlueprintDocumentation:
         else:
             return jsonify({ 'data': 'User can\'n be created. Entered email address already registered'}), 400
 
-
     @user_blueprint.route('/api/user/<int:user_id>', methods=['GET'])
+    @swag_from({
+        'tags': ['User'],
+        'summary': 'Get a specific user by user ID',
+        'description': 'Endpoint to retrieve a specific user by user ID.',
+        'parameters': [
+            {
+                'name': 'user_id',
+                'in': 'path',
+                'type': 'integer',
+                'required': True
+            }
+        ],
+        'responses': {
+            200: {'description': 'User data if found'},
+            404: {'description': 'User not found'}
+        }
+    })
+    @exclude_docstring
     def get_user(user_id):
         """
         Get a specific user by user ID.
@@ -73,8 +117,17 @@ class UserBlueprintDocumentation:
         else:
             return jsonify({ 'data': 'User not found'}), 404
 
-
     @user_blueprint.route('/api/users', methods=['GET'])
+    @swag_from({
+        'tags': ['User'],
+        'summary': 'Get all users in the database',
+        'description': 'Endpoint to retrieve all users in the database.',
+        'responses': {
+            200: {'description': 'List of user data if users found'},
+            404: {'description': 'No users found'}
+        }
+    })
+    @exclude_docstring
     def get_all_users():
         """
         Get all users in the database.
@@ -93,8 +146,33 @@ class UserBlueprintDocumentation:
         else:
             return jsonify({ 'data': 'No users found'}), 404
     
-
     @user_blueprint.route('/api/user/<int:user_id>', methods=['PUT'])
+    @swag_from({
+        'tags': ['User'],
+        'summary': 'Update specific user by user ID',
+        'description': 'Endpoint to update specific user details by user ID.',
+        'parameters': [
+            {
+                'name': 'user_id',
+                'in': 'path',
+                'type': 'integer',
+                'required': True
+            },
+            {
+                'name': 'body',
+                'in': 'body',
+                'required': True,
+                'schema': {
+                    # Define schema for the updated user data
+                }
+            }
+        ],
+        'responses': {
+            200: {'description': 'User updated successfully'},
+            404: {'description': 'Profile info can\'t be updated'}
+        }
+    })
+    @exclude_docstring
     def update_user(user_id):
         """
         Update specific user by user ID.

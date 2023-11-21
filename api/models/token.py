@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer, ForeignKey
-from db_config import Base, engine
+from config.database import Base, engine
 
 class Token(Base):
     """

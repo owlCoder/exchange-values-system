@@ -1,4 +1,4 @@
-from db_config import db
+from config.database import db
 from models.credit_card import CreditCard
 
 # Method to create a new credit card

@@ -1,11 +1,41 @@
 from flask import Blueprint, jsonify, request
+from flasgger import swag_from
 from controllers.current_account import *
 from services.account_number_generator import generate_account_number
+from config.exlude_docs_str import exclude_docstring
+from flasgger import swag_from
 
 current_account_blueprint = Blueprint('current_account_blueprint', __name__)
 
-# Route to top up the balance of a current account or create a new account if it doesn't exist
 @current_account_blueprint.route('/api/account/topup', methods=['POST'])
+@swag_from({
+    'tags': ['Current Account'],
+    'summary': 'Top up the balance of a current account or create a new account',
+    'description': 'Endpoint to top up the balance of a current account or create a new account if it does not exist.',
+    'parameters': [
+        {
+            'name': 'body',
+            'in': 'body',
+            'required': True,
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'card_number': {'type': 'string'},
+                    'uid': {'type': 'integer'},
+                    'amount': {'type': 'number', 'format': 'float'},
+                    'currency': {'type': 'string'}
+                },
+                'required': ['card_number', 'uid', 'amount', 'currency']
+            }
+        }
+    ],
+    'responses': {
+        201: {'description': 'Account balance has been topped up'},
+        500: {'description': 'Account balance hasn\'t been changed'},
+        400: {'description': 'Please provide valid data'}
+    }
+})
+@exclude_docstring
 def top_up_current_account():
     """
     Route to top up the balance of a current account or create a new account if it doesn't exist.
@@ -46,8 +76,32 @@ def top_up_current_account():
         else:
             return jsonify({'data': 'Account balance hasn\'t been changed'}), 500
 
-# Route to fetch all accounts associated with a specified credit card number
 @current_account_blueprint.route('/api/accounts/getAccountsByCard', methods=['POST'])
+@swag_from({
+    'tags': ['Current Account'],
+    'summary': 'Fetch all accounts associated with a specified credit card number',
+    'description': 'Endpoint to fetch all accounts associated with a specified credit card number.',
+    'parameters': [
+        {
+            'name': 'body',
+            'in': 'body',
+            'required': True,
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'card_number': {'type': 'string'}
+                },
+                'required': ['card_number']
+            }
+        }
+    ],
+    'responses': {
+        200: {'description': 'Serialized list of accounts associated with the provided card_number'},
+        204: {'description': 'No current accounts'},
+        500: {'description': 'Error occurred while fetching accounts'}
+    }
+})
+@exclude_docstring
 def get_accounts_by_card_number():
     """
     Route to fetch all accounts associated with a specified credit card number.

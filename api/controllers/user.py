@@ -1,5 +1,5 @@
 from models.user import User
-from db_config import db
+from config.database import db
 from sqlalchemy.orm.exc import NoResultFound
 
 # Method to create a new user

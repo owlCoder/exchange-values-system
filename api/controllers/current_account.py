@@ -1,6 +1,6 @@
 from decimal import Decimal
 from models.current_account import CurrentAccount
-from db_config import db
+from config.database import db
 
 # Method to create a new current account
 def create_current_account(account_number, balance, currency, card_number, uid):

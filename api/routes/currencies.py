@@ -1,5 +1,8 @@
 from flask import Blueprint, jsonify
+from flasgger import Swagger, swag_from
 from services.currencies_service import *
+from config.exlude_docs_str import exclude_docstring
+from flasgger import swag_from
 
 currencies_blueprint = Blueprint('currencies_blueprint', __name__)
 
@@ -17,6 +20,17 @@ class CurrenciesBlueprintDocumentation:
     """
 
     @currencies_blueprint.route('/api/currencies', methods=['GET'])
+    @swag_from({
+        'tags': ['Currencies'],
+        'summary': 'Retrieve available currency codes',
+        'description': 'Endpoint to retrieve available currency codes.',
+        'responses': {
+            200: {
+                'description': 'List of available currency codes'
+            }
+        }
+    })
+    @exclude_docstring
     def get_available_currencies():
         """
         Retrieve available currency codes.
@@ -32,6 +46,17 @@ class CurrenciesBlueprintDocumentation:
         return jsonify(currencies), 200
 
     @currencies_blueprint.route('/api/currencies/course', methods=['GET'])
+    @swag_from({
+        'tags': ['Currencies'],
+        'summary': 'Retrieve detailed currency information',
+        'description': 'Endpoint to retrieve detailed currency information.',
+        'responses': {
+            200: {
+                'description': 'Dictionary containing detailed currency information'
+            }
+        }
+    })
+    @exclude_docstring
     def get_available_currencies_course():
         """
         Retrieve detailed currency information.

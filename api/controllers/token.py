@@ -1,5 +1,5 @@
 from models.user import User
-from db_config import db
+from config.database import db
 from models.token import Token
 
 # Method to create a new token in database and create a new session

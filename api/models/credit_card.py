@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, String, Integer, ForeignKey
-from db_config import Base, engine
+from config.database import Base, engine
 
 class CreditCard(Base):
     """

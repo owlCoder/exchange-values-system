@@ -1,5 +1,5 @@
 import requests
-from db_config import CURRENCY_API_URL
+from config.database import CURRENCY_API_URL
 
 def GetAvailableCurrencies():
     """
