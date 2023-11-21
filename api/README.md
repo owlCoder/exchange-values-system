@@ -101,7 +101,7 @@ You can organize your project's files and logic within these directories to foll
 To start the Flask API, run the following command within the activated virtual environment:
 
 ```bash
-python run.py
+python index.py
 ```
 
 This will start the development server, and your API will be accessible at `http://localhost:5000/`.
@@ -113,4 +113,3 @@ We welcome contributions to this Flask API project. Please feel free to open iss
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-```
