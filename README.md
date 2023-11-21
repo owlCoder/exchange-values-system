@@ -1,165 +1,136 @@
-# Transaction Systems API
+# Exchange Values System
 
-This API is a transaction system that allows users to perform various operations related to accounts, credit cards, authentication, and user management.
+This project provides a basic structure for building a RESTful API using Flask, a popular Python web framework and React.JS (TypeScript) to make modern and flexible application. 
 
-## Overview
+This README will guide you through setting up a virtual environment, installing the required dependencies, and activating it on a Windows system, setting up and running React.JS project.
 
-The Transaction Systems API offers the following main functionalities:
+## Table of Contents
 
-- **Accounts:** Top-up account balances, fetch accounts by credit card, etc.
-- **Authentication:** Authenticate users, sign users out, etc.
-- **Credit Cards:** Check, create, update credit card details, etc.
-- **Currencies:** Retrieve available currency codes and detailed information.
-- **Token:** Check token validity, delete tokens, etc.
-- **User:** Create users, retrieve user details, update user information, etc.
+- [Getting Started with Flask API](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Setting Up a Virtual Environment](#setting-up-a-virtual-environment)
+    - [Installing Dependencies](#installing-dependencies)
+    - [Activating the Virtual Environment](#activating-the-virtual-environment)
+    - [Running the API](#running-the-api)
+- [Getting Started with React.JS](#react-js)
+    - [Prerequisites](#prerequisites-1)
+    - [Installation](#installation)
+    - [Scripts](#scripts)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Getting Started
 
-To use API, follow the guidelines below:
+### Prerequisites
 
-### Base URL
+Before you begin, make sure you have the following installed on your system:
 
-The base URL for this API is `https://api.transactionsystem.com`.
+- Python 3.x (You can download it from [Python's official website](https://www.python.org/downloads/))
+- Node.JS 18.x (You can download it from [Node.JS's official website](https://nodejs.org))
 
-### Authentication
+### Setting Up a Virtual Environment
 
-Some endpoints require authentication. You need to authenticate by providing the user's email and password via the `/api/auth0/` endpoint.
+A virtual environment is a clean, isolated environment for your project's dependencies. It's highly recommended to use a virtual environment to manage dependencies for your Flask API project.
 
-### Error Handling
+1. Open a command prompt or PowerShell in the project's root directory.
 
-- **400:** Bad Request - Invalid data provided.
-- **401:** Unauthorized - Authentication failure or invalid token.
-- **403:** Forbidden - Insufficient permissions.
-- **404:** Not Found - Resource not found.
-- **500:** Internal Server Error - Unexpected errors occurred.
+2. Install the `virtualenv` package if you haven't already. Run the following command:
 
-## Endpoints
+   ```bash
+   pip install virtualenv
+   ```
+3. Create a virtual environment by running the following command:
 
-## Authentication Endpoints
+   ```bash
+   python -m venv venv
+   ```
 
-### Authenticate User (POST /api/auth0/)
+   This will create a virtual environment named `venv` in your project directory.
 
-Authenticate a user using email and password.
+### Installing Dependencies
 
-Request body:
-```json
-{
-  "email": "user@example.com",
-  "password": "user_password"
-}
+To install the required dependencies for this project, you can use the `requirements.txt` file.
+
+1. Make sure your virtual environment is activated (see the next section on how to activate it).
+
+2. Run the following command to install the dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Activating the Virtual Environment
+
+Before you can run the Flask API, you need to activate your virtual environment.
+
+#### On Windows (PowerShell):
+
+1. Navigate to your project directory in the command prompt or PowerShell.
+
+2. Activate the virtual environment by running the following command:
+
+   ```powershell
+   .\venv\Scripts\Activate
+   ```
+
+   You should now see the virtual environment name in your command prompt or PowerShell, indicating that it's active.
+
+### Running the API
+
+To start the Flask API, run the following command within the activated virtual environment:
+
+```bash
+python index.py
 ```
 
-- **Success Response (200)**: User authenticated successfully.
+This will start the development server, and your API will be accessible at `http://localhost:5000/`.
 
-### Sign Out User (POST /api/auth0/logout/)
-Sign out a user and remove their token.
+---
 
-Request body:
+# Getting Started with React.JS
 
-```json
-{
-  "token": "user_token",
-  "uid": "user_id"
-}
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Prerequisites
+
+Before you begin, ensure you have Node.js and npm installed on your machine.
+
+## Installation
+
+To install the necessary dependencies, run:
+
+```bash
+npm install
 ```
 
-- **Success Response (200)**: User signed out successfully.
+## Scripts
+In the project directory, you can run:
 
+### `npm start`
 
-Certainly! Here are the account-related endpoints formatted in Markdown:
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Account Endpoints
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-### Top Up Account (POST /api/account/topup)
+### `npm test`
 
-Top up the balance of a current account or create a new account if it does not exist.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Request body:
-```json
-{
-  "amount": 100.0,
-  "card_number": "card_number_here",
-  "currency": "USD",
-  "uid": 12345
-}
-```
+### `npm run build`
 
-- **Success Response (201):** Account balance has been topped up.
-- **Error Response (400):** Please provide valid data.
-- **Error Response (500):** Account balance hasn't been changed.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Get Accounts by Card Number (POST /api/accounts/getAccountsByCard)
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-Fetch all accounts associated with a specified credit card number.
+## Contributing
 
-Request body:
-```json
-{
-  "card_number": "card_number_here"
-}
-```
+We welcome contributions to this Flask API project. Please feel free to open issues, submit pull requests, and help us improve this project.
 
-- **Success Response (200):** Serialized list of accounts associated with the provided card number.
-- **Success Response (204):** No current accounts.
-- **Error Response (500):** Error occurred while fetching accounts.
+## License
 
-## Credit Cards
-
-### Check Credit Card by User ID (POST /api/cards/checkByUid)
-
-Check if the user has at least one credit card in the database.
-
-Request body:
-```json
-{
-  "uid": "user_id"
-}
-```
-
-- **Success Response (200):** Exists.
-- **Error Response (401):** Credit card info doesn't exist. Check entered information.
-
-### Create Credit Card (POST /api/cards/create)
-
-Create a new credit card with user-provided information.
-
-Request body:
-```json
-{
-  "example_field": "Example description of a field"
-}
-```
-
-- **Success Response (200):** Credit card info saved successfully.
-- **Error Response (401):** Credit card info couldn't be saved. Check entered information.
-
-### Get Credit Cards By User ID (POST /api/cards/getCardsByUid)
-
-Retrieve all credit cards owned by a user with a specific UID.
-
-Request body:
-```json
-{
-  "uid": "user_id"
-}
-```
-
-- **Success Response (200):** List of credit card details.
-- **Error Response (500):** Error retrieving credit cards by uid.
-
-### Update Verified Status (PUT /api/cards/updateVerified)
-
-Update the "verified" field by card number.
-
-Request body:
-```json
-{
-  "card_number": "1234567890123456",
-  "uid": "user_id",
-  "verified": true
-}
-```
-
-- **Success Response (200):** Verified status updated successfully.
-- **Error Response (403):** Error updating verified status.
-
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
