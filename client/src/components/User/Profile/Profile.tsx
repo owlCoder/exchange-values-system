@@ -120,8 +120,8 @@ const Profile: React.FC = () => {
             {infoModal && <Info title='User has been created successfully' closeModalMethod={setInfoModal} />}
             {loading ? <LoadingSpinner /> :
                 <div className="overflow-y-auto h-screen overflow-x-hidden justify-center items-center w-full md:inset-0 md:h-full">
-                    <div className="relative p-4 w-full h-full md:h-auto">
-                        <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                    <div className="relative p-4 w-full h-full md:h-auto px-32">
+                        <div className="relative p-4 bg-white rounded-xl shadow dark:bg-gray-800 sm:p-5">
                             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
                                 <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
                                     Update your account information

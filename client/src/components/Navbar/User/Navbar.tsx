@@ -16,7 +16,7 @@ const NavigationHeader: React.FC = () => {
     const renderActiveComponent = (): JSX.Element => {
         if (RenderComponent === "cards") return <Cards />
         else if (RenderComponent === "profile") return <Profile />;
-        else return <div className="w-full bg-white rounded-2xl shadow dark:border md:mt-0 xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        else return <div className="w-5/6 mb-4 mx-auto bg-white rounded-2xl shadow dark:border md:mt-4 xl:p-0 dark:bg-gray-800 dark:border-gray-900">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-white">
                     Add new credit card
