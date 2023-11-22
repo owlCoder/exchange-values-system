@@ -83,6 +83,30 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMetho
                         :
 
                         <form onSubmit={handleSubmit} className="py-2 dark:bg-gray-800">
+                            <div className="mb-4">
+                            <label
+                                htmlFor="first_name"
+                                className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                            >
+                                Amount
+                            </label>
+                                <input
+                                    type="text"
+                                    id="amount"
+                                    name="amount"
+                                    value={formData.amount}
+                                    onChange={handleInputChange}
+                                    placeholder='1000,00'
+                                    className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                                    required
+                                />
+                            </div>
+                            <label
+                                htmlFor="first_name"
+                                className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                            >
+                                Currency
+                            </label>
                             <select
                                 id="currency"
                                 name="currency"
@@ -95,19 +119,6 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMetho
                                     <option key={index} value={code}>{code}</option>
                                 ))}
                             </select>
-
-                            <div className="mb-8">
-                                <input
-                                    type="text"
-                                    id="amount"
-                                    name="amount"
-                                    value={formData.amount}
-                                    onChange={handleInputChange}
-                                    placeholder='1000,00'
-                                    className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
-                                    required
-                                />
-                            </div>
                             {error && <div className='my-5'>
                                 <h4 className="text-rose-700 dark:text-rose-500 -mt-4 mb-4 text-lg">{message}</h4>
                             </div>}

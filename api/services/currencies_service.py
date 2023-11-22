@@ -74,10 +74,22 @@ def convert_currency(amount, from_currency, to_currency):
     Returns:
     - float: The converted amount in the target currency.
     """
-    currencies = GetAvailableCurrenciesCourse()
-    from_course_curr = currencies.get(from_currency)['course']
-    to_course_curr = currencies.get(to_currency)['course']
-   
-    converted_amount = float(amount) * float(from_course_curr.replace(',', '.')) / float(to_course_curr.replace(',', '.'))
-    
-    return converted_amount
+    exchange_rates = GetAvailableCurrenciesCourse()
+
+    # Ensure the exchange_rates structure is as expected
+    if not isinstance(exchange_rates, dict):
+        return -1
+
+    # Get the exchange rates for the provided currencies
+    from_rate_data = exchange_rates.get(from_currency)
+    to_rate_data = exchange_rates.get(to_currency)
+
+    # Extract course values and convert commas to dots
+    from_rate = float(from_rate_data.get('course').replace(',', '.')) / float(from_rate_data.get('number'))
+    to_rate = float(to_rate_data.get('course').replace(',', '.')) / float(to_rate_data.get('number'))
+
+    # Convert the initial amount to RSD
+    converted = from_rate * float(amount) / to_rate
+
+    # Rounding the result to 4 decimal places
+    return round(converted, 4)
