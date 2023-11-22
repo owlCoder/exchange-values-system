@@ -52,9 +52,9 @@ def convert_currency(amount, from_currency, to_currency):
     ```
     """
     currencies = GetAvailableCurrenciesCourse()
-
-    from_course = next(currency['course'] for currency in currencies if currency['code'] == from_currency)
-    to_course = next(currency['course'] for currency in currencies if currency['code'] == to_currency)
-
-    converted_amount = amount * float(from_course.replace(',', '.')) / float(to_course.replace(',', '.'))
+    from_course_curr = currencies.get(from_currency)['course']
+    to_course_curr = currencies.get(to_currency)['course']
+   
+    converted_amount = float(amount) * float(from_course_curr.replace(',', '.')) / float(to_course_curr.replace(',', '.'))
+    
     return converted_amount

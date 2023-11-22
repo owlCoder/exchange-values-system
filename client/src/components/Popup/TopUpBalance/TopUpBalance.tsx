@@ -88,6 +88,7 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMetho
                                 name="currency"
                                 value={formData.currency}
                                 onChange={handleInputChange}
+                                autoFocus
                                 className="bg-gray-50 border mb-5 pr-12 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             >
                                 {codes.map((code, index) => (
@@ -97,10 +98,9 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMetho
 
                             <div className="mb-8">
                                 <input
-                                    type="number"
+                                    type="text"
                                     id="amount"
                                     name="amount"
-                                    min={0}
                                     value={formData.amount}
                                     onChange={handleInputChange}
                                     placeholder='1000,00'

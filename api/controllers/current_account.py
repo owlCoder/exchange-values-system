@@ -33,6 +33,7 @@ def create_current_account(account_number, balance, currency, card_number, uid):
         db.session.commit()
         return True
     except Exception as e:
+        print(str(e))
         db.session.rollback()
         return False
 
@@ -55,6 +56,26 @@ def check_account_exists(uid, card_number, currency):
     try:
         account = db.session.query(CurrentAccount).filter_by(card_number=card_number, uid=uid, currency=currency).first()
         return account.account_id if account else None
+    except Exception as e:
+        return None
+
+def check_current_account_exists(account_id):
+    """
+    Checks if a current account exists based on the account ID.
+
+    Args:
+        account_id (int): The account ID to check.
+
+    Returns:
+        bool: Returns True if the account exists, otherwise returns False.
+
+    Example:
+        account_exists = check_current_account_exists(123)
+    """
+    try:
+        # Query the database to find the account with the given account ID
+        account = db.session.query(CurrentAccount).filter_by(account_id=account_id).first()
+        return account
     except Exception as e:
         return None
 

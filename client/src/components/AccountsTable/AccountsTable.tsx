@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import IAccountsTableData from '../../interfaces/IAccountsTableData';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { TbTransferVertical } from 'react-icons/tb';
 import { AiOutlineTransaction } from 'react-icons/ai';
 import ICurrentAccount from '../../interfaces/ICurrentAccount';

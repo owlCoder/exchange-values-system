@@ -55,7 +55,12 @@ const ExchangeFunds: React.FC<IExchangeFundsPopUp> = ({ account_id, balance, cur
 
         async function CurrenciesData() {
             const fetchedCodes = await GetCurrencyCodes();
-            setCodes(fetchedCodes.filter((x) => x !== currency)); // remove current currency
+            const filter = fetchedCodes.filter((x) => x !== currency);
+            setCodes(filter); // remove current currency
+            setFormData({
+                ...formData,
+                currency_to_convert: filter[0] // set first dropdown currency for default one
+            });
             setLoading(false);
         }
 
@@ -81,18 +86,30 @@ const ExchangeFunds: React.FC<IExchangeFundsPopUp> = ({ account_id, balance, cur
                         <form onSubmit={handleSubmit} className="py-2 dark:bg-gray-800">
                             <p className='text-lg dark:text-white mb-6 text-center font-medium'>Current balance: {balance} {currency}</p>
                             <div className="mb-4">
+                            <label
+                                htmlFor="first_name"
+                                className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                            >
+                                Amount
+                            </label>
                                 <input
-                                    type="number"
+                                    type="text"
                                     id="amount_to_exchange"
                                     name="amount_to_exchange"
-                                    min={0}
                                     value={formData.amount_to_exchange}
                                     onChange={handleInputChange}
-                                    placeholder='1000,00'
+                                    autoFocus
+                                    placeholder={'Amount to exchange: 100,00 ' + currency.toString()}
                                     className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
                                     required
                                 />
                             </div>
+                            <label
+                                htmlFor="first_name"
+                                className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                            >
+                                To
+                            </label>
                             <select
                                 id="currency_to_convert"
                                 name="currency_to_convert"
@@ -118,7 +135,7 @@ const ExchangeFunds: React.FC<IExchangeFundsPopUp> = ({ account_id, balance, cur
                                 Confirm
                             </button>
                             <button
-                                onClick={() => { closeModalMethod(true); onRefresh();}}
+                                onClick={() => { closeModalMethod(true); onRefresh(); }}
                                 type="button"
                                 className="bg-gray-300 ml-4 text-gray-700 font-semibold px-4 py-1 rounded-lg hover:bg-gray-400"
                             >

@@ -36,6 +36,7 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
             setLoading(false);
             setShowAccountsTable(true);
         }, 400);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cards, index, refresh]);
 
     const handleRefresh = () => {
