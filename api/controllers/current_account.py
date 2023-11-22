@@ -1,4 +1,5 @@
 from decimal import Decimal
+from services.account_number_generator import generate_account_number
 from models.current_account import CurrentAccount
 from config.database import db
 
@@ -33,7 +34,6 @@ def create_current_account(account_number, balance, currency, card_number, uid):
         db.session.commit()
         return True
     except Exception as e:
-        print(str(e))
         db.session.rollback()
         return False
 
@@ -97,7 +97,7 @@ def update_account_balance(account_id, amount):
     try:
         account = db.session.query(CurrentAccount).get(account_id)
         if account:
-            account.balance = account.balance +  Decimal(str(amount))
+            account.balance = account.balance + Decimal(str(amount))
             db.session.commit()
             return True
         else:
@@ -106,6 +106,7 @@ def update_account_balance(account_id, amount):
         db.session.rollback()
         return False
 
+# Method to get all current accounts connected with credit card
 def get_all_current_accounts(card_number):
     """
     Retrieves all accounts associated with a specified credit card number.
@@ -128,3 +129,60 @@ def get_all_current_accounts(card_number):
         return accounts
     except Exception as e:
         return None
+
+# Method to exchange current account funds
+def exchange_funds(account_id, new_balance, amount_to_exchange, currency_to_convert):
+    response = {}; response['error'] = ""; response['code'] = 200
+    account = check_current_account_exists(account_id)
+
+    if account:
+        # Check if balance fits to requested exchange balance
+        if float(account.balance) < float(amount_to_exchange) or float(amount_to_exchange) < 0.0:
+            response['error'] = "Insufficient funds on the account"; response['code'] = 400
+        else:
+            account_id_destination = check_account_exists(account.uid, account.card_number, currency_to_convert)
+            
+            # If current account already has account with convert currency then just update it
+            if account_id_destination:
+                try:
+                    account_source = db.session.query(CurrentAccount).get(account_id) # Source account
+                    account_destination = db.session.query(CurrentAccount).get(account_id_destination) # Destination account
+
+                    if account_source and account_destination:
+                        account_source.balance = account.balance - Decimal(str(amount_to_exchange))
+                        account_destination.balance = account_destination.balance + Decimal(str(new_balance))
+                        db.session.commit()
+                        response['error'] = "Account balance has been exchanged"; response['code'] = 201
+                    else:
+                        response['error'] = "Account balance couldn't been exchanged"; response['code'] = 400
+                except Exception as e:
+                    db.session.rollback()
+                    response['error'] = "Account balance couldn't been exchanged"; response['code'] = 501
+            else:
+                # Create a new destination account with new currency
+                try:
+                    account_source = db.session.query(CurrentAccount).get(account_id) # Source account
+                    
+                    # Create a new account for new currency
+                    new_account = CurrentAccount(
+                        account_number=generate_account_number(),
+                        balance=new_balance,
+                        currency=currency_to_convert,
+                        card_number=account.card_number,
+                        uid=account.uid
+                    )
+                    
+                    if account_source:
+                        account_source.balance = account.balance - Decimal(str(amount_to_exchange))
+                        db.session.add(new_account) # Add new account with new balance
+                        db.session.commit()
+                        response['error'] = "Account balance has been exchanged"; response['code'] = 201
+                    else:
+                        response['error'] = "Account balance couldn't been exchanged"; response['code'] = 400
+                except Exception as e:
+                    db.session.rollback()
+                    response['error'] = "Account balance couldn't been exchanged"; response['code'] = 502
+    else:
+        response['error'] = "Account balance couldn't been exchanged"; response['code'] = 404
+    
+    return response

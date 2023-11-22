@@ -138,40 +138,11 @@ def exchange_current_account():
     initial_currency = data.get('initial_currency')
     amount_to_exchange = data.get('amount_to_exchange')
     currency_to_convert = data.get('currency_to_convert')
+    new_balance = float(convert_currency(amount_to_exchange, initial_currency, currency_to_convert))
 
     if not account_id or not initial_currency or not amount_to_exchange or not currency_to_convert:
         return jsonify({'data': 'Please provide valid data'}), 400
     
-    account = check_current_account_exists(account_id)
-
-    if account:
-         # first convert from requested new currency to source currency
-        # on eg. account has 1000 RSD and in body of request was requested 5 EUR
-        # first convert EUR to source currency and check if RSD balance fits to requested
-        # exchange balance
-        new_balance = float(convert_currency(amount_to_exchange, account.currency, currency_to_convert))
-
-        if float(account.balance) < float(amount_to_exchange):
-            return jsonify({'data': 'Insufficient funds on the account'}), 400
-        else:
-            # account has enough funds
-            account_id_convert = check_account_exists(account.uid, account.card_number, currency_to_convert)
-            
-            if account_id_convert:
-                if update_account_balance(account_id_convert, new_balance) and \
-                   update_account_balance(account_id, -float(amount_to_exchange)): # remove requested amount from old account balance
-                    return jsonify({'data': 'Account balance has been exchanged'}), 201
-                else:
-                    return jsonify({'data': 'Account balance couldn\'t been changed'}), 501
-            else:
-                cr = create_current_account(generate_account_number(), new_balance, currency_to_convert, account.card_number, account.uid)
-                uc = update_account_balance(account_id, -float(amount_to_exchange))
-                print(cr) #to make update method with 2 queries and rollback if one of them fails
-                print(uc)
-                if uc and \
-                   cr: # remove requested amount from old account balance 
-                    return jsonify({'data': 'Account with new balance has been created'}), 201
-                else:
-                    return jsonify({'data': 'Account balance hasn\'t been changed'}), 502
-    else:
-        return jsonify({'data': 'Account balance couldn\'t been exchanged'}), 500
+    response = exchange_funds(account_id, new_balance, amount_to_exchange, currency_to_convert)
+    
+    return jsonify({'data': response['error']}), response['code']

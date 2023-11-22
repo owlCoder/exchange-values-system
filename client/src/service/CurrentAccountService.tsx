@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import ITopUpAccountData from '../interfaces/ITopUpAccountData';
 import { API_URL } from '..';
 import ICurrentAccount from '../interfaces/ICurrentAccount';
@@ -49,7 +49,6 @@ export async function GetAccountsByCardNumber(card_number: string): Promise<ICur
  */
 export async function Exchange(data: IExchangeFundsData): Promise<string> {
   try {
-    console.log(data)
     const response: AxiosResponse = await axios.post(API_URL + 'account/exchange', data);
 
     // Check if the response status is successful (201 - Created)
@@ -59,7 +58,16 @@ export async function Exchange(data: IExchangeFundsData): Promise<string> {
       return 'Failed to exchange currencies. Account balance won\'t be charged'; // Exchange failed
     }
   } catch (error) {
-    console.log(error)
-    return 'Error while exchanging currencies'; // Error during the exchange process
+    let err = error as AxiosError;
+    let errorMessage: string = err.response && err.response.data
+      ? JSON.stringify(err.response.data)
+      : "Failed to exchange currencies. Account balance won't be charged";
+
+    try {
+      errorMessage = JSON.parse(errorMessage).data;
+    }
+    catch(error) { }
+
+    return Promise.resolve(errorMessage); // Reject with the error message
   }
 }

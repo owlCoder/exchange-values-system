@@ -21,6 +21,7 @@ const ExchangeFunds: React.FC<IExchangeFundsPopUp> = ({ account_id, balance, cur
     const [message, setMessage] = useState<string>('');
     const [error, setError] = useState<boolean>(false);
     const [success, setSuccess] = useState<boolean>(false);
+    const [balanceState, setBalanceState] = useState<number>(balance);
 
     const handleInputChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -40,6 +41,7 @@ const ExchangeFunds: React.FC<IExchangeFundsPopUp> = ({ account_id, balance, cur
         if (result === 'OK') {
             setError(false);
             setSuccess(true);
+            setBalanceState(balanceState - formData.amount_to_exchange);
             setMessage('Account balance exchanged successfully');
         }
         else {
@@ -84,7 +86,7 @@ const ExchangeFunds: React.FC<IExchangeFundsPopUp> = ({ account_id, balance, cur
                         :
 
                         <form onSubmit={handleSubmit} className="py-2 dark:bg-gray-800">
-                            <p className='text-lg dark:text-white mb-6 text-center font-medium'>Current balance: {balance} {currency}</p>
+                            <p className='text-lg dark:text-white mb-6 text-center font-medium'>Current balance: {balanceState} {currency}</p>
                             <div className="mb-4">
                             <label
                                 htmlFor="first_name"
