@@ -133,7 +133,7 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMetho
                                 Confirm
                             </button>
                             <button
-                                onClick={() => { closeModalMethod(true); onRefresh();}}
+                                onClick={() => { closeModalMethod(true);}}
                                 type="button"
                                 className="bg-gray-300 ml-4 text-gray-700 font-semibold px-4 py-1 rounded-lg hover:bg-gray-400"
                             >
