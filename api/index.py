@@ -6,6 +6,7 @@ from routes.current_account import current_account_blueprint
 from routes.user import user_blueprint
 from routes.token import token_blueprint
 from routes.currencies import currencies_blueprint
+from routes.transaction import transaction_blueprint
 from config.database import db
 from flasgger import Swagger
 
@@ -27,6 +28,7 @@ app.register_blueprint(token_blueprint)
 app.register_blueprint(credit_card_blueprint)
 app.register_blueprint(current_account_blueprint)
 app.register_blueprint(currencies_blueprint)
+app.register_blueprint(transaction_blueprint)
 
 # Swagger config
 app.config['SWAGGER'] = {

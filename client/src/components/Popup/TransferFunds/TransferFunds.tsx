@@ -1,10 +1,10 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import ITransferFundsData from '../../../interfaces/ITransferFundsData';
-import { GetCurrencyCodes } from '../../../service/CurrenciesService';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import ITransferFundsPopup from '../../../interfaces/ITransferFundsPopUp';
 import { TbTransferVertical } from 'react-icons/tb';
 import { useAuth } from '../../../contexts/AuthContext';
+import { Transfer } from '../../../service/TransactionService';
 
 const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, currency, closeModalMethod, onRefresh }) => {
     const { currentUser } = useAuth();
@@ -13,7 +13,6 @@ const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, cur
         sender_uid: currentUser ? currentUser.uid : -1,
         sender_account_id: account_id,
         amount: 0,
-        receiver_uid: -1,
         receiver_account_number: '',
         receiver_email: '',
         receiver_name: '',
@@ -21,8 +20,6 @@ const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, cur
         approved: "ON HOLD",
     };
 
-    const [codes, setCodes] = useState<string[] | []>([]);
-    const [loading, setLoading] = useState<boolean>(false);
     const [inProgress, setInProgress] = useState<boolean>(false);
     const [formData, setFormData] = useState<ITransferFundsData>(initialFormData);
     const [message, setMessage] = useState<string>('');
@@ -36,32 +33,27 @@ const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, cur
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // setFormData({
-        //     ...formData,
-        //     amount_to_exchange: parseFloat(formData['amount_to_exchange'].toString()), // Convert to number if needed
-        // });
         setInProgress(true);
 
-        // const result = await Exchange(formData);
-
-        // if (result === 'OK') {
-        //     setError(false);
-        //     setSuccess(true);
-        //     setBalanceState(balanceState - formData.amount_to_exchange);
-        //     setMessage('Account balance exchanged successfully');
-        // }
-        // else {
-        //     setError(true);
-        //     setSuccess(false);
-        //     setMessage(result);
-        // }
+        const result = await Transfer(formData);
+        if (result === "OK") {
+            setError(false);
+            setSuccess(true);
+            setFormData(initialFormData);
+            setMessage("Transcation has been evidented in queue");
+        }
+        else {
+            setError(true);
+            setSuccess(false);
+            setMessage(result);
+        }
         setInProgress(false);
     };
 
     return (
         <div className="fixed inset-0 flex -mt-32 items-center justify-center z-50 backdrop-blur-2xl backdrop-filter dark:backdrop-blur-xl dark:backdrop-filter">
             <div className="bg-transparent w-2/6 rounded-xl p-6 transition-opacity duration-300">
-                {loading ? <LoadingSpinner background='bg-transaprent' /> : <div className="relative p-4 text-center bg-white rounded-xl shadow dark:bg-gray-800 sm:p-5">
+                <div className="relative p-4 text-center bg-white rounded-xl shadow dark:bg-gray-800 sm:p-5">
                     <div className="w-12 h-12 rounded-full bg-sky-100 dark:bg-sky-900 p-2 flex items-center justify-center mx-auto mb-3.5">
                         <TbTransferVertical className="w-8 h-8 text-sky-500 dark:text-sky-400 inline" />
 
@@ -76,45 +68,45 @@ const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, cur
                         <form onSubmit={handleSubmit} className="py-2 dark:bg-gray-800">
                             <p className='text-lg dark:text-white mb-6 text-center font-medium'>Current balance: {balance.toFixed(4)} {currency}</p>
                             <div className="grid grid-cols-2 gap-4">
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="first_name"
-                                    className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
-                                >
-                                    Amount
-                                </label>
-                                <input
-                                    type="text"
-                                    id="amount"
-                                    name="amount"
-                                    value={formData.amount}
-                                    onChange={handleInputChange}
-                                    autoFocus
-                                    placeholder={'Amount to transfer: 100,00 ' + currency.toString()}
-                                    className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label
-                                    htmlFor="first_name"
-                                    className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
-                                >
-                                    Receiver Account Number
-                                </label>
-                                <input
-                                    type="text"
-                                    id="receiver_account_number"
-                                    name="receiver_account_number"
-                                    value={formData.receiver_account_number}
-                                    onChange={handleInputChange}
-                                    minLength={17}
-                                    maxLength={17}
-                                    placeholder={'170-7015483354186'}
-                                    className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
-                                    required
-                                />
-                            </div>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="first_name"
+                                        className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                                    >
+                                        Amount
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="amount"
+                                        name="amount"
+                                        value={formData.amount}
+                                        onChange={handleInputChange}
+                                        autoFocus
+                                        placeholder={'Amount to transfer: 100,00 ' + currency.toString()}
+                                        className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="first_name"
+                                        className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                                    >
+                                        Receiver Account Number
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="receiver_account_number"
+                                        name="receiver_account_number"
+                                        value={formData.receiver_account_number}
+                                        onChange={handleInputChange}
+                                        minLength={17}
+                                        maxLength={17}
+                                        placeholder={'170-7015483354186'}
+                                        className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                                        required
+                                    />
+                                </div>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="mb-4">
@@ -173,10 +165,10 @@ const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, cur
                                 />
                             </div>
                             {error && <div className='my-5'>
-                                <h4 className="text-rose-700 dark:text-rose-500 -mt-4 mb-4 text-lg">{message}</h4>
+                                <h4 className="text-rose-700 dark:text-rose-500 -mt-2 mb-4 text-lg">{message}</h4>
                             </div>}
                             {success && <div className='my-5'>
-                                <h4 className="text-emerald-700 dark:text-emerald-500 -mt-4 mb-4 text-lg">{message}</h4>
+                                <h4 className="text-emerald-700 dark:text-emerald-500 -mt-2 mb-4 text-lg">{message}</h4>
                             </div>}
                             <button
                                 onClick={() => onRefresh()}
@@ -194,7 +186,7 @@ const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, cur
                             </button>
                         </form>
                     }
-                </div>}
+                </div>
             </div>
         </div>
     );
