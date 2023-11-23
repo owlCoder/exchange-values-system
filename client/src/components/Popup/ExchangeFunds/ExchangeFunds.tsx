@@ -72,8 +72,8 @@ const ExchangeFunds: React.FC<IExchangeFundsPopUp> = ({ account_id, balance, cur
 
     return (
         <div className="fixed inset-0 flex -mt-64 items-center justify-center z-50 backdrop-blur-2xl backdrop-filter dark:backdrop-blur-xl dark:backdrop-filter">
-            <div className="bg-transparent w-96 rounded-lg p-6 transition-opacity duration-300">
-                {loading ? <LoadingSpinner background='bg-transaprent' /> : <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+            <div className="bg-transparent w-96 rounded-xl p-6 transition-opacity duration-300">
+                {loading ? <LoadingSpinner background='bg-transaprent' /> : <div className="relative p-4 text-center bg-white rounded-xl shadow dark:bg-gray-800 sm:p-5">
                     <div className="w-12 h-12 rounded-full bg-sky-100 dark:bg-sky-900 p-2 flex items-center justify-center mx-auto mb-3.5">
                         <AiOutlineTransaction className="w-8 h-8 text-sky-500 dark:text-sky-400 inline" />
 

@@ -59,9 +59,9 @@ const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, cur
     };
 
     return (
-        <div className="fixed inset-0 flex -mt-64 items-center justify-center z-50 backdrop-blur-2xl backdrop-filter dark:backdrop-blur-xl dark:backdrop-filter">
-            <div className="bg-transparent w-96 rounded-lg p-6 transition-opacity duration-300">
-                {loading ? <LoadingSpinner background='bg-transaprent' /> : <div className="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+        <div className="fixed inset-0 flex -mt-32 items-center justify-center z-50 backdrop-blur-2xl backdrop-filter dark:backdrop-blur-xl dark:backdrop-filter">
+            <div className="bg-transparent w-2/6 rounded-xl p-6 transition-opacity duration-300">
+                {loading ? <LoadingSpinner background='bg-transaprent' /> : <div className="relative p-4 text-center bg-white rounded-xl shadow dark:bg-gray-800 sm:p-5">
                     <div className="w-12 h-12 rounded-full bg-sky-100 dark:bg-sky-900 p-2 flex items-center justify-center mx-auto mb-3.5">
                         <TbTransferVertical className="w-8 h-8 text-sky-500 dark:text-sky-400 inline" />
 
@@ -75,6 +75,7 @@ const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, cur
 
                         <form onSubmit={handleSubmit} className="py-2 dark:bg-gray-800">
                             <p className='text-lg dark:text-white mb-6 text-center font-medium'>Current balance: {balance.toFixed(4)} {currency}</p>
+                            <div className="grid grid-cols-2 gap-4">
                             <div className="mb-4">
                                 <label
                                     htmlFor="first_name"
@@ -94,13 +95,83 @@ const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, cur
                                     required
                                 />
                             </div>
-                            <label
-                                htmlFor="first_name"
-                                className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
-                            >
-                                To
-                            </label>
-                           {/* todo */}
+                            <div className="mb-4">
+                                <label
+                                    htmlFor="first_name"
+                                    className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                                >
+                                    Receiver Account Number
+                                </label>
+                                <input
+                                    type="text"
+                                    id="receiver_account_number"
+                                    name="receiver_account_number"
+                                    value={formData.receiver_account_number}
+                                    onChange={handleInputChange}
+                                    minLength={17}
+                                    maxLength={17}
+                                    placeholder={'170-7015483354186'}
+                                    className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                                    required
+                                />
+                            </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="first_name"
+                                        className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                                    >
+                                        Receiver Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="receiver_name"
+                                        name="receiver_name"
+                                        value={formData.receiver_name}
+                                        onChange={handleInputChange}
+                                        placeholder={'Oun'}
+                                        className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="first_name"
+                                        className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                                    >
+                                        Receiver Surname
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="receiver_surname"
+                                        name="receiver_surname"
+                                        value={formData.receiver_surname}
+                                        onChange={handleInputChange}
+                                        placeholder={'Lan'}
+                                        className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="mb-5">
+                                <label
+                                    htmlFor="first_name"
+                                    className="block text-start mb-2 font-medium text-gray-900 dark:text-white"
+                                >
+                                    Receiver Email
+                                </label>
+                                <input
+                                    type="email"
+                                    id="receiver_email"
+                                    name="receiver_email"
+                                    value={formData.receiver_email}
+                                    onChange={handleInputChange}
+                                    placeholder={'oulan@tsystems.com'}
+                                    className='bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                                    required
+                                />
+                            </div>
                             {error && <div className='my-5'>
                                 <h4 className="text-rose-700 dark:text-rose-500 -mt-4 mb-4 text-lg">{message}</h4>
                             </div>}
