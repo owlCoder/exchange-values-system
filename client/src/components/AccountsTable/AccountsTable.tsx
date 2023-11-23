@@ -5,7 +5,7 @@ import { AiOutlineTransaction } from 'react-icons/ai';
 import ICurrentAccount from '../../interfaces/ICurrentAccount';
 import { GetAccountsByCardNumber } from '../../service/CurrentAccountService';
 
-const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, refresh, renderExchangeFundsPopup }) => {
+const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, refresh, renderExchangeFundsPopup, renderTransferFundsPopup }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [accounts, setAccounts] = useState<ICurrentAccount[]>([]);
 
@@ -69,7 +69,7 @@ const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, re
                                             Exchange Funds</button>
                                     </div>
                                     <div className="flex flex-wrap my-2">
-                                        <button onClick={() => { }} className="px-5 py-1.5 bg-orange-800 text-white text-md rounded-lg hover:bg-orange-900">
+                                        <button onClick={() => { renderTransferFundsPopup(account.account_id, account.balance, account.currency) }} className="px-5 py-1.5 bg-orange-800 text-white text-md rounded-lg hover:bg-orange-900">
                                             <TbTransferVertical className="inline -mt-1 mr-2 text-2xl" />
                                             Transfer Funds</button>
                                     </div>

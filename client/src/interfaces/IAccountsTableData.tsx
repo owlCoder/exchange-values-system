@@ -29,6 +29,15 @@ interface IAccountsTableData {
      * @returns void
      */
     renderExchangeFundsPopup: (account_id: number, balance: number, currency: string) => void;
+
+    /**
+     * Method to render a transfer funds popup.
+     * @param account_id - The ID of the account involved in the transfer process.
+     * @param balance - The current balance of the account.
+     * @param currency - The currency associated with the account balance.
+     * @returns void
+     */
+    renderTransferFundsPopup: (account_id: number, balance: number, currency: string) => void;
   }
   
   export default IAccountsTableData;

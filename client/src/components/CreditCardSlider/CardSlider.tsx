@@ -11,12 +11,14 @@ import ICreditCardData from '../../interfaces/ICreditCardData';
 import AccountsTable from '../AccountsTable/AccountsTable';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import ExchangeFunds from '../Popup/ExchangeFunds/ExchangeFunds';
+import TransferFunds from '../Popup/TransferFunds/TransferFunds';
 
 const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
     const [index, setIndex] = useState<number>(0);
     const [topUpPopup, setTopUpPopup] = useState<JSX.Element>(<div />);
     const [exchangePopup, setExchangePopup] = useState<JSX.Element>(<div />);
+    const [transferPopup, setTransferPopup] = useState<JSX.Element>(<div />);
     const [accountsTable, setAccountsTable] = useState<JSX.Element>(<div />);
     const [refresh, setRefresh] = useState(true);
     const [loading, setLoading] = useState<boolean>(false);
@@ -31,6 +33,7 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                     verified={cards[index].verified}
                     refresh={refresh}
                     renderExchangeFundsPopup={renderExchangeFundsPopup}
+                    renderTransferFundsPopup={renderTransferFundsPopup}
                 />
             );
             setLoading(false);
@@ -84,10 +87,25 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
         setExchangePopup(newExchangePopup);
     };
 
+    const renderTransferFundsPopup = (account_id: number, balance: number, currency: string): void => {
+        const newExchangePopup = account_id !== -1 ? (
+            <TransferFunds
+                account_id={account_id}
+                balance={balance}
+                currency={currency}
+                closeModalMethod={() => setTransferPopup(<div />)}
+                onRefresh={() => handleRefresh()}
+            />
+        ) : <div />;
+
+        setTransferPopup(newExchangePopup);
+    };
+
     return (
         <div className="bg-transparent min-h-screen pb-5 pt-2">
             {topUpPopup}
             {exchangePopup}
+            {transferPopup}
             <div className="w-full max-w-xl mx-auto">
                 <Slider
                     ref={sliderRef}

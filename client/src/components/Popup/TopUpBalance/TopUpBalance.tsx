@@ -76,7 +76,7 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMetho
 
                         <span className="sr-only">Top Up Account Balance</span>
                     </div>
-                    <p className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Top Up Account Balance</p>
+                    <p className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Top Up Account Balance</p>
 
                     {inProgress ? <div><span className='text-lg italic dark:text-white mb-12'>Processing transaction...<br /><br />
                         <LoadingSpinner background='bg-transparent' minH='0vh' /></span></div>
