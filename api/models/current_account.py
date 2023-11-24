@@ -31,7 +31,7 @@ class CurrentAccount(Base):
     __tablename__ = 'current_account'
 
     account_id = Column(Integer, primary_key=True, autoincrement=True)
-    account_number = Column(String(20), unique=True)
+    account_number = Column(String(20))
     balance = Column(DECIMAL(15, 2), default=0.00)
     currency = Column(String(5))
     card_number = Column(String(19), ForeignKey('credit_cards.card_number'), nullable=False)

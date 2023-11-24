@@ -14,3 +14,6 @@ root.render(
 
 // Global API Endpoint
 export const API_URL = 'http://localhost:5000/api/'
+
+// Global Timeout for RealTime updates
+export const REALTIME_TIMEOUT = 10;

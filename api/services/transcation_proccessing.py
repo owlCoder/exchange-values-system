@@ -8,7 +8,7 @@ def background_task():
         # Do some background task here
         socketio.emit('updated_data', "helo its me", namespace="/api/realtime")
         print("Running background task...")
-        time.sleep(5)  # Example: wait for 5 seconds before running the task again
+        time.sleep(10)  # Run transactions job on every 1 minute
 
 # Route to start the background task
 def start_background():
