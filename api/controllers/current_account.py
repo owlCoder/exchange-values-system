@@ -67,7 +67,7 @@ def get_account_number(uid, card_number):
     except Exception as e:
         return None
 
-def check_current_account_exists(account_id):
+def get_current_account_by_id(account_id):
     """
     Checks if a current account exists based on the account ID.
 
@@ -114,6 +114,14 @@ def update_account_balance(account_id, amount):
         db.session.rollback()
         return False
 
+# Method to get account by account number
+def get_account_by_number(account_number):
+    try:
+        account = db.session.query(CurrentAccount).filter_by(account_number=account_number).first()
+        return account
+    except Exception as e:
+        return None
+
 # Method to get all current accounts connected with credit card
 def get_all_current_accounts(card_number):
     """
@@ -141,7 +149,7 @@ def get_all_current_accounts(card_number):
 # Method to exchange current account funds
 def exchange_funds(account_id, new_balance, amount_to_exchange, currency_to_convert):
     response = {}; response['error'] = ""; response['code'] = 200
-    account = check_current_account_exists(account_id)
+    account = get_current_account_by_id(account_id)
 
     if account:
         # Check if balance fits to requested exchange balance

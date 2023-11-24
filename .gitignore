@@ -53,3 +53,5 @@ __pycache__/
 /app/.env.development.local
 /app/.env.test.local
 /app/.env.production.local
+
+.vscode

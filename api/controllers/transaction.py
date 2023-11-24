@@ -1,6 +1,6 @@
-from decimal import Decimal
 from models.transaction import Transactions
 from config.database import db
+from controllers.current_account import *
 
 # Function to create a new transaction record using db.session
 def create_transaction(sender_uid, sender_account_id, amount, receiver_account_number, receiver_email, receiver_name, receiver_surname, approved):
@@ -47,6 +47,19 @@ def create_transaction(sender_uid, sender_account_id, amount, receiver_account_n
         db.session.add(new_transaction)
         db.session.commit()
         return True 
+    except Exception as e:
+        db.session.rollback()
+        return False
+    
+# Method to process individual transaction
+def process_transaction(sender_account_id, receiver_account_id, amount):
+    try:
+        sender_account = get_current_account_by_id(sender_account_id)
+        receiver_account = get_current_account_by_id(receiver_account_id)
+
+
+
+        return True
     except Exception as e:
         db.session.rollback()
         return False
