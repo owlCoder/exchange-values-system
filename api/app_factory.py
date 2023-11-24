@@ -48,6 +48,6 @@ def create_app():
     app.register_blueprint(currencies_blueprint)
     app.register_blueprint(transaction_blueprint)
     
-    start_background()
+    #start_background()
 
     return app

@@ -65,6 +65,10 @@ def top_up_current_account():
         return jsonify({'data': 'Please provide valid data'}), 400
     
     account_id = check_account_exists(uid, card_number, currency)
+    account = get_account_number(uid, card_number)
+
+    # If credit card has no active account, create a new one
+    account_number = account.account_number if account else generate_account_number()
 
     if account_id:
         if update_account_balance(account_id, amount):
@@ -72,10 +76,11 @@ def top_up_current_account():
         else:
             return jsonify({'data': 'Account balance hasn\'t been changed'}), 500
     else:
-        if create_current_account(generate_account_number(), amount, currency, card_number, uid): 
+        print(account_number)
+        if account_number and create_current_account(account_number, amount, currency, card_number, uid): 
             return jsonify({'data': 'Account balance has been topped up'}), 201
         else:
-            return jsonify({'data': 'Account balance hasn\'t been changed'}), 500
+            return jsonify({'data': 'Account balance hasn\'t been changed'}), 501
 
 @current_account_blueprint.route('/api/accounts/getAccountsByCard', methods=['POST'])
 @swag_from({

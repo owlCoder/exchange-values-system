@@ -51,11 +51,19 @@ def check_account_exists(uid, card_number, currency):
         int or None: Returns the account ID if the account exists, otherwise returns None.
 
     Example:
-        account_id = check_account_exists(1, "USD")
+        account_id = check_account_exists(1, "3434 3434 5667 2223", "USD")
     """
     try:
         account = db.session.query(CurrentAccount).filter_by(card_number=card_number, uid=uid, currency=currency).first()
         return account.account_id if account else None
+    except Exception as e:
+        return None
+    
+# Method to check if an account exists based on UID and currency
+def get_account_number(uid, card_number):
+    try:
+        account = db.session.query(CurrentAccount).filter_by(card_number=card_number, uid=uid).first()
+        return account
     except Exception as e:
         return None
 
@@ -67,7 +75,7 @@ def check_current_account_exists(account_id):
         account_id (int): The account ID to check.
 
     Returns:
-        bool: Returns True if the account exists, otherwise returns False.
+        bool: Returns an account if the account exists, otherwise returns None.
 
     Example:
         account_exists = check_current_account_exists(123)
@@ -163,9 +171,9 @@ def exchange_funds(account_id, new_balance, amount_to_exchange, currency_to_conv
                 try:
                     account_source = db.session.query(CurrentAccount).get(account_id) # Source account
                     
-                    # Create a new account for new currency
+                    # Create a new currency on account
                     new_account = CurrentAccount(
-                        account_number=generate_account_number(),
+                        account_number=account.account_number,
                         balance=new_balance,
                         currency=currency_to_convert,
                         card_number=account.card_number,
