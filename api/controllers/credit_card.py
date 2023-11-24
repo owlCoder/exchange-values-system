@@ -1,5 +1,7 @@
 from config.database import db
 from models.credit_card import CreditCard
+from controllers.current_account import create_current_account
+from services.account_number_generator import generate_account_number
 
 # Method to create a new credit card
 def create_credit_card(data):
@@ -40,10 +42,10 @@ def create_credit_card(data):
 
     try:
         db.session.add(new_credit_card)
+        create_current_account(generate_account_number(), 0, 'RSD', card_number, uid)
         db.session.commit()
         return True
     except Exception as e:
-        print(str(e))
         db.session.rollback()
         return False
 

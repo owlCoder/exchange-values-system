@@ -57,7 +57,10 @@ def process_transaction(sender_account_id, receiver_account_id, amount):
         sender_account = get_current_account_by_id(sender_account_id)
         receiver_account = get_current_account_by_id(receiver_account_id)
 
+        if sender_account:
+            return False
 
+        # check if receiver has current account with currency from sender's account
 
         return True
     except Exception as e:
