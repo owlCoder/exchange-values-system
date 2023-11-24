@@ -10,7 +10,7 @@ interface IAccountsTableData {
     card_number: string;
   
     /**
-     * Indicates whether the account is verified or not.
+     * Indicates whether the credit card is verified or not.
      * @type {boolean}
      */
     verified: boolean;
