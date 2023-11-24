@@ -121,6 +121,14 @@ def get_account_by_number(account_number):
         return account
     except Exception as e:
         return None
+    
+# Method to get account id by account number and currency
+def get_account_by_number_and_currency(account_number, currency):
+    try:
+        account = db.session.query(CurrentAccount).filter_by(account_number=account_number, currency=currency).first()
+        return account.account_id if account else None
+    except Exception as e:
+        return None
 
 # Method to get all current accounts connected with credit card
 def get_all_current_accounts(card_number):

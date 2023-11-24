@@ -76,7 +76,6 @@ def top_up_current_account():
         else:
             return jsonify({'data': 'Account balance hasn\'t been changed'}), 500
     else:
-        print(account_number)
         if account_number and create_current_account(account_number, amount, currency, card_number, uid): 
             return jsonify({'data': 'Account balance has been topped up'}), 201
         else:

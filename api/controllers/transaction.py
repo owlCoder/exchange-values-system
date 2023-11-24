@@ -1,6 +1,9 @@
 from models.transaction import Transactions
 from config.database import db
 from controllers.current_account import *
+from controllers.user import get_user_by_id
+from services.email_message import transaction_message
+from services.email_service import prepare
 
 # Function to create a new transaction record using db.session
 def create_transaction(sender_uid, sender_account_id, amount, receiver_account_number, receiver_email, receiver_name, receiver_surname, approved):
@@ -50,19 +53,47 @@ def create_transaction(sender_uid, sender_account_id, amount, receiver_account_n
     except Exception as e:
         db.session.rollback()
         return False
-    
+
+# Method to process transactions waiting for proccessing
+def process_on_hold_transactions():
+    raise Exception
+
 # Method to process individual transaction
-def process_transaction(sender_account_id, receiver_account_id, amount):
-    try:
-        sender_account = get_current_account_by_id(sender_account_id)
-        receiver_account = get_current_account_by_id(receiver_account_id)
+def process_transaction(sender_account_id, receiver_account_number, amount):
+    sender_account = get_current_account_by_id(sender_account_id)
+    receiver_account = get_account_by_number(receiver_account_number)
 
-        if sender_account:
+    # Check if current accounts exist and does sender has enough balance to send
+    if sender_account is None or receiver_account is None or sender_account.balance < amount:
+        return False
+
+    # Check if receiver has current account with currency from sender's account
+    account_id_in_receiver_currency = get_account_by_number_and_currency(receiver_account.account_number, sender_account.currency)
+
+    # Create new currency for receiver account
+    if account_id_in_receiver_currency is None:
+        success = create_current_account(receiver_account.account_number, amount, receiver_account.currency, receiver_account.card_number, receiver_account.uid)
+    else:
+        # Update receiver's existing account balance
+        success = update_account_balance(account_id_in_receiver_currency, amount)
+
+    # Receiver has new transaction approved
+    if success:
+        update_account_balance(sender_account_id, -amount)
+
+        # Send email to sender and receiver about transactions approval
+        sender_message = transaction_message(amount, sender_account.currency, sender_account.account_number, "Out", sender_account.balance - amount)
+        receiver_message = transaction_message(amount, sender_account.currency, receiver_account_number, 'In', get_current_account_by_id(account_id_in_receiver_currency).balance)
+
+        # Send transactions confirmation emails
+        sender = get_user_by_id(sender_account.uid)
+        receiver = get_user_by_id(receiver_account.uid)
+
+        if sender and receiver and \
+           prepare(sender.email, sender_message, "Transcation has been processed") and \
+           prepare(receiver.email, receiver_message, "Transcation has been processed"):
+            return True
+        else:
             return False
-
-        # check if receiver has current account with currency from sender's account
-
-        return True
-    except Exception as e:
-        db.session.rollback()
+    else:
         return False
