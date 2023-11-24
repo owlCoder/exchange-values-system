@@ -3,7 +3,6 @@ from flasgger import swag_from
 from controllers.token import is_token_valid, delete_token
 from config.exlude_docs_str import exclude_docstring
 from flasgger import swag_from
-from config.socket import handle_data_update
 
 token_blueprint = Blueprint('token_blueprint', __name__)
 

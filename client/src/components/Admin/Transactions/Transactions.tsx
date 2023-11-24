@@ -6,7 +6,7 @@ const Transactions = () => {
   const [data, setData] = useState('');
 
   useEffect(() => {
-    const socket: Socket = socketIOClient(API_URL + "update");
+    const socket: Socket = socketIOClient(API_URL + "realtime");
 
     socket.on('connect', () => {
       console.log('Connected to server');
@@ -25,7 +25,7 @@ const Transactions = () => {
 
   return (
     <div>
-      <h1>Live Data: {data}</h1>
+      <h1 className='text-white'>Live Data: {data}</h1>
     </div>
   );
 };

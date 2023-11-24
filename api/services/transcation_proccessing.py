@@ -1,21 +1,23 @@
-import asyncio
 import threading
 import time
-import schedule
+from config.socket import socketio
 
-# Function to update the table (replace this with your table update logic)
-def update_table():
-    print("Table updated at:", time.strftime("%H:%M:%S"))
-
-# Function to run the scheduler for the background task
+# Function that runs in a background thread
 def background_task():
     while True:
-        schedule.run_pending()
-        time.sleep(1)
+        # Do some background task here
+        socketio.emit('updated_data', "helo its me", namespace="/api/realtime")
+        print("Running background task...")
+        time.sleep(5)  # Example: wait for 5 seconds before running the task again
 
-# Schedule the table update task to run every 1 minute
-schedule.every(1).minutes.do(update_table)
-
-# Start the background task with schedule
-thread = threading.Thread(target=background_task)
-thread.start()
+# Route to start the background task
+def start_background():
+    # Check if the background thread is already running
+    global bg_thread
+    if 'bg_thread' not in globals() or not bg_thread.is_alive():
+        # Create and start the background thread
+        bg_thread = threading.Thread(target=background_task)
+        bg_thread.start()
+        return True
+    else:
+        return False
