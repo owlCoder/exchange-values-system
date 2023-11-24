@@ -7,19 +7,25 @@ from routes.user import user_blueprint
 from routes.token import token_blueprint
 from routes.currencies import currencies_blueprint
 from routes.transaction import transaction_blueprint
-from config.database import db
+from config.database import db, socketio
+from config.config import ALLOWED_CLIENT_ORIGIN
 from flasgger import Swagger
 
 # Initialize app
 app = Flask(__name__)
 
+# Initialize configuration
 app.config.from_pyfile('config/config.py')
+app.config['SECRET_KEY'] = 'secret!'
 
 # Allows secure origins to access API
-CORS(app, origins=["http://localhost:3000"], methods=["POST", "GET", "PUT"])
+CORS(app, origins=[ALLOWED_CLIENT_ORIGIN], methods=["POST", "GET", "PUT"])
 
 # Initialize database engine
 db.init_app(app)
+
+# Run socket for real time updates
+socketio.init_app(app, cors_allowed_origins=ALLOWED_CLIENT_ORIGIN)
 
 # Import and register blueprints
 app.register_blueprint(auth_blueprint)
@@ -44,5 +50,7 @@ swagger = Swagger(app)
 
 # Run app
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True)
+    #app.run(debug=True)
+
     
