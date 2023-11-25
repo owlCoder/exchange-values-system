@@ -96,19 +96,23 @@ def process_transaction(sender_account_id, receiver_account_number, amount):
     else:
         # Update receiver's existing account balance
         success = update_account_balance(account_id_in_receiver_currency, amount)
-
+    
     # Receiver has new transaction approved
     if success:
         update_account_balance(sender_account_id, -amount)
 
         # Send email to sender and receiver about transactions approval
-        sender_message = transaction_message(amount, sender_account.currency, sender_account.account_number, "Out", sender_account.balance - amount)
+        sender_message = transaction_message(amount, sender_account.currency, sender_account.account_number, "Out", sender_account.balance)
         receiver_message = transaction_message(amount, sender_account.currency, receiver_account_number, 'In', get_current_account_by_id(account_id_in_receiver_currency).balance)
 
         # Send transactions confirmation emails
         sender = get_user_by_id(sender_account.uid)
         receiver = get_user_by_id(receiver_account.uid)
 
+        print("\n\n--------------------------- STAMPA -----------------------------")
+        print(sender_message)
+        print("--------------------------------------------------------------------")
+        
         if sender and receiver and \
            prepare(sender.email, sender_message, "Transcation has been processed") and \
            prepare(receiver.email, receiver_message, "Transcation has been processed"):

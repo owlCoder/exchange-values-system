@@ -25,7 +25,14 @@ def prepare(receiver_email, message_body, subject):
     message['From'] = f'{"Transaction Systems Support"} <{"danijelj2001.xda@gmail.com"}>'
 
     # Send email
-    return send(receiver_email, message)
+    success = send(receiver_email, message)
+
+    if success:
+        print("Email prepared and sent successfully")
+        return True
+    else:
+        print("Email preparation or sending failed")
+        return False
 
 # Send email content to receiver email
 def send(receiver_email, message):
