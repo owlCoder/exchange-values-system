@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import socketIOClient, { Socket } from 'socket.io-client';
 import { API_URL } from '../../..';
 import ITransaction from '../../../interfaces/ITransaction';
-import { showErrorToast, showSuccessToast, showWarningToast } from '../../ToastNotification/Toast';
+import { showErrorToast, showSuccessToast, showWarningToast, showInfoToast } from '../../ToastNotification/Toast';
 import { ToastContainer } from 'react-toastify';
 
 const Transactions: React.FC = () => {
   const [data, setData] = useState<ITransaction[]>([]);
-  const [notification, setNotification] = useState<string>("Connecting to Transactions System service");
 
   const handleSuccessClick = () => {
     showSuccessToast('Operation successful!');
@@ -24,16 +23,18 @@ const Transactions: React.FC = () => {
   useEffect(() => {
     const socket: Socket = socketIOClient(API_URL + "realtime");
     socket.on('connect', () => {
-      setNotification('Connected to Transactions System service');
+      showInfoToast("Connecting to Transactions System service");
+      setTimeout(() => showSuccessToast('Connected to Transactions System service'), 5500);
     });
 
     socket.on('updated_data', (transaction) => {
       var new_transaction: ITransaction = JSON.parse(transaction);
       setData(data => [...data, new_transaction]);
+      showInfoToast("Transcation has been processed")
     })
 
     socket.on('disconnect', () => {
-      setNotification('RealTime Transactions System service is offline');
+      showErrorToast('RealTime Transactions System service is offline');
     });
 
     // Cleanup on unmount
