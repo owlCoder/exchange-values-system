@@ -56,17 +56,32 @@ def create_transaction(sender_uid, sender_account_id, amount, receiver_account_n
         db.session.rollback()
         return False
 
+def get_transactions_by_approved_status(status):
+    transcations = db.session.query(Transactions).filter(Transactions.approved=='ON HOLD').all()
+    return transcations
+
+def update_transcation_approved_status(transaction_id, status):
+    try:
+        transaction = db.session.query(Transactions).get(transaction_id)
+
+        if transaction:
+            transaction.approved = status
+            db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+
 # Method to process transactions waiting for proccessing
 def process_on_hold_transactions():
     # Get all on hold transactions
     try:
-        transactions = db.session.query(Transactions).filter_by(approved="ON HOLD").all()
+        transactions = get_transactions_by_approved_status("ON HOLD")
+
         if transactions:
             for transaction in transactions:
                 if process_transaction(transaction.sender_account_id, transaction.receiver_account_number, transaction.amount):
-                    transaction.approved = "APPROVED"
+                    update_transcation_approved_status(transaction.id, "APPROVED")
                 else:
-                    transaction.approved = "DENIED"
+                    update_transcation_approved_status(transaction.id, "DENIED")
 
                 print(transaction.approved)
                 live_update = jsonify({'data': transaction})
@@ -74,7 +89,7 @@ def process_on_hold_transactions():
                 # Emit transaction status update
                 socketio.emit('updated_data', live_update, namespace="/api/realtime")
                 
-                #db.session.commit()
+                db.session.commit()
     except Exception as e:
         return
 
@@ -108,14 +123,11 @@ def process_transaction(sender_account_id, receiver_account_number, amount):
         # Send transactions confirmation emails
         sender = get_user_by_id(sender_account.uid)
         receiver = get_user_by_id(receiver_account.uid)
-
-        print("\n\n--------------------------- STAMPA -----------------------------")
-        print(sender_message)
-        print("--------------------------------------------------------------------")
-        
+        return True
         if sender and receiver and \
            prepare(sender.email, sender_message, "Transcation has been processed") and \
            prepare(receiver.email, receiver_message, "Transcation has been processed"):
+                
             return True
         else:
             return False
