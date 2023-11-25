@@ -1,69 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient, { Socket } from 'socket.io-client';
-import { API_URL, REALTIME_TIMEOUT } from '../../..';
+import { API_URL } from '../../..';
+import ITransaction from '../../../interfaces/ITransaction';
+import { showErrorToast, showSuccessToast, showWarningToast } from '../../ToastNotification/Toast';
+import { ToastContainer } from 'react-toastify';
 
-const Transactions = () => {
-  const [data, setData] = useState('');
-  const [connectionTime, setConnectionTime] = useState<number>(REALTIME_TIMEOUT);
-  const [notification, setNotification] = useState<string>("");
-  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null); // Explicitly typed as NodeJS.Timeout
+const Transactions: React.FC = () => {
+  const [data, setData] = useState<ITransaction[]>([]);
+  const [notification, setNotification] = useState<string>("Connecting to Transactions System service");
 
-  const handleCountdown = () => {
-    const newTimer = setInterval(() => {
-      setConnectionTime((prevTime) => {
-        if (prevTime === 0) {
-          clearInterval(newTimer);
-          return REALTIME_TIMEOUT;
-        } else {
-          return prevTime - 1;
-        }
-      });
-    }, 1000); // Update every second
-
-    setTimer(newTimer); // Set the timer state
+  const handleSuccessClick = () => {
+    showSuccessToast('Operation successful!');
   };
 
+  const handleErrorClick = () => {
+    showErrorToast('Something went wrong!');
+  };
+
+  const handleWarningClick = () => {
+    showWarningToast('Be cautious!');
+  };
+  
   useEffect(() => {
     const socket: Socket = socketIOClient(API_URL + "realtime");
-
-    setNotification("Connection to realtime service...")
-
     socket.on('connect', () => {
-      console.log('Connected to server');
-      setNotification('');
-      handleCountdown(); // Start countdown when connected
+      setNotification('Connected to Transactions System service');
     });
 
-    socket.on('updated_data', (updatedData) => {
-      setData(updatedData);
-      console.table(JSON.parse(updatedData))
-      setConnectionTime(REALTIME_TIMEOUT);
-    });
+    socket.on('updated_data', (transaction) => {
+      var new_transaction: ITransaction = JSON.parse(transaction);
+      setData(data => [...data, new_transaction]);
+    })
 
     socket.on('disconnect', () => {
-      if (timer) {
-        clearInterval(timer); // Clear the countdown timer
-      }
-      setConnectionTime(REALTIME_TIMEOUT); // Reset time to 60 seconds on disconnect
-      setData(''); // Clear data when disconnected
-      setNotification('RealTime transaction systems service is offline');
+      setNotification('RealTime Transactions System service is offline');
     });
 
     // Cleanup on unmount
     return () => {
       socket.disconnect();
-      if (timer) {
-        clearInterval(timer);
-      }
     };
   }, []); // Include timer in the dependencies array
 
   return (
     <div>
-      <h1 className='dark:text-white'>Live Data: {data}</h1>
-      <p className='dark:text-white'>Transcations will be processed: &nbsp;
-       {notification === "" ? connectionTime +  " seconds" : notification}
-       </p>
+      {/* Show toast notification for realtime server connections */}
+       <ToastContainer />
+      <h1 className='dark:text-white'>Live Data: </h1>
+      <div>
+      <button className='text-white bg-[#8E0000] hover:bg-[#A43232] focus:ring-4 focus:ring-[#8E0000] font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2 mr-2 dark:bg-[#8E0000] dark:hover:bg-[#A43232] focus:outline-none dark:focus:ring-[#8E0000]' onClick={handleSuccessClick}>Show Success Toast</button>
+      <button className='text-white bg-[#8E0000] hover:bg-[#A43232] focus:ring-4 focus:ring-[#8E0000] font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2 mr-2 dark:bg-[#8E0000] dark:hover:bg-[#A43232] focus:outline-none dark:focus:ring-[#8E0000]' onClick={handleErrorClick}>Show Error Toast</button>
+      <button className='text-white bg-[#8E0000] hover:bg-[#A43232] focus:ring-4 focus:ring-[#8E0000] font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2 mr-2 dark:bg-[#8E0000] dark:hover:bg-[#A43232] focus:outline-none dark:focus:ring-[#8E0000]' onClick={handleWarningClick}>Show Warning Toast</button>
+    </div>
     </div>
   );
 };
