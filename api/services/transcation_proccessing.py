@@ -1,6 +1,5 @@
 import socket
 import threading
-from flask import current_app
 import schedule
 import time
 from controllers.transaction import process_on_hold_transactions
@@ -18,7 +17,7 @@ def background_task(app):
 
 # Schedule the background task
 def schedule_background(app):
-    schedule.every(10).seconds.do(background_task, app)  # Run every 1 minute
+    schedule.every(60).seconds.do(background_task, app)  # Run every 1 minute
 
     while True:
         schedule.run_pending()

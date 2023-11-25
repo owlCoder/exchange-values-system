@@ -21,10 +21,10 @@ const Transactions: React.FC = () => {
       setData(data => [...data, new_transaction]);
 
       if(new_transaction.approved)
-        showSuccessToast(`Transcation ${new_transaction.id} ${new_transaction.amount} to
+        showSuccessToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
                                    ${new_transaction.receiver_email} has been approved`);
       else
-        showWarningToast(`Transcation ${new_transaction.id} ${new_transaction.amount} to
+        showWarningToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
                                    ${new_transaction.receiver_email} has been denied`);
 
     })

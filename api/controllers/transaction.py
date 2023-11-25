@@ -75,6 +75,7 @@ def process_on_hold_transactions():
                     # Check if receiver has current account with currency from sender's account
                     account_id_in_receiver_currency = get_account_by_number_and_currency(str(transaction.receiver_account_number).strip(), sender_account.currency)
                     new_balance_receiver = 0.0
+                    currency = sender_account.currency
 
                     try:
                         if account_id_in_receiver_currency is None:
@@ -90,7 +91,7 @@ def process_on_hold_transactions():
                             # New receiver account currency so initial balance is transaction amount
                             new_balance_receiver = float(transaction.amount)
                         else:
-                            account = db.session.query(CurrentAccount).get(receiver_account.account_id)
+                            account = db.session.query(CurrentAccount).get(account_id_in_receiver_currency)
                             account.balance = account.balance + Decimal(str(transaction.amount))
 
                             # Receiver account balance is transaction amount plus old account balance
@@ -112,15 +113,16 @@ def process_on_hold_transactions():
                         prepare(sender["email"], sender_message, "Transcation has been processed")
                         prepare(receiver["email"], receiver_message, "Transcation has been processed")
 
+                        # Add currency to dictonary
+                        transaction = transaction.serialize()
+                        transaction["currency"] = currency
+                        
                         # Convert the dictionary to a JSON string
-                        live_update = json.dumps(transaction.serialize())
-                        print(live_update)  # For debugging
+                        live_update = json.dumps(transaction)
 
                         # Emit transaction status update
                         socketio.emit('updated_data', live_update, namespace="/api/realtime")
                     except Exception as e:
-                        traceback.print_exc()
-                        current_app.logger.info(str(e))
                         db.session.rollback()
                                 
                 # Commit changes to database
