@@ -27,9 +27,9 @@ const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, re
     }, [card_number, refresh]);
 
     return (
-        <div>
+        <div className='bg-transparent'>
             {!loading && (accounts.length === 0 ?
-                <div className='mx-auto text-md text-left text-black dark:text-white rounded-lg overflow-hidden w-3/5'>
+                <div className='mx-auto text-md text-left text-black dark:text-white rounded-l overflow-hidden w-3/5'>
                     {verified ? <h1 className="border border-sky-700  bg-sky-700 p-2 rounded-xl w-full text-lg font-semibold text-center text-white dark:text-white">
                         There are no current accounts to display at the moment. Use TOP UP BALANCE option to create a new account.
                     </h1> :
@@ -65,7 +65,7 @@ const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, re
                             <tbody>
                                 {accounts.map((account: ICurrentAccount, index: number) => (
                                     <tr key={index}
-                                        className="bg-white border-1 border-b-gray-950 dark:bg-slate-950 dark:border-gray-700"
+                                        className="bg-gray-100 border-1 border-b-gray-950 dark:bg-slate-950 dark:border-gray-700"
                                     >
                                         <td className="px-10 py-2">{account.account_number}</td>
                                         <td className="px-10 py-2">{account.balance}</td>

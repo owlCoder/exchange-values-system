@@ -1,47 +1,69 @@
-/* Import the base styles */
 @import "tailwindcss/base";
-
-/* Import the components styles */
 @import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-/* Use @layer utilities for custom utility classes */
 @layer utilities {
-  /* Define utility classes within the utilities layer */
-  .scrollbar-hidden::-webkit-scrollbar {
-    display: none;
-  }
+  @variants responsive {
 
-  .scrollbar-hidden {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    /* Hide scrollbar for Chrome, Safari, and Opera */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge, and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
   }
 }
 
-/* Import the utilities styles */
-@import "tailwindcss/utilities";
-
-/* Your custom styles */
 .bgw {
   background-image: url('../public/bg.jpg');
 }
 
-/* Spinner spinning animation */
+/* Spinner spining animation */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
-/* Body color */
-body {
-  background-color: rgb(30 41 59);
+:root {
+  --light-bg-color: #f3f4f6; /* Light mode background color */
+  --dark-bg-color: #1E293B; /* Dark mode background color */
 }
 
+/* Set the initial body background color */
+body {
+  background-color: var(--dark-bg-color); /* Default to dark mode */
+}
+
+/* Use prefers-color-scheme media query to adapt body background based on user preference */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: var(--light-bg-color); /* Set background color for light mode */
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--dark-bg-color); /* Set background color for dark mode */
+  }
+}
 /* Slider arrows colors */
-.slick-prev:before,
+.slick-prev:before {
+  color: #0369a1 !important;
+  background-color: transparent;
+  font-size: 30px !important;
+}
+
 .slick-next:before {
   color: #0369a1 !important;
   background-color: transparent;

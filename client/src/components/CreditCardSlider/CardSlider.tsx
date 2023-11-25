@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slick';
-import PaymentCard from '../PaymentCard/PaymentCard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import PaymentCard from '../PaymentCard/PaymentCard';
 import CardSliderData from '../../interfaces/ICardSliderData';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GoBlocked } from 'react-icons/go';
@@ -155,7 +155,7 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
                     ))}
                 </Slider>
             </div>
-            <div className='mt-10 pb-12 bg-gray-900 -mx-5 rounded-xl'>
+            <div className='mt-10 pb-12 bg-transparent -mx-5 rounded-xl'>
                 {loading ? 
                     <LoadingSpinner background='bg-transparent' minH='0' /> 
                     : showAccountsTable && <div> {accountsTable} </div>
