@@ -1,14 +1,13 @@
 import threading
 import time
-from config.socket import socketio
+from controllers.transaction import process_on_hold_transactions
 
 # Function that runs in a background thread
 def background_task():
     while True:
-        # Do some background task here
-        socketio.emit('updated_data', "helo its me", namespace="/api/realtime")
-        print("Running background task...")
-        time.sleep(10)  # Run transactions job on every 1 minute
+        print("Processing transactions...")
+        process_on_hold_transactions()
+        time.sleep(60)
 
 # Route to start the background task
 def start_background():

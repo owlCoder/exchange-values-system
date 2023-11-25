@@ -1,9 +1,11 @@
+from flask import jsonify
 from models.transaction import Transactions
 from config.database import db
 from controllers.current_account import *
 from controllers.user import get_user_by_id
 from services.email_message import transaction_message
 from services.email_service import prepare
+from config.socket import socketio
 
 # Function to create a new transaction record using db.session
 def create_transaction(sender_uid, sender_account_id, amount, receiver_account_number, receiver_email, receiver_name, receiver_surname, approved):
@@ -56,17 +58,35 @@ def create_transaction(sender_uid, sender_account_id, amount, receiver_account_n
 
 # Method to process transactions waiting for proccessing
 def process_on_hold_transactions():
-    raise Exception
+    # Get all on hold transactions
+    try:
+        transactions = db.session.query(Transactions).filter_by(approved="ON HOLD").all()
+        if transactions:
+            for transaction in transactions:
+                if process_transaction(transaction.sender_account_id, transaction.receiver_account_number, transaction.amount):
+                    transaction.approved = "APPROVED"
+                else:
+                    transaction.approved = "DENIED"
+
+                print(transaction.approved)
+                live_update = jsonify({'data': transaction})
+
+                # Emit transaction status update
+                #socketio.emit('updated_data', live_update, namespace="/api/realtime")
+                
+                #db.session.commit()
+    except Exception as e:
+        return
 
 # Method to process individual transaction
 def process_transaction(sender_account_id, receiver_account_number, amount):
     sender_account = get_current_account_by_id(sender_account_id)
     receiver_account = get_account_by_number(receiver_account_number)
-
+    
     # Check if current accounts exist and does sender has enough balance to send
     if sender_account is None or receiver_account is None or sender_account.balance < amount:
         return False
-
+    
     # Check if receiver has current account with currency from sender's account
     account_id_in_receiver_currency = get_account_by_number_and_currency(receiver_account.account_number, sender_account.currency)
 

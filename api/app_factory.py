@@ -48,6 +48,13 @@ def create_app():
     app.register_blueprint(currencies_blueprint)
     app.register_blueprint(transaction_blueprint)
     
-    #start_background()
+    # Start Transaction System service in background
+    # start_background()
+
+    from controllers.transaction import process_on_hold_transactions
+    @app.route('/pokreni')
+    def kreni():
+        process_on_hold_transactions()
+        return "OK", 200
 
     return app
