@@ -49,12 +49,6 @@ def create_app():
     app.register_blueprint(transaction_blueprint)
     
     # Start Transaction System service in background
-    # start_background()
-
-    from controllers.transaction import process_on_hold_transactions
-    @app.route('/pokreni')
-    def kreni():
-        process_on_hold_transactions()
-        return "OK", 200
-
+    start_background()
+    
     return app

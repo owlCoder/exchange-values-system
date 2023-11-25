@@ -72,7 +72,7 @@ def process_on_hold_transactions():
                 live_update = jsonify({'data': transaction})
 
                 # Emit transaction status update
-                #socketio.emit('updated_data', live_update, namespace="/api/realtime")
+                socketio.emit('updated_data', live_update, namespace="/api/realtime")
                 
                 #db.session.commit()
     except Exception as e:
