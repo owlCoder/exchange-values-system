@@ -36,6 +36,7 @@ const Transactions = () => {
 
     socket.on('updated_data', (updatedData) => {
       setData(updatedData);
+      console.log(updatedData)
       setConnectionTime(REALTIME_TIMEOUT);
     });
 

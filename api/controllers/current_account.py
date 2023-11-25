@@ -117,7 +117,7 @@ def update_account_balance(account_id, amount):
 # Method to get account by account number
 def get_account_by_number(account_number):
     try:
-        account = db.session.query(CurrentAccount).filter_by(account_number=account_number).first()
+        account = db.session.query(CurrentAccount).filter_by(account_number=str(account_number).strip()).first()
         return account
     except Exception as e:
         return None

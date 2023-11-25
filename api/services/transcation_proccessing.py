@@ -1,4 +1,6 @@
+import socket
 import threading
+from flask import current_app
 import schedule
 import time
 from controllers.transaction import process_on_hold_transactions
@@ -6,12 +8,17 @@ from controllers.transaction import process_on_hold_transactions
 # Function to process transactions
 def background_task(app):
     with app.app_context():
-        print("Processing transactions...")
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))  # Connect to a well-known IP address
+        remote_addr = s.getsockname()[0]  # Get the local IP address
+        s.close()
+        log_message = 'Transactions System service is processing transactions'
+        print(f'{remote_addr} - - [{time.strftime("%d/%b/%Y %H:%M:%S")}] "{log_message}"')
         process_on_hold_transactions()
 
 # Schedule the background task
 def schedule_background(app):
-    schedule.every(1).minutes.do(background_task, app)  # Run every 1 minute
+    schedule.every(10).seconds.do(background_task, app)  # Run every 1 minute
 
     while True:
         schedule.run_pending()
