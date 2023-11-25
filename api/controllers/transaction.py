@@ -1,4 +1,4 @@
-import time
+import json
 import traceback
 from flask import current_app, jsonify
 from models.transaction import Transactions
@@ -112,8 +112,9 @@ def process_on_hold_transactions():
                         prepare(sender["email"], sender_message, "Transcation has been processed")
                         prepare(receiver["email"], receiver_message, "Transcation has been processed")
 
-                        live_update = jsonify({'data': transaction.serialize()})
-                        current_app.logger.info(live_update)
+                        # Convert the dictionary to a JSON string
+                        live_update = json.dumps(transaction.serialize())
+                        print(live_update)  # For debugging
 
                         # Emit transaction status update
                         socketio.emit('updated_data', live_update, namespace="/api/realtime")
