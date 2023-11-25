@@ -2,24 +2,13 @@ import React, { useEffect, useState } from 'react';
 import socketIOClient, { Socket } from 'socket.io-client';
 import { API_URL } from '../../..';
 import ITransaction from '../../../interfaces/ITransaction';
-import { showErrorToast, showSuccessToast, showWarningToast, showInfoToast } from '../../ToastNotification/Toast';
+import { showErrorToast, showSuccessToast, showInfoToast, showWarningToast } from '../../ToastNotification/Toast';
 import { ToastContainer } from 'react-toastify';
+import GraphComponent from '../../RealTimeGraph/Graph';
 
 const Transactions: React.FC = () => {
   const [data, setData] = useState<ITransaction[]>([]);
 
-  const handleSuccessClick = () => {
-    showSuccessToast('Operation successful!');
-  };
-
-  const handleErrorClick = () => {
-    showErrorToast('Something went wrong!');
-  };
-
-  const handleWarningClick = () => {
-    showWarningToast('Be cautious!');
-  };
-  
   useEffect(() => {
     const socket: Socket = socketIOClient(API_URL + "realtime");
     socket.on('connect', () => {
@@ -30,7 +19,14 @@ const Transactions: React.FC = () => {
     socket.on('updated_data', (transaction) => {
       var new_transaction: ITransaction = JSON.parse(transaction);
       setData(data => [...data, new_transaction]);
-      showInfoToast("Transcation has been processed")
+
+      if(new_transaction.approved)
+        showSuccessToast(`Transcation ${new_transaction.id} ${new_transaction.amount} to
+                                   ${new_transaction.receiver_email} has been approved`);
+      else
+        showWarningToast(`Transcation ${new_transaction.id} ${new_transaction.amount} to
+                                   ${new_transaction.receiver_email} has been denied`);
+
     })
 
     socket.on('disconnect', () => {
@@ -41,18 +37,25 @@ const Transactions: React.FC = () => {
     return () => {
       socket.disconnect();
     };
-  }, []); // Include timer in the dependencies array
+  }, []);
 
   return (
     <div>
       {/* Show toast notification for realtime server connections */}
-       <ToastContainer />
-      <h1 className='dark:text-white'>Live Data: </h1>
-      <div>
-      <button className='text-white bg-[#8E0000] hover:bg-[#A43232] focus:ring-4 focus:ring-[#8E0000] font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2 mr-2 dark:bg-[#8E0000] dark:hover:bg-[#A43232] focus:outline-none dark:focus:ring-[#8E0000]' onClick={handleSuccessClick}>Show Success Toast</button>
-      <button className='text-white bg-[#8E0000] hover:bg-[#A43232] focus:ring-4 focus:ring-[#8E0000] font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2 mr-2 dark:bg-[#8E0000] dark:hover:bg-[#A43232] focus:outline-none dark:focus:ring-[#8E0000]' onClick={handleErrorClick}>Show Error Toast</button>
-      <button className='text-white bg-[#8E0000] hover:bg-[#A43232] focus:ring-4 focus:ring-[#8E0000] font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2 mr-2 dark:bg-[#8E0000] dark:hover:bg-[#A43232] focus:outline-none dark:focus:ring-[#8E0000]' onClick={handleWarningClick}>Show Warning Toast</button>
-    </div>
+      <ToastContainer />
+
+      <div className="overflow-y-auto h-screen overflow-x-hidden justify-center items-center w-full md:inset-0 md:h-full">
+        <div className="relative p-4 w-full h-full md:h-auto">
+          <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+            <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                Real-Time Transactions
+              </h3>
+            </div>
+                <GraphComponent data={data} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

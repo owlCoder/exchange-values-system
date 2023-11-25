@@ -41,9 +41,8 @@ export const showWarningToast = (message: string): void => {
 
 const Toast: React.FC = () => {
     return (
-        <div className="toast-container">
+        <div>
             <ToastContainer
-
                 position="top-right"
                 autoClose={3000}
                 hideProgressBar={false}

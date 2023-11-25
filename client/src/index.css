@@ -1,31 +1,38 @@
+/* Import the base styles */
 @import "tailwindcss/base";
+
+/* Import the components styles */
 @import "tailwindcss/components";
-@import "tailwindcss/utilities";
 
+/* Use @layer utilities for custom utility classes */
 @layer utilities {
-  @variants responsive {
+  /* Define utility classes within the utilities layer */
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
 
-    /* Hide scrollbar for Chrome, Safari, and Opera */
-    ::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* Hide scrollbar for IE, Edge, and Firefox */
-    .no-scrollbar {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
-    }
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
+/* Import the utilities styles */
+@import "tailwindcss/utilities";
+
+/* Your custom styles */
 .bgw {
   background-image: url('../public/bg.jpg');
 }
 
-/* Spinner spining animation */
+/* Spinner spinning animation */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Body color */
@@ -34,11 +41,7 @@ body {
 }
 
 /* Slider arrows colors */
-.slick-prev:before {
-  color: #0369a1 !important;
-  background-color: transparent;
-  font-size: 30px !important;
-}
+.slick-prev:before,
 .slick-next:before {
   color: #0369a1 !important;
   background-color: transparent;
