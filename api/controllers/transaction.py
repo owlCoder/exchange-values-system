@@ -104,9 +104,6 @@ def process_on_hold_transactions():
                     prepare(sender["email"], sender_message, "Transcation has been processed")
                     prepare(receiver["email"], receiver_message, "Transcation has been processed")
 
-                    print("---------------------------------------------------------------")
-                    print(str(transaction.id) + " " + transaction.approved)
-                    print("---------------------------------------------------------------")
                     live_update = jsonify({'data': transaction.serialize()})
 
                     # Emit transaction status update
@@ -114,5 +111,4 @@ def process_on_hold_transactions():
                 
                     db.session.commit()
                 except Exception as e:
-                    print(str(e))
                     db.session.rollback()

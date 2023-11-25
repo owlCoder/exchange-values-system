@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flasgger import Swagger
-from services.transcation_proccessing import start_background
+from services.transcation_proccessing import start_schedule_background
 
 from config.socket import socketio
 from config.database import db
@@ -49,6 +49,6 @@ def create_app():
     app.register_blueprint(transaction_blueprint)
     
     # Start Transaction System service in background
-    start_background(app)
+    start_schedule_background(app)
     
     return app
