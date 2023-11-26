@@ -68,6 +68,7 @@ def get_all_users():
 def update_user(user_id, new_data):
     try:
         user = db.session.query(User).get(user_id)
+        
         if user:
             user.first_name = new_data.get("first_name", user.first_name)
             user.surname = new_data.get("surname", user.surname)

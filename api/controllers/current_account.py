@@ -1,5 +1,4 @@
 from decimal import Decimal
-from services.account_number_generator import generate_account_number
 from models.current_account import CurrentAccount
 from config.database import db
 
@@ -78,7 +77,7 @@ def get_account_by_number_and_currency(account_number, currency):
 def get_all_current_accounts_by_cardnumber(card_number):
     try:
         accounts = db.session.query(CurrentAccount).filter(CurrentAccount.card_number == card_number).all()
-        return accounts
+        return [account.serialize() for account in accounts]
     except Exception as e:
         return None
 

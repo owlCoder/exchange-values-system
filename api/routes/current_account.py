@@ -35,17 +35,13 @@ def top_up_current_account():
 
 @current_account_blueprint.route('/api/accounts/getAccountsByCard', methods=['POST'])
 def get_accounts_by_card_number():
-    try:
-        card_number = request.get_json().get('card_number')
-        accounts = get_all_current_accounts_by_cardnumber(card_number)
+    card_number = request.get_json().get('card_number')
+    accounts = get_all_current_accounts_by_cardnumber(card_number)
 
-        if accounts:
-            serialized_accounts = [account.serialize() for account in accounts]
-            return jsonify(serialized_accounts), 200
-        else:
-            return jsonify({'message': 'No current accounts'}), 204
-    except Exception as e:
-         return jsonify({'message': 'Error occurred while fetching accounts'}), 500
+    if accounts:
+        return jsonify(accounts), 200
+    else:
+        return jsonify({'message': 'No current accounts'}), 404
     
 @current_account_blueprint.route('/api/account/exchange', methods=['POST'])
 def exchange_current_account():

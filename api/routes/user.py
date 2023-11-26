@@ -21,10 +21,10 @@ class UserBlueprintDocumentation:
                 return jsonify({ 'data': 'User created successfully'}), 201
             else:
                 # Email send failed so delete created user
-                delete_user_by_email(email)
-                return jsonify({ 'data': 'User can\'n be created. Check entered data'}), 401
+                #delete_user_by_email(email)
+                return jsonify({ 'data': 'User can\'t be created. Check entered data'}), 401
         else:
-            return jsonify({ 'data': 'User can\'n be created. Entered email address already registered'}), 400
+            return jsonify({ 'data': 'User can\'t be created. Entered email address already registered'}), 400
 
     @user_blueprint.route('/api/user/<int:user_id>', methods=['GET'])
     def get_user(user_id):
