@@ -1,3 +1,4 @@
+-- Active: 1698963933767@@127.0.0.1@3306@proddb
 -- Drop all tables if they exist
 DROP TABLE IF EXISTS transactions;
 DROP TABLE IF EXISTS current_account;
