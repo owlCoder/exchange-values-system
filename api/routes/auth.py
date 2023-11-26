@@ -1,5 +1,4 @@
 from flask import Blueprint, request
-from flasgger import swag_from
 from services.password_hasher import hash_method
 from services.auth_service import auth_user, unauth_user
 

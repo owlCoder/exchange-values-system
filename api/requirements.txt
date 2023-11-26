@@ -2,5 +2,8 @@ Flask
 Flask-CORS
 Flask-SQLAlchemy
 mysql-connector-python
+requests
 flask-socketio
 schedule
+gunicorn
+eventlet

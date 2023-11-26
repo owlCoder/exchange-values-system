@@ -2,7 +2,6 @@ from flask import Flask
 from flask_cors import CORS
 from services.transcation_proccessing import start_schedule_background
 
-from config.socket import socketio
 from config.database import db
 from config.config import ALLOWED_CLIENT_ORIGIN
 
@@ -17,16 +16,13 @@ from routes.transaction import transaction_blueprint
 def create_app():
     app = Flask(__name__)
     app.config.from_pyfile('config/config.py')
-    
+
     # Initialize CORS
     CORS(app, origins=[ALLOWED_CLIENT_ORIGIN], methods=["POST", "GET", "PUT"])
-    
+
     # Initialize database engine
     db.init_app(app)
-    
-    # Initialize SocketIO for real-time updates
-    socketio.init_app(app, cors_allowed_origins=ALLOWED_CLIENT_ORIGIN)
-    
+
     # Register blueprints
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(user_blueprint)
@@ -35,8 +31,8 @@ def create_app():
     app.register_blueprint(current_account_blueprint)
     app.register_blueprint(currencies_blueprint)
     app.register_blueprint(transaction_blueprint)
-    
+
     # Start Transaction System service in background
     start_schedule_background(app)
-    
+
     return app

@@ -1,7 +1,7 @@
 # Database configuration
 DB_USERNAME = 'root'
 DB_PASSWORD = '123'
-DB_HOST = '127.0.0.1'
+DB_HOST = '172.17.0.2' # Change to localmachine ip adress to access database
 DB_PORT = '3306'
 DB_NAME = 'proddb'
 
@@ -16,4 +16,4 @@ SQLALCHEMY_ECHO = False
 DEBUG = True  # Set to False for production
 
 # Allow requests from only whitelisted origins
-ALLOWED_CLIENT_ORIGIN = "http://localhost:3000"
+ALLOWED_CLIENT_ORIGIN = ["http://localhost:3000", "ws://localhost:3000"]
