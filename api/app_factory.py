@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_cors import CORS
-from flasgger import Swagger
 from services.transcation_proccessing import start_schedule_background
 
 from config.socket import socketio
@@ -27,17 +26,6 @@ def create_app():
     
     # Initialize SocketIO for real-time updates
     socketio.init_app(app, cors_allowed_origins=ALLOWED_CLIENT_ORIGIN)
-    
-    # Swagger configuration
-    app.config['SWAGGER'] = {
-        'title': 'Transaction Systems API',
-        'version': '1.32.1',
-        'uiversion': 3,
-        'swagger_ui': True,
-        'specs_route': '/api/',
-        'swagger_ui_css': '/static/swagger-ui.css'
-    }
-    Swagger(app)
     
     # Register blueprints
     app.register_blueprint(auth_blueprint)
