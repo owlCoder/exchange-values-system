@@ -2,33 +2,6 @@ from sqlalchemy import Boolean, Column, String, Integer, ForeignKey
 from config.database import Base, engine
 
 class CreditCard(Base):
-    """
-    CreditCard class represents a credit card entity.
-
-    Attributes:
-        card_number (str): The card number of the credit card.
-        cardholder_name (str): The name of the cardholder.
-        expiry_date (str): The expiry date of the credit card.
-        cvv (str): The CVV code of the credit card.
-        verified (bool): The verification status of the credit card.
-        uid (int): Foreign key referencing the user ID associated with the credit card.
-
-    Methods:
-        serialize(): Converts CreditCard object to a dictionary.
-
-    Example:
-        new_card = CreditCard(
-            card_number="1234567890123456",
-            cardholder_name="John Doe",
-            expiry_date="12/23",
-            cvv="123",
-            verified=False,
-            uid=1
-        )
-        db.session.add(new_card)
-        db.session.commit()
-    """
-
     __tablename__ = 'credit_cards'
 
     card_number = Column(String(19), primary_key=True, nullable=False)
@@ -39,18 +12,6 @@ class CreditCard(Base):
     uid = Column(Integer, ForeignKey('users.uid'), nullable=False)
 
     def serialize(self):
-        """
-        Serialize CreditCard object to a dictionary.
-
-        Returns:
-            dict: Serialized data of the CreditCard object.
-
-        Example:
-            card = CreditCard.query.filter_by(card_number="1234567890123456").first()
-            if card:
-                card_data = card.serialize()
-                print(card_data)  # {'card_number': '1234567890123456', 'cardholder_name': 'John Doe', ...}
-        """
         return {
             'card_number': self.card_number,
             'cardholder_name': self.cardholder_name,

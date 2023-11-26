@@ -64,8 +64,8 @@ def top_up_current_account():
     if not card_number or not uid or not amount or not currency:
         return jsonify({'data': 'Please provide valid data'}), 400
     
-    account_id = check_account_exists(uid, card_number, currency)
-    account = get_account_number(uid, card_number)
+    account_id = check_account_exists_by_uid_cardnumber_currency(uid, card_number, currency)
+    account = get_account_number_by_uid_and_cardnumber(uid, card_number)
 
     # If credit card has no active account, create a new one
     account_number = account.account_number if account else generate_account_number()
@@ -124,7 +124,7 @@ def get_accounts_by_card_number():
     """
     try:
         card_number = request.get_json().get('card_number')
-        accounts = get_all_current_accounts(card_number)
+        accounts = get_all_current_accounts_by_cardnumber(card_number)
 
         if accounts:
             serialized_accounts = [account.serialize() for account in accounts]

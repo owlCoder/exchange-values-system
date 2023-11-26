@@ -139,7 +139,7 @@ class UserBlueprintDocumentation:
         Returns:
             JSON: List of user data if users found, else a message indicating no users found.
         """
-        users = get_all_users_data()
+        users = get_all_users()
 
         if users:
             return jsonify(users), 200
@@ -187,7 +187,7 @@ class UserBlueprintDocumentation:
         """
         new_user_data = request.get_json()  # The updated data is in the request
 
-        if update_user_data(user_id, new_user_data):
+        if update_user(user_id, new_user_data):
             return jsonify({ 'data': 'User updated successfully'}), 200
         else:
             return jsonify({ 'data': 'Profile info can\'t be updated. Check entered email'}), 404

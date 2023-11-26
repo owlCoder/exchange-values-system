@@ -8,16 +8,6 @@ from flasgger import swag_from
 auth_blueprint = Blueprint("auth_blueprint", __name__)
 
 class AuthBlueprintDocumentation:
-    """
-    AuthBlueprintDocumentation provides authentication routes to validate and manage user sessions.
-
-    Routes:
-        - POST /api/auth0/
-            - Authenticate user with email and password.
-        - POST /api/auth0/logout/
-            - Sign out user and remove a token.
-    """
-
     @auth_blueprint.route('/api/auth0/', methods=["POST"])
     @swag_from({
         'tags': ['Authentication'],

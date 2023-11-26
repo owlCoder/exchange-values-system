@@ -2,39 +2,6 @@ from sqlalchemy import Column, Integer, String, Boolean
 from config.database import Base, engine
 
 class User(Base):
-    """
-    User class represents user information.
-
-    Attributes:
-        uid (int): Unique user identifier.
-        first_name (str): First name of the user.
-        surname (str): Surname of the user.
-        address (str): Address of the user.
-        city (str): City of the user.
-        country (str): Country of the user.
-        phone_number (str): Phone number of the user.
-        email (str): Email address of the user.
-        password (str): Password of the user.
-        admin (bool): Indicates if the user is an admin (True/False).
-        verified (bool): Indicates if the user is verified (True/False).
-
-    Example:
-        new_user = User(
-            first_name="John",
-            surname="Doe",
-            address="123 Main St",
-            city="Example City",
-            country="Example Country",
-            phone_number="123-456-7890",
-            email="john@example.com",
-            password="secure_password",
-            admin=False,
-            verified=True
-        )
-        db.session.add(new_user)
-        db.session.commit()
-    """
-
     __tablename__ = 'users'
 
     uid = Column(Integer, primary_key=True, autoincrement=True)
@@ -50,12 +17,6 @@ class User(Base):
     verified = Column(Boolean, nullable=False)
 
     def serialize(self):
-        """
-        Serializes user data into a dictionary.
-
-        Returns:
-            dict: Serialized user data.
-        """
         return {
             'uid': self.uid,
             'first_name': self.first_name,

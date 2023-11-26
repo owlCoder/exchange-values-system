@@ -1,5 +1,5 @@
 from flask import jsonify
-from controllers.user import update_user_verified
+from controllers.user import update_user_verified_status
 from controllers.credit_card import update_verified_field
 
 # Service to verify user and user's credit card
@@ -22,4 +22,4 @@ def verify_user_credit_card(card_number, verified_status, uid):
         return False
     else:
         return update_verified_field(card_number, verified_status) \
-           and update_user_verified(uid, True)
+           and update_user_verified_status(uid, True)

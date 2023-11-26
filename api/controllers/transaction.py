@@ -66,7 +66,7 @@ def process_on_hold_transactions():
         if transactions:
             for transaction in transactions:
                 sender_account = get_current_account_by_id(transaction.sender_account_id)
-                receiver_account = get_account_by_number(transaction.receiver_account_number)
+                receiver_account = get_account_by_account_number(transaction.receiver_account_number)
 
                 # Check if current accounts exist and does sender has enough balance to send
                 if sender_account is None or float(sender_account.balance) < float(transaction.amount):
