@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from controllers.user import *
-from services.email_service import prepare
+from services.email_service import get_email_sender_instance
 from services.email_message import activation_message
 from services.password_hasher import hash_method
 from config.exlude_docs_str import exclude_docstring
@@ -69,9 +69,9 @@ class UserBlueprintDocumentation:
 
         # Always save hashed passwords in database
         new_user_data['password'] = hash_method(new_user_data['password'])
-
+        
         if create_new_user(new_user_data):
-            if prepare(email, activation_message(email, password), 'Account Registration'):
+            if get_email_sender_instance().prepare(email, activation_message(email, password), 'Account Registration'):
                 return jsonify({ 'data': 'User created successfully'}), 201
             else:
                 # Email send failed so delete created user

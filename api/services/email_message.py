@@ -15,8 +15,6 @@ def activation_message(email, password):
         activation_email = activation_message("example@example.com", "securepassword")
     """
     return f"""\
-    Hello,
-
     Welcome to new era of transcations!
 
     Here are your login details:
@@ -45,7 +43,7 @@ def transaction_message(amount, currency, account_number, flow, new_account_bala
         transaction_info = transaction_message(100.0, "USD", "1234567890", "In", 500.0)
     """
     return f"""\
-    Dear user,
+    Regards,
 
     {flow}flow: {amount} {currency} on your account {account_number}
 

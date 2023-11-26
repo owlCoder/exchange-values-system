@@ -6,7 +6,7 @@ from config.database import db
 from controllers.current_account import *
 from controllers.user import get_user_by_id
 from services.email_message import transaction_message
-from services.email_service import prepare
+from services.email_service import get_email_sender_instance
 from config.socket import socketio
 
 # Function to create a new transaction record using db.session
@@ -110,8 +110,12 @@ def process_on_hold_transactions():
                         sender = get_user_by_id(sender_account.uid)
                         receiver = get_user_by_id(receiver_account.uid)
 
-                        prepare(sender["email"], sender_message, "Transcation has been processed")
-                        prepare(receiver["email"], receiver_message, "Transcation has been processed")
+                        # Get the shared EmailSender instance
+                        email_sender = get_email_sender_instance()
+
+                        # Put emails into queue
+                        email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
+                        email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
 
                         # Add currency to dictonary
                         transaction = transaction.serialize()
