@@ -43,7 +43,6 @@ CREATE TABLE tokens (
     token VARCHAR(255) PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     uid INT NOT NULL,
-    FOREIGN KEY (email) REFERENCES users (email),
     FOREIGN KEY (uid) REFERENCES users (uid)
 );
 
