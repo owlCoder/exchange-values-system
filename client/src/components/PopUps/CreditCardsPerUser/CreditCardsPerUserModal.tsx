@@ -5,7 +5,7 @@ import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { AiFillCheckCircle, AiFillInfoCircle } from 'react-icons/ai';
 import { ActivateCreditCard, GetUsersCreditCards } from '../../../service/CreditCardsService';
 
-const CreditCards: React.FC<ICreditCardModal> = ({ uid, ModalClose, RefreshDataBackground }) => {
+const CreditCardsPerUserModal: React.FC<ICreditCardModal> = ({ uid, ModalClose, RefreshDataBackground }) => {
     const [data, setData] = useState<ICreditCardData[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
@@ -144,4 +144,4 @@ const CreditCards: React.FC<ICreditCardModal> = ({ uid, ModalClose, RefreshDataB
     );
 };
 
-export default CreditCards;
+export default CreditCardsPerUserModal;

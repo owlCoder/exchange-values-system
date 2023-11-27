@@ -5,7 +5,7 @@ import { AiOutlineTransaction } from 'react-icons/ai';
 import ICurrentAccount from '../../interfaces/ICurrentAccount';
 import { GetAccountsByCardNumber } from '../../service/CurrentAccountService';
 
-const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, refresh, renderExchangeFundsPopup, renderTransferFundsPopup }) => {
+const CurrentAccountsPerCreditCard: React.FC<IAccountsTableData> = ({ card_number, verified, refresh, renderExchangeFundsPopup, renderTransferFundsPopup }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [accounts, setAccounts] = useState<ICurrentAccount[]>([]);
 
@@ -92,4 +92,4 @@ const AccountsTable: React.FC<IAccountsTableData> = ({ card_number, verified, re
     );
 };
 
-export default AccountsTable;
+export default CurrentAccountsPerCreditCard;

@@ -13,7 +13,7 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import ExchangeFunds from '../Popup/ExchangeFunds/ExchangeFunds';
 import TransferFunds from '../Popup/TransferFunds/TransferFunds';
 
-const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
+const CreditCardsSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
     const [index, setIndex] = useState<number>(0);
     const [topUpPopup, setTopUpPopup] = useState<JSX.Element>(<div />);
@@ -165,4 +165,4 @@ const CardSlider: React.FC<CardSliderData> = ({ cards }) => {
     );
 };
 
-export default CardSlider;
+export default CreditCardsSlider;

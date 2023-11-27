@@ -1,7 +1,7 @@
 import React from 'react';
 import ICreditCardData from '../../interfaces/ICreditCardData';
 
-const PaymentCard: React.FC<ICreditCardData> = ({card_number, cardholder_name, expiry_date, cvv, uid = 1}) => {
+const CreditCard: React.FC<ICreditCardData> = ({card_number, cardholder_name, expiry_date, cvv, uid = 1}) => {
    
     return (
       <div className="w-96 h-56 mx-auto rounded-xl text-white shadow-2xl transition-transform transform">
@@ -40,4 +40,4 @@ const PaymentCard: React.FC<ICreditCardData> = ({card_number, cardholder_name, e
     );
 };
 
-export default PaymentCard;
+export default CreditCard;

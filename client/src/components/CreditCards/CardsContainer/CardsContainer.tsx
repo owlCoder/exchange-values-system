@@ -6,7 +6,7 @@ import { GetUsersCreditCards } from '../../../service/CreditCardsService';
 import ICreditCardData from '../../../interfaces/ICreditCardData';
 import CardSlider from '../../CreditCardSlider/CardSlider';
 
-const Cards: React.FC = () => {
+const CardsContainer: React.FC = () => {
     const { currentUser, setUser } = useAuth();
     const [loading, setLoading] = useState<boolean>(true);
     const [cards, setCards] = useState<ICreditCardData[]>([]);
@@ -38,7 +38,7 @@ const Cards: React.FC = () => {
     }, [currentUser, navigate, setUser]);
 
     return (
-        <main className="bg-white dark:bg-gray-900 h-screen pb-5 pt-12 rounded-xl">
+        <div className="bg-white dark:bg-gray-900 h-screen pb-5 pt-12 rounded-xl">
             {loading ? (
                 <LoadingSpinner />
             ) : currentUser ? (
@@ -49,8 +49,8 @@ const Cards: React.FC = () => {
                     <CardSlider cards={cards} />
                 </>
             ) : null}
-        </main>
+        </div>
     );
 };
 
-export default Cards;
+export default CardsContainer;
