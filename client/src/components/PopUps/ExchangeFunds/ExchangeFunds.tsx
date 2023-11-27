@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import IExchangeFundsData from '../../../interfaces/IExchangeFundsData';
+import IExchangeFundsData from '../../../interfaces/ExchangeFunds/IExchangeFundsData';
+import IExchangeFundsPopUp from '../../../interfaces/ExchangeFunds/IExchangeFundsPopUp';
+import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { GetCurrencyCodes } from '../../../service/CurrenciesService';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { AiOutlineTransaction } from 'react-icons/ai';
-import IExchangeFundsPopUp from '../../../interfaces/IExchangeFundsPopUp';
 import { Exchange } from '../../../service/CurrentAccountService';
 
 const ExchangeFunds: React.FC<IExchangeFundsPopUp> = ({ account_id, balance, currency, closeModalMethod, onRefresh }) => {

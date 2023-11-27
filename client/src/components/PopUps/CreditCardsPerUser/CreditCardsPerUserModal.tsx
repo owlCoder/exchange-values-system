@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ICreditCardModal from '../../../interfaces/ICreditCardModal';
-import ICreditCardData from '../../../interfaces/ICreditCardData';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import ICreditCardModal from '../../../interfaces/CreditCards/ICreditCardModal';
+import ICreditCardData from '../../../interfaces/CreditCards/ICreditCardData';
 import { AiFillCheckCircle, AiFillInfoCircle } from 'react-icons/ai';
 import { ActivateCreditCard, GetUsersCreditCards } from '../../../service/CreditCardsService';
+import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 
 const CreditCardsPerUserModal: React.FC<ICreditCardModal> = ({ uid, ModalClose, RefreshDataBackground }) => {
     const [data, setData] = useState<ICreditCardData[]>([]);

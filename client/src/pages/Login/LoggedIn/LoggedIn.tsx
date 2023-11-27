@@ -1,7 +1,6 @@
 import { LiaSignOutAltSolid, LiaSuperpowers } from "react-icons/lia";
 import { Link, useNavigate } from "react-router-dom";
-import { LogOut } from "../../service/AuthenticationService";
-import React from "react";
+import { LogOut } from "../../../service/AuthenticationService";
 
 const LoggedIn = () => {
     const navigate = useNavigate();

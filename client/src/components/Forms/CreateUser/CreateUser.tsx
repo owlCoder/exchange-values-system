@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { MdClear } from 'react-icons/md';
-import IUser from '../../../interfaces/IUser';
+import IUser from '../../../interfaces/Auth/IUser';
 import { CreateUserAccount } from '../../../service/UserService';
-import Info from '../../Popup/Informative/Info';
+import Info from '../../PopUps/Informative/Info';
 
 const CreateUser: React.FC = () => {
   const [error, setError] = useState<string>('');

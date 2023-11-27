@@ -1,4 +1,4 @@
-import IUser from "../../interfaces/IUser";
+import IUser from "../../interfaces/Auth/IUser";
 
 const isUser = (obj: any): obj is IUser => (
     typeof obj === 'object' &&

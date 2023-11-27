@@ -1,4 +1,4 @@
-import ICurrentUser from "../interfaces/ICurrentUser";
+import ICurrentUser from "../interfaces/Auth/ICurrentUser";
 
 type AuthContextType = {
     currentUser: ICurrentUser | null;

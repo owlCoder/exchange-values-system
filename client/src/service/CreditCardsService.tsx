@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../main';
 import { isCardNumberValid, isExpiryDateValid, isCVVValid } from '../utils/CreditCard/DataValidator';
-import ICreditCardData from '../interfaces/ICreditCardData';
+import ICreditCardData from '../interfaces/CreditCards/ICreditCardData';
 
 export async function SaveCreditCardData(cardData: ICreditCardData): Promise<string | undefined> {
   try {

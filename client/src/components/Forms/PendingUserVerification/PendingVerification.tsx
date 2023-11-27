@@ -1,7 +1,7 @@
 import React from 'react';
 import { LiaSignOutAltSolid } from 'react-icons/lia';
-import { useAuth } from '../../contexts/AuthContext';
-import { LogOut } from '../../service/AuthenticationService';
+import { useAuth } from '../../../contexts/AuthContext';
+import { LogOut } from '../../../service/AuthenticationService';
 
 const PendingVerification: React.FC = () => {
     const { setUser } = useAuth();

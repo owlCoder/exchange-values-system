@@ -1,4 +1,4 @@
-import CreditCardForm from '../CreditCard/CreditCardForm';
+import AddCreditCard from "../AddCreditCard/AddCreditCard";
 
 const Verification: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Verification: React.FC = () => {
             <p className="font-light md:-pt-12 text-gray-500 md:text-lg dark:text-gray-400">Complete verification process entering credit card details.</p>
           </h1>
           <div className="space-y-4 md:space-y-6">
-            <CreditCardForm />
+            <AddCreditCard />
           </div>
         </div>
       </div>

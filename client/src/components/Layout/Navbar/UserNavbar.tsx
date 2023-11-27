@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import { LogOut } from "../../../service/AuthenticationService";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
-import Cards from "../../User/Cards/Cards";
-import CreditCardForm from "../../CreditCard/CreditCardForm";
-import Info from "../../Popup/Informative/Info";
-import Profile from "../../User/Profile/Profile";
+import CardsContainer from "../../CreditCards/CardsContainer/CardsContainer";
+import CreditCardForm from "../../Forms/AddCreditCard/AddCreditCard";
+import Info from "../../PopUps/Informative/Info";
+import Profile from "../../Forms/UserProfile/Profile";
 
-const NavigationHeader: React.FC = () => {
+const UserNavigationHeader: React.FC = () => {
     const [infoModal, setInfoModal] = useState<boolean>(false);
     const navigate = useNavigate();
     const [RenderComponent, setRenderComponent] =
         useState<"cards" | "profile" | 'add-card'>("cards");
 
     const renderActiveComponent = (): JSX.Element => {
-        if (RenderComponent === "cards") return <Cards />
+        if (RenderComponent === "cards") return <CardsContainer />
         else if (RenderComponent === "profile") return <Profile />;
         else return <div className="w-5/6 mb-4 mx-auto bg-white rounded-2xl shadow dark:border md:mt-4 xl:p-0 dark:bg-gray-800 dark:border-gray-900">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -109,4 +109,4 @@ const NavigationHeader: React.FC = () => {
     );
 };
 
-export default NavigationHeader;
+export default UserNavigationHeader;

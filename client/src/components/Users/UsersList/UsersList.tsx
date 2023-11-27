@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import IUser from '../../../interfaces/IUser';
+import IUser from '../../../interfaces/Auth/IUser';
 import axios from 'axios';
 import { API_URL } from '../../../main';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { AiFillCreditCard } from 'react-icons/ai';
-import CreditCards from '../UserCreditCards/CreditCards';
+import CreditCardsPerUserModal from '../../PopUps/CreditCardsPerUser/CreditCardsPerUserModal';
 
 const UsersList: React.FC = () => {
     const [data, setData] = useState<IUser[]>([]);
@@ -44,7 +44,7 @@ const UsersList: React.FC = () => {
 
     // Function to show all credits card registered by user
     function OpenCardsInfo(uid?: number): void {
-        setModal(<CreditCards uid={uid} ModalClose={ModalClose} RefreshDataBackground={Refresher}/>);
+        setModal(<CreditCardsPerUserModal uid={uid} ModalClose={ModalClose} RefreshDataBackground={Refresher}/>);
     }
 
     return (

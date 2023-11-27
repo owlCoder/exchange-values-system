@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import IAccountsTableData from '../../interfaces/IAccountsTableData';
+import IAccountsTableData from '../../../interfaces/CurrentAccount/IAccountsTableData';
 import { TbTransferVertical } from 'react-icons/tb';
 import { AiOutlineTransaction } from 'react-icons/ai';
-import ICurrentAccount from '../../interfaces/ICurrentAccount';
-import { GetAccountsByCardNumber } from '../../service/CurrentAccountService';
+import ICurrentAccount from '../../../interfaces/CurrentAccount/ICurrentAccount';
+import { GetAccountsByCardNumber } from '../../../service/CurrentAccountService';
 
 const CurrentAccountsPerCreditCard: React.FC<IAccountsTableData> = ({ card_number, verified, refresh, renderExchangeFundsPopup, renderTransferFundsPopup }) => {
     const [loading, setLoading] = useState<boolean>(true);

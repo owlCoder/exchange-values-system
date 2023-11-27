@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient, { Socket } from 'socket.io-client';
-import { API_URL } from '../../../main';
-import ITransaction from '../../../interfaces/ITransaction';
-import { showErrorToast, showSuccessToast, showInfoToast, showWarningToast } from '../../ToastNotification/Toast';
+import { API_URL } from '../../main';
+import ITransaction from '../../interfaces/Transaction/ITransaction';
+import { showErrorToast, showSuccessToast, showInfoToast, showWarningToast } from '../Toast/Toast';
 import { ToastContainer } from 'react-toastify';
-import GraphComponent from '../../RealTimeGraph/Graph';
+import Graph from '../Graph/Graph';
 
 const Transactions: React.FC = () => {
   const [data, setData] = useState<ITransaction[]>([]);
@@ -52,7 +52,7 @@ const Transactions: React.FC = () => {
                 Real-Time Transactions
               </h3>
             </div>
-                <GraphComponent data={data} />
+                <Graph data={data} />
           </div>
         </div>
       </div>

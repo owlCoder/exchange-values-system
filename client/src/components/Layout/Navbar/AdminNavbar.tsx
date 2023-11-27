@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { LogOut } from "../../../service/AuthenticationService";
 import { useNavigate } from "react-router-dom";
-import CreateUser from "../../Admin/CreateUser/CreateUser";
-import UsersList from "../../Admin/UsersList/UsersList";
-import Transactions from "../../Admin/Transactions/Transactions";
+import CreateUser from "../../Forms/CreateUser/CreateUser";
+import UsersList from "../../Users/UsersList/UsersList";
+import Transactions from "../../Transactions/Transactions";
 import { AiOutlineLogout } from "react-icons/ai";
 
-const NavigationHeader: React.FC = () => {
+const AdminNavigationHeader: React.FC = () => {
     const navigate = useNavigate();
     const [RenderComponent, setRenderComponent] = 
                 useState<"transactions" | "users" | "create">("transactions");
@@ -96,4 +96,4 @@ const NavigationHeader: React.FC = () => {
     );
 };
 
-export default NavigationHeader;
+export default AdminNavigationHeader;

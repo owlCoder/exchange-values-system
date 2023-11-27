@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import ITransaction from '../../interfaces/ITransaction';
+import ITransaction from '../../interfaces/Transaction/ITransaction';
 
 interface GraphComponentProps {
   data: ITransaction[];
 }
 
-const GraphComponent: React.FC<GraphComponentProps> = ({ data }) => {
+const Graph: React.FC<GraphComponentProps> = ({ data }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -81,4 +81,4 @@ const GraphComponent: React.FC<GraphComponentProps> = ({ data }) => {
   );
 };
 
-export default GraphComponent;
+export default Graph;

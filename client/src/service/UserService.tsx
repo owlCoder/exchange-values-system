@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import IUser from '../interfaces/IUser';
 import { API_URL } from '../main';
+import IUser from '../interfaces/Auth/IUser';
 
 export async function CreateUserAccount(new_user: IUser): Promise<string> {
   try {

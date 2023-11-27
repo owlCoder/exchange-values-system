@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { GetUsersCreditCards } from '../../../service/CreditCardsService';
-import ICreditCardData from '../../../interfaces/ICreditCardData';
-import CardSlider from '../../CreditCardSlider/CardSlider';
+import ICreditCardData from '../../../interfaces/CreditCards/ICreditCardData';
+import CreditCardsSlider from '../CreditCardsSlider/CreditCardsSlider';
 
 const CardsContainer: React.FC = () => {
     const { currentUser, setUser } = useAuth();
@@ -46,7 +46,7 @@ const CardsContainer: React.FC = () => {
                     <h2 className="text-3xl font-semibold dark:text-white -mt-10 text-center mb-8 pt-6">
                         Credit Cards
                     </h2>
-                    <CardSlider cards={cards} />
+                    <CreditCardsSlider cards={cards} />
                 </>
             ) : null}
         </div>

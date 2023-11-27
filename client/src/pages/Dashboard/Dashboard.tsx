@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LogOut, Token } from "../../service/AuthenticationService";
-import PendingVerification from "../../components/PendingVerification/PendingVerification";
-import Verification from "../../components/Verification/Verification";
+import PendingVerification from "../../components/Forms/PendingUserVerification/PendingVerification";
+import Verification from "../../components/Forms/Verification/Verification";
 import { IsExistCreditCardPerUser } from "../../service/CreditCardsService";
 import { useAuth } from "../../contexts/AuthContext";
-import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../../components/Layout/LoadingSpinner/LoadingSpinner";
 
 const Dashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);

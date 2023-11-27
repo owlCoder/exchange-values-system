@@ -1,4 +1,4 @@
-import ICurrentUser from "../../interfaces/ICurrentUser";
+import ICurrentUser from "../../interfaces/Auth/ICurrentUser";
 
 const isICurrentUser = (obj: any): obj is ICurrentUser => (
     typeof obj === 'object' &&

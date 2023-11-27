@@ -2,16 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import PaymentCard from '../PaymentCard/PaymentCard';
-import CardSliderData from '../../interfaces/ICardSliderData';
+import CreditCard from '../CreditCard/CreditCard';
+import CardSliderData from '../../../interfaces/CreditCards/ICardSliderData';
+import ICreditCardData from '../../../interfaces/CreditCards/ICreditCardData';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { GoBlocked } from 'react-icons/go';
-import TopUpBalance from '../Popup/TopUpBalance/TopUpBalance';
-import ICreditCardData from '../../interfaces/ICreditCardData';
-import AccountsTable from '../AccountsTable/AccountsTable';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
-import ExchangeFunds from '../Popup/ExchangeFunds/ExchangeFunds';
-import TransferFunds from '../Popup/TransferFunds/TransferFunds';
+import TopUpBalance from '../../PopUps/TopUpBalance/TopUpBalance';
+import ExchangeFunds from '../../PopUps/ExchangeFunds/ExchangeFunds';
+import TransferFunds from '../../PopUps/TransferFunds/TransferFunds';
+import CurrentAccountsPerCreditCard from '../../CurrentAccounts/CurrentAccountsPerCreditCard/CurrentAccountsPerCreditCard';
+import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 
 const CreditCardsSlider: React.FC<CardSliderData> = ({ cards }) => {
     const sliderRef = useRef<Slider>(null);
@@ -28,7 +28,7 @@ const CreditCardsSlider: React.FC<CardSliderData> = ({ cards }) => {
         setLoading(true);
         setTimeout(() => {
             setAccountsTable(
-                <AccountsTable
+                <CurrentAccountsPerCreditCard
                     card_number={cards[index].card_number}
                     verified={cards[index].verified}
                     refresh={refresh}
@@ -125,7 +125,7 @@ const CreditCardsSlider: React.FC<CardSliderData> = ({ cards }) => {
                 >
                     {cards.map((card: ICreditCardData, index: number) => (
                         <div key={index}>
-                            <PaymentCard
+                            <CreditCard
                                 card_number={card.card_number}
                                 cardholder_name={card.cardholder_name}
                                 expiry_date={card.expiry_date}

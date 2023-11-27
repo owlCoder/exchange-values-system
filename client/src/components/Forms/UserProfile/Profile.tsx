@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { MdClear } from 'react-icons/md';
-import IUser from '../../../interfaces/IUser';
+import IUser from '../../../interfaces/Auth/IUser';
 import { GetUserAccount, UpdateUserAccount } from '../../../service/UserService';
-import Info from '../../Popup/Informative/Info';
+import Info from '../../PopUps/Informative/Info';
 import { useNavigate } from 'react-router-dom';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { useAuth } from '../../../contexts/AuthContext';
 import isUser from '../../../utils/User/TypeValidator';
 import { hashPassword } from '../../../service/CryptoHasherService';

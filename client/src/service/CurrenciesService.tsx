@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../main';
-import ICurrency from '../interfaces/ICurrency';
+import ICurrency from '../interfaces/CurrentAccount/ICurrency';
 
 export async function GetCurrencyCodes(): Promise<string[] | []> {
   try {

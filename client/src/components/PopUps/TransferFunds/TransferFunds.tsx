@@ -1,12 +1,12 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import ITransferFundsData from '../../../interfaces/ITransferFundsData';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
-import ITransferFundsPopup from '../../../interfaces/ITransferFundsPopUp';
+import ITransferFundsData from '../../../interfaces/TransferFunds/ITransferFundsData';
+import ITransferFundsPopUp from '../../../interfaces/TransferFunds/ITransferFundsPopUp';
+import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { TbTransferVertical } from 'react-icons/tb';
 import { useAuth } from '../../../contexts/AuthContext';
 import { Transfer } from '../../../service/TransactionService';
 
-const TransferFunds: React.FC<ITransferFundsPopup> = ({ account_id, balance, currency, closeModalMethod, onRefresh }) => {
+const TransferFunds: React.FC<ITransferFundsPopUp> = ({ account_id, balance, currency, closeModalMethod, onRefresh }) => {
     const { currentUser } = useAuth();
 
     const initialFormData: ITransferFundsData = {

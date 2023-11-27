@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Token } from '../../service/AuthenticationService';
-import NavigationBar from '../../components/Navbar/Admin/Navbar';
+import LoadingSpinner from '../../components/Layout/LoadingSpinner/LoadingSpinner';
+import AdminNavigationHeader from '../../components/Layout/Navbar/AdminNavbar';
 
 const Administrator: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -57,7 +57,7 @@ const Administrator: React.FC = () => {
         <LoadingSpinner />
     ) : currentUser ? (
         <main className="bg-gray-100 dark:bg-gray-900 h-screen">
-            <NavigationBar />
+            <AdminNavigationHeader />
         </main>
     ) : (
         <div></div>

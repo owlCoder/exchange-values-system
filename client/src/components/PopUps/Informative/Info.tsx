@@ -1,5 +1,5 @@
 import React from 'react';
-import IInfoModal from '../../../interfaces/IInfoModal';
+import IInfoModal from '../../../interfaces/PopUp/IInfoModal';
 
 const Info: React.FC<IInfoModal> = ({ title, closeModalMethod }) => {
     return (

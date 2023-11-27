@@ -1,10 +1,10 @@
 import { AiOutlineLogin } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import { LogIn } from "../../service/AuthenticationService";
-import ILogin from "../../interfaces/ILogin";
+import { LogIn } from "../../../service/AuthenticationService";
+import ILogin from "../../../interfaces/Auth/ILogin";
 import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import isICurrentUser from "../../utils/CurrentUser/TypeValidator";
+import { useAuth } from "../../../contexts/AuthContext";
+import isICurrentUser from "../../../utils/CurrentUser/TypeValidator";
 import React from "react";
 
 const LoginForm = () => {

@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import ITopUpPopup from '../../../interfaces/ITopUpPopup';
+import ITopUpPopup from '../../../interfaces/TopUpAccount/ITopUpPopup';
+import ITopUpAccountData from '../../../interfaces/TopUpAccount/ITopUpAccountData';
+import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { GetCurrencyCodes } from '../../../service/CurrenciesService';
-import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { AiOutlineArrowUp } from 'react-icons/ai';
-import ITopUpAccountData from '../../../interfaces/ITopUpAccountData';
 import { TopUp } from '../../../service/CurrentAccountService';
 
 const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMethod, onRefresh }) => {

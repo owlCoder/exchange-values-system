@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
-import { useAuth } from '../../contexts/AuthContext';
-import { isCardNumberValid, isCVVValid, isExpiryDateValid } from '../../utils/CreditCard/DataValidator';
-import ICreditCardData from '../../interfaces/ICreditCardData';
-import { SaveCreditCardData } from '../../service/CreditCardsService';
+import { useAuth } from '../../../contexts/AuthContext';
+import { isCVVValid, isCardNumberValid, isExpiryDateValid } from '../../../utils/CreditCard/DataValidator';
+import ICreditCardData from '../../../interfaces/CreditCards/ICreditCardData';
+import { SaveCreditCardData } from '../../../service/CreditCardsService';
 
-const CreditCardForm: React.FC = () => {
+const CreditCardAddForm: React.FC = () => {
   const { currentUser } = useAuth();
 
   const initialFormData: ICreditCardData = {
@@ -173,4 +173,4 @@ const CreditCardForm: React.FC = () => {
   );
 };
 
-export default CreditCardForm;
+export default CreditCardAddForm;

@@ -1,4 +1,4 @@
-import ITransferFundsData from "./ITransferFundsData";
+import ITransferFundsData from "../TransferFunds/ITransferFundsData";
 
 interface ITransaction extends ITransferFundsData {
     id: number;

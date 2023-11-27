@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import ILogin from '../interfaces/ILogin';
-import ICurrentUser from '../interfaces/ICurrentUser';
+import ILogin from '../interfaces/Auth/ILogin';
+import ICurrentUser from '../interfaces/Auth/ICurrentUser';
 import { API_URL } from '../main';
 
 export async function Token(): Promise<boolean> {
