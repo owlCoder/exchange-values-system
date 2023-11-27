@@ -84,13 +84,6 @@ def process_on_hold_transactions():
                             sender = get_user_by_id(sender_account.uid)
                             receiver = get_user_by_id(receiver_account.uid)
 
-                            # Get the shared EmailSender instance
-                            email_sender = get_email_sender_instance()
-
-                            # Put emails into queue
-                            email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
-                            email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
-
                             # Add currency to dictonary
                             transaction = transaction.serialize()
                             transaction["currency"] = currency
@@ -100,6 +93,13 @@ def process_on_hold_transactions():
 
                             # Emit transaction status update
                             socketio.emit('updated_data', live_update, namespace="/api/realtime")
+                            
+                            # Get the shared EmailSender instance
+                            email_sender = get_email_sender_instance()
+
+                            # Put emails into queue
+                            email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
+                            email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
                         except Exception as e:
                             db.session.rollback()
                                 

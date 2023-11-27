@@ -5,6 +5,7 @@ import ILogin from "../../interfaces/ILogin";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import isICurrentUser from "../../utils/CurrentUser/TypeValidator";
+import React from "react";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');

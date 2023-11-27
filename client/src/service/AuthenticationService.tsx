@@ -1,12 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import ILogin from '../interfaces/ILogin';
 import ICurrentUser from '../interfaces/ICurrentUser';
-import { API_URL } from '..';
+import { API_URL } from '../main';
 
-/**
- * Checks the token validity and updates user verification status.
- * @returns {Promise<boolean>} A Promise resolving to a boolean value indicating the token verification success.
- */
 export async function Token(): Promise<boolean> {
   try {
     const storedUser = localStorage.getItem('currentUser');
@@ -39,7 +35,7 @@ export async function Token(): Promise<boolean> {
       };
 
       localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-      
+
       return true;
     } else {
       return false;
@@ -49,12 +45,6 @@ export async function Token(): Promise<boolean> {
   }
 }
 
-/**
- * Logs in a user with provided credentials.
- * @param {ILogin} credentials - User credentials for login.
- * @returns {Promise<ICurrentUser>} A Promise resolving to the current user's information if login is successful.
- * @throws {Error} Throws an error if login fails.
- */
 export async function LogIn(credentials: ILogin): Promise<ICurrentUser> {
   try {
     const response: AxiosResponse = await axios.post(API_URL + 'auth0/', credentials, {
@@ -73,12 +63,6 @@ export async function LogIn(credentials: ILogin): Promise<ICurrentUser> {
   }
 }
 
-/**
- * Logs out the current user.
- * @returns {Promise<boolean>} A Promise resolving to a boolean value indicating the success of logout.
- * If no user data is found in localStorage, it returns true immediately without making an API call.
- * @throws {Error} Throws an error if there's an issue during logout process.
- */
 export async function LogOut(): Promise<boolean> {
   try {
     const storedUser = localStorage.getItem('currentUser');
@@ -87,10 +71,8 @@ export async function LogOut(): Promise<boolean> {
       const currentUser = JSON.parse(storedUser);
       const { uid, token } = currentUser;
 
-      // Remove the user from localStorage
       localStorage.removeItem('currentUser');
 
-      // Make a POST request to log the user out
       const response: AxiosResponse = await axios.post(API_URL + 'auth0/logout/', { uid, token }, {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8',
@@ -99,11 +81,9 @@ export async function LogOut(): Promise<boolean> {
 
       return response.status === 200;
     } else {
-      // If there's no user data in localStorage, return true without making an API call
       return true;
     }
   } catch (error) {
-    // Handle errors by removing user data from localStorage and rejecting the promise
     localStorage.removeItem('currentUser');
     throw error;
   }

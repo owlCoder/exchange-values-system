@@ -21,7 +21,7 @@
 }
 
 .bgw {
-  background-image: url('../public/bg.jpg');
+  background-image: url('bg.jpg');
 }
 
 /* Spinner spining animation */

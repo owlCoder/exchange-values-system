@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient, { Socket } from 'socket.io-client';
-import { API_URL } from '../../..';
+import { API_URL } from '../../../main';
 import ITransaction from '../../../interfaces/ITransaction';
 import { showErrorToast, showSuccessToast, showInfoToast, showWarningToast } from '../../ToastNotification/Toast';
 import { ToastContainer } from 'react-toastify';

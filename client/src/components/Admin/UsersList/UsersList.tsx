@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import IUser from '../../../interfaces/IUser';
 import axios from 'axios';
-import { API_URL } from '../../..';
+import { API_URL } from '../../../main';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import { AiFillCreditCard } from 'react-icons/ai';
 import CreditCards from '../UserCreditCards/CreditCards';
