@@ -5,31 +5,34 @@ import { showErrorToast, showSuccessToast, showInfoToast, showWarningToast } fro
 import { ToastContainer } from 'react-toastify';
 import Graph from '../Graph/Graph';
 import axios from 'axios';
+import socketIOClient, { Socket } from 'socket.io-client';
 
 const Transactions: React.FC = () => {
   let run = 0;
   const [data, setData] = useState<ITransaction[]>([]);
-
+  
   useEffect(() => {
-    ShowInfo();
+    const socket: Socket = socketIOClient("http://localhost:5000/");
 
-    const fetchData = async (data: any) => {
-      try {
-        const response = await axios.get(API_URL + `realtime?lastData=${data}`);
-        if (response.status === 200) {
-          const result = response.data;
-          console.log('Received data:', result.data);
-          // Process the received data, update UI, etc.
-          fetchData(result.data); // Initiate the next request
-        } else {
-          showErrorToast('RealTime Transactions System service is offline');
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        showErrorToast('RealTime Transactions System service is offline');
-      }
+    console.log("Connection to realtime service...")
+
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+
+    socket.on('live', (data: any) => {
+      console.table(data)
+    });
+
+    socket.on('disconnect', () => {
+      console.log('RealTime transaction systems service is offline');
+    });
+
+    // Cleanup on unmount
+    return () => {
+      socket.disconnect();
     };
-  }, []);
+  }, []); 
 
   const ShowInfo = (): void => {
     if(run < 1) {

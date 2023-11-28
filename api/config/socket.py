@@ -1,13 +1,11 @@
-from flask import Blueprint, request, jsonify
-import time
+from flask_socketio import SocketIO
 
-realtime_blueprint = Blueprint("realtime_blueprint", __name__)
-realtime_data = []
+socket_io = SocketIO()
 
-class TransactionsUpdates:
-    @realtime_blueprint.route('/api/realtime', methods=['GET'])
-    def wait_for_data():
-        while True:
-            if realtime_data != request.args.get('lastData'):
-                return jsonify({"data": realtime_data})
-            time.sleep(1)
+@socket_io.on("connect")
+def connection():
+    print("Connected!")
+
+@socket_io.on("disconnect")
+def connection():
+    print("Disconnected!")
