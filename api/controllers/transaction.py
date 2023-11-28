@@ -6,6 +6,7 @@ from controllers.user import get_user_by_id
 from services.email_message import transaction_message
 from services.email_service import get_email_sender_instance
 from config.socket import socketio
+from config.socket import realtime_data
 
 # Function to create a new transaction record using db.session
 def create_transaction(sender_uid, sender_account_id, amount, receiver_account_number, receiver_email, receiver_name, receiver_surname, approved):
@@ -89,18 +90,17 @@ def process_on_hold_transactions():
                             transaction["currency"] = currency
                             
                             # Convert the dictionary to a JSON string
-                            live_update = json.dumps(transaction)
+                            realtime_data.append(transaction)
 
-                            # Emit transaction status update
-                            socketio.emit('updated_data', live_update, namespace="/api/realtime")
-                            
                             # Get the shared EmailSender instance
                             email_sender = get_email_sender_instance()
 
                             # Put emails into queue
-                            email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
-                            email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
+                            #email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
+                            #email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
                         except Exception as e:
+                            import traceback
+                            traceback.print_exc()
                             db.session.rollback()
                                 
                 # Commit changes to database

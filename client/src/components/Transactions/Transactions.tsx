@@ -10,23 +10,29 @@ const Transactions: React.FC = () => {
   const [data, setData] = useState<ITransaction[]>([]);
 
   useEffect(() => {
-    const socket: Socket = socketIOClient(API_URL + "realtime");
+    const socket: Socket = socketIOClient(API_URL);
     socket.on('connect', () => {
       showInfoToast("Connecting to Transactions System service");
-      setTimeout(() => showSuccessToast('Connected to Transactions System service'), 5500);
+      setTimeout(() => showSuccessToast('Connected to Transactions System service'), 3500);
     });
 
-    socket.on('updated_data', (transaction) => {
-      var new_transaction: ITransaction = JSON.parse(transaction);
-      setData(data => [...data, new_transaction]);
+    socket.on('updated_data', transaction => {
+      if (transaction.startsWith("No")) {
+        showInfoToast(transaction);
+      }
+      else {
+        console.log(transaction);
 
-      if(new_transaction.approved)
-        showSuccessToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
-                                   ${new_transaction.receiver_email} has been approved`);
-      else
-        showWarningToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
-                                   ${new_transaction.receiver_email} has been denied`);
+        // var new_transaction: ITransaction = JSON.parse(transaction);
+        // setData(data => [...data, new_transaction]);
 
+        // if (new_transaction.approved)
+        //   showSuccessToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
+        //                            ${new_transaction.receiver_email} has been approved`);
+        // else
+        //   showWarningToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
+        //                            ${new_transaction.receiver_email} has been denied`);
+      }
     })
 
     socket.on('disconnect', () => {
@@ -52,7 +58,7 @@ const Transactions: React.FC = () => {
                 Real-Time Transactions
               </h3>
             </div>
-                <Graph data={data} />
+            <Graph data={data} />
           </div>
         </div>
       </div>

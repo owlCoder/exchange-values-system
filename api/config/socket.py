@@ -12,4 +12,7 @@ class RealTimeNamespace(Namespace):
     def on_disconnect(self):
         print('Client disconnected from realtime updates service')
 
-socketio.on_namespace(RealTimeNamespace('/api/realtime'))
+socketio.on_namespace(RealTimeNamespace('/api/'))
+
+# To emit all in-progress transactions
+realtime_data = []
