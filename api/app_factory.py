@@ -1,8 +1,8 @@
-from flask import Flask
+import time
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from services.transcation_proccessing import start_schedule_background
 
-from config.socket import socketio
 from config.database import db
 from config.config import ALLOWED_CLIENT_ORIGIN
 
@@ -13,6 +13,7 @@ from routes.user import user_blueprint
 from routes.token import token_blueprint
 from routes.currencies import currencies_blueprint
 from routes.transaction import transaction_blueprint
+from config.socket import realtime_blueprint
 
 def create_app():
     app = Flask(__name__)
@@ -24,9 +25,6 @@ def create_app():
     # Initialize database engine
     db.init_app(app)
     
-    # Initialize SocketIO for real-time updates
-    socketio.init_app(app, cors_allowed_origins=ALLOWED_CLIENT_ORIGIN)
-    
     # Register blueprints
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(user_blueprint)
@@ -35,7 +33,8 @@ def create_app():
     app.register_blueprint(current_account_blueprint)
     app.register_blueprint(currencies_blueprint)
     app.register_blueprint(transaction_blueprint)
-    
+    app.register_blueprint(realtime_blueprint)
+
     # Start Transaction System service in background
     start_schedule_background(app)
     

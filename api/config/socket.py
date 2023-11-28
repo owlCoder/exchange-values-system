@@ -1,18 +1,13 @@
-from flask_socketio import Namespace
-from flask_socketio import SocketIO
+from flask import Blueprint, request, jsonify
+import time
 
-# Define new realtime socket
-socketio = SocketIO()
-
-# Define a custom namespace
-class RealTimeNamespace(Namespace):
-    def on_connect(self):
-        print('Client connected to realtime updates service')
-
-    def on_disconnect(self):
-        print('Client disconnected from realtime updates service')
-
-socketio.on_namespace(RealTimeNamespace('/api/'))
-
-# To emit all in-progress transactions
+realtime_blueprint = Blueprint("realtime_blueprint", __name__)
 realtime_data = []
+
+class TransactionsUpdates:
+    @realtime_blueprint.route('/api/realtime', methods=['GET'])
+    def wait_for_data():
+        while True:
+            if realtime_data != request.args.get('lastData'):
+                return jsonify({"data": realtime_data})
+            time.sleep(1)

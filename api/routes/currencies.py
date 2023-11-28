@@ -3,7 +3,7 @@ from services.currencies_service import *
 
 currencies_blueprint = Blueprint('currencies_blueprint', __name__)
 
-class CurrenciesBlueprintDocumentation:
+class CurrenciesBlueprint:
     @currencies_blueprint.route('/api/currencies', methods=['GET'])
     def get_available_currencies():
         currencies = get_available_currencies()

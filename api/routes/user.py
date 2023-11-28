@@ -6,7 +6,7 @@ from services.password_hasher import hash_method
 
 user_blueprint = Blueprint('user_blueprint', __name__)
 
-class UserBlueprintDocumentation:
+class UserBlueprint:
     @user_blueprint.route('/api/user/create', methods=['POST'])
     def create_user():
         new_user_data = request.get_json()

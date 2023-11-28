@@ -3,7 +3,7 @@ from controllers.token import is_token_valid, delete_token
 
 token_blueprint = Blueprint('token_blueprint', __name__)
 
-class TokenBlueprintDocumentation:
+class TokenBlueprint:
     @token_blueprint.route('/api/token/check', methods=['POST'])
     def check_token():
         token = request.json.get('token')

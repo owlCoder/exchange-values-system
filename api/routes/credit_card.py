@@ -4,7 +4,7 @@ from controllers.credit_card import *
 
 credit_card_blueprint = Blueprint('credit_card_blueprint', __name__)
 
-class CreditCardBlueprintDocumentation:
+class CreditCardBlueprint:
     @credit_card_blueprint.route('/api/cards/create', methods=['POST'])
     def create_credit_card_route():
         data = request.get_json()

@@ -1,9 +1,10 @@
 from flask import Blueprint, request
 from services.password_hasher import hash_method
 from services.auth_service import auth_user, unauth_user
+
 auth_blueprint = Blueprint("auth_blueprint", __name__)
 
-class AuthBlueprintDocumentation:
+class AuthBlueprint:
     @auth_blueprint.route('/api/auth0/', methods=["POST"])
     def login():
         credentials = request.get_json()
