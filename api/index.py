@@ -1,6 +1,6 @@
 from app_factory import create_app
-from config.socket import socketio
+from config.socket import socket_io
 
 if __name__ == '__main__':
     app = create_app()
-    socketio.run(app, debug=True)
+    socket_io.run(app, debug=True, port=5000)

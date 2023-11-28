@@ -112,7 +112,7 @@ Before you can run the Flask API, you need to activate your virtual environment.
 To start the Flask API, run the following command within the activated virtual environment:
 
 ```bash
-python index.py
+flask --app index.py run --debug
 ```
 
 This will start the development server, and your API will be accessible at `http://localhost:5000/`.

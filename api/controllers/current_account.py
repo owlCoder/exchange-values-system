@@ -1,27 +1,9 @@
 from decimal import Decimal
-from services.account_number_generator import generate_account_number
 from models.current_account import CurrentAccount
 from config.database import db
 
 # Method to create a new current account
 def create_current_account(account_number, balance, currency, card_number, uid):
-    """
-    Creates a new current account.
-
-    Args:
-        account_number (str): The account number of the current account.
-        balance (float): The initial balance in the account.
-        currency (str): The currency type of the account.
-        card_number (str): The associated credit card number.
-        uid (int): The user ID associated with the account.
-
-    Returns:
-        True or False: Returns True if the account is created successfully,
-                     otherwise returns False.
-
-    Example:
-        is_created = create_current_account("1234567890", 1000.00, "USD", "1234567890123456", 1)
-    """
     try:
         new_account = CurrentAccount(
             account_number=account_number,
@@ -38,21 +20,7 @@ def create_current_account(account_number, balance, currency, card_number, uid):
         return False
 
 # Method to check if an account exists based on UID and currency
-def check_account_exists(uid, card_number, currency):
-    """
-    Checks if an account exists based on user ID, card number and currency.
-
-    Args:
-        uid (int): The user ID associated with the account.
-        card_number (str): The user card number associated with the account.
-        currency (str): The currency type of the account.
-
-    Returns:
-        int or None: Returns the account ID if the account exists, otherwise returns None.
-
-    Example:
-        account_id = check_account_exists(1, "3434 3434 5667 2223", "USD")
-    """
+def check_account_exists_by_uid_cardnumber_currency(uid, card_number, currency):
     try:
         account = db.session.query(CurrentAccount).filter_by(card_number=card_number, uid=uid, currency=currency).first()
         return account.account_id if account else None
@@ -60,7 +28,7 @@ def check_account_exists(uid, card_number, currency):
         return None
     
 # Method to check if an account exists based on UID and currency
-def get_account_number(uid, card_number):
+def get_account_number_by_uid_and_cardnumber(uid, card_number):
     try:
         account = db.session.query(CurrentAccount).filter_by(card_number=card_number, uid=uid).first()
         return account
@@ -68,18 +36,6 @@ def get_account_number(uid, card_number):
         return None
 
 def get_current_account_by_id(account_id):
-    """
-    Checks if a current account exists based on the account ID.
-
-    Args:
-        account_id (int): The account ID to check.
-
-    Returns:
-        bool: Returns an account if the account exists, otherwise returns None.
-
-    Example:
-        account_exists = check_current_account_exists(123)
-    """
     try:
         # Query the database to find the account with the given account ID
         account = db.session.query(CurrentAccount).filter_by(account_id=account_id).first()
@@ -89,19 +45,6 @@ def get_current_account_by_id(account_id):
 
 # Method to update the balance of an account by account ID
 def update_account_balance(account_id, amount):
-    """
-    Updates the balance of an account by account ID.
-
-    Args:
-        account_id (int): The unique identifier for the account.
-        amount (float): The new amout to be added in the account.
-
-    Returns:
-        bool: True if the account balance is successfully updated, otherwise False.
-
-    Example:
-        success = update_account_balance(1, 1500.00)
-    """
     try:
         account = db.session.query(CurrentAccount).get(account_id)
         if account:
@@ -115,7 +58,7 @@ def update_account_balance(account_id, amount):
         return False
 
 # Method to get account by account number
-def get_account_by_number(account_number):
+def get_account_by_account_number(account_number):
     try:
         account = db.session.query(CurrentAccount).filter_by(account_number=str(account_number).strip()).first()
         return account
@@ -131,26 +74,10 @@ def get_account_by_number_and_currency(account_number, currency):
         return None
 
 # Method to get all current accounts connected with credit card
-def get_all_current_accounts(card_number):
-    """
-    Retrieves all accounts associated with a specified credit card number.
-
-    Args:
-        card_number (str): The credit card number to search for.
-
-    Returns:
-        list or None: A list of CurrentAccount objects associated with the specified card_number.
-                      Returns None if an error occurs during the query.
-
-    Example:
-        accounts = get_all_current_accounts('1234567890123456')
-        if accounts:
-            for account in accounts:
-                print(f"Account ID: {account.account_id}, Balance: {account.balance}, Currency: {account.currency}")
-    """
+def get_all_current_accounts_by_cardnumber(card_number):
     try:
         accounts = db.session.query(CurrentAccount).filter(CurrentAccount.card_number == card_number).all()
-        return accounts
+        return [account.serialize() for account in accounts]
     except Exception as e:
         return None
 
@@ -164,7 +91,7 @@ def exchange_funds(account_id, new_balance, amount_to_exchange, currency_to_conv
         if float(account.balance) < float(amount_to_exchange) or float(amount_to_exchange) < 0.0:
             response['error'] = "Insufficient funds on the account"; response['code'] = 400
         else:
-            account_id_destination = check_account_exists(account.uid, account.card_number, currency_to_convert)
+            account_id_destination = check_account_exists_by_uid_cardnumber_currency(account.uid, account.card_number, currency_to_convert)
             
             # If current account already has account with convert currency then just update it
             if account_id_destination:

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import LoadingSpinner from '../../components/Layout/LoadingSpinner/LoadingSpinner';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Token } from '../../service/AuthenticationService';
-import Sidebar from '../../components/Navbar/User/Navbar';
+import UserNavigationHeader from '../../components/Layout/Navbar/UserNavbar';
 
 const User: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -57,7 +57,7 @@ const User: React.FC = () => {
         <LoadingSpinner />
     ) : currentUser ? (
         <main className="bg-gray-100 dark:bg-gray-900 h-screen pb-5">
-            <Sidebar />
+            <UserNavigationHeader />
         </main>
     ) : (
         <div></div>

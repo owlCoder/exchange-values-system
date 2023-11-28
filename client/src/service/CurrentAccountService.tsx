@@ -1,14 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import ITopUpAccountData from '../interfaces/ITopUpAccountData';
-import { API_URL } from '..';
-import ICurrentAccount from '../interfaces/ICurrentAccount';
-import IExchangeFundsData from '../interfaces/IExchangeFundsData';
+import { API_URL } from '../main';
+import ITopUpAccountData from '../interfaces/TopUpAccount/ITopUpAccountData';
+import ICurrentAccount from '../interfaces/CurrentAccount/ICurrentAccount';
+import IExchangeFundsData from '../interfaces/ExchangeFunds/IExchangeFundsData';
 
-/**
- * Tops up the account balance with provided data.
- * @param {ITopUpAccountData} data - Data for topping up the account balance.
- * @returns {Promise<string>} A Promise resolving to a status message ('OK' if successful, otherwise an error message).
- */
 export async function TopUp(data: ITopUpAccountData): Promise<string> {
   try {
     const response: AxiosResponse = await axios.post(API_URL + 'account/topup', data);
@@ -22,11 +17,6 @@ export async function TopUp(data: ITopUpAccountData): Promise<string> {
   }
 }
 
-/**
- * Retrieves accounts associated with a specific card number.
- * @param {string} card_number - Card number to retrieve associated accounts.
- * @returns {Promise<ICurrentAccount[]>} A Promise containing an array of current accounts or an empty array if unsuccessful.
- */
 export async function GetAccountsByCardNumber(card_number: string): Promise<ICurrentAccount[]> {
   try {
     const response: AxiosResponse<ICurrentAccount[]> = await axios.post(API_URL + `accounts/getAccountsByCard`, { card_number: card_number });
@@ -39,23 +29,14 @@ export async function GetAccountsByCardNumber(card_number: string): Promise<ICur
   }
 }
 
-/**
- * Function to exchange funds between currencies.
- * @param data - Object containing details required for the funds exchange.
- * @returns Promise<string> - A Promise resolving to a string indicating the status of the exchange.
- *
- * @remarks
- * This function sends a POST request to the API endpoint to exchange funds between currencies based on the provided data.
- */
 export async function Exchange(data: IExchangeFundsData): Promise<string> {
   try {
     const response: AxiosResponse = await axios.post(API_URL + 'account/exchange', data);
 
-    // Check if the response status is successful (201 - Created)
     if (response.status === 201) {
-      return 'OK'; // Exchange successful
+      return 'OK';
     } else {
-      return 'Failed to exchange currencies. Account balance won\'t be charged'; // Exchange failed
+      return 'Failed to exchange currencies. Account balance won\'t be charged';
     }
   } catch (error) {
     let err = error as AxiosError;
@@ -66,8 +47,8 @@ export async function Exchange(data: IExchangeFundsData): Promise<string> {
     try {
       errorMessage = JSON.parse(errorMessage).data;
     }
-    catch(error) { }
+    catch (error) { }
 
-    return Promise.resolve(errorMessage); // Reject with the error message
+    return Promise.resolve(errorMessage);
   }
 }

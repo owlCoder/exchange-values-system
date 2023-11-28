@@ -1,15 +1,11 @@
-from flask_socketio import Namespace
 from flask_socketio import SocketIO
 
-# Define new realtime socket
-socketio = SocketIO()
+socket_io = SocketIO()
 
-# Define a custom namespace
-class RealTimeNamespace(Namespace):
-    def on_connect(self):
-        print('Client connected to realtime updates service')
+@socket_io.on("connect")
+def connection():
+    print("Connected!")
 
-    def on_disconnect(self):
-        print('Client disconnected from realtime updates service')
-
-socketio.on_namespace(RealTimeNamespace('/api/realtime'))
+@socket_io.on("disconnect")
+def connection():
+    print("Disconnected!")
