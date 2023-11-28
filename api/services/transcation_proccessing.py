@@ -3,17 +3,13 @@ import threading
 import schedule
 import time
 from controllers.transaction import process_on_hold_transactions
-from config.socket import socketio, realtime_data
+from config.socket import realtime_data
 
 # Function to process transactions
 def background_task(app):
     with app.app_context():
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(('1.1.1.1', 80))  # Connect to a well-known IP address
-        remote_addr = s.getsockname()[0]  # Get the local IP address
-        s.close()
         log_message = 'Transactions System service is processing transactions'
-        print(f'{remote_addr} - - [{time.strftime("%d/%b/%Y %H:%M:%S")}] "{log_message}"')
+        print(f'127.0.0.1 - - [{time.strftime("%d/%b/%Y %H:%M:%S")}] "{log_message}"')
         process_on_hold_transactions()
         # print("============================ DATA ===============================")
         # print(realtime_data)

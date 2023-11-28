@@ -5,7 +5,6 @@ from controllers.current_account import *
 from controllers.user import get_user_by_id
 from services.email_message import transaction_message
 from services.email_service import get_email_sender_instance
-from config.socket import socketio
 from config.socket import realtime_data
 
 # Function to create a new transaction record using db.session
@@ -99,8 +98,6 @@ def process_on_hold_transactions():
                             #email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
                             #email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
                         except Exception as e:
-                            import traceback
-                            traceback.print_exc()
                             db.session.rollback()
                                 
                 # Commit changes to database

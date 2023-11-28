@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import socketIOClient, { Socket } from 'socket.io-client';
 import { API_URL } from '../../main';
 import ITransaction from '../../interfaces/Transaction/ITransaction';
 import { showErrorToast, showSuccessToast, showInfoToast, showWarningToast } from '../Toast/Toast';
@@ -8,9 +7,12 @@ import Graph from '../Graph/Graph';
 import axios from 'axios';
 
 const Transactions: React.FC = () => {
+  let run = 0;
   const [data, setData] = useState<ITransaction[]>([]);
 
   useEffect(() => {
+    ShowInfo();
+
     const fetchData = async (data: any) => {
       try {
         const response = await axios.get(API_URL + `realtime?lastData=${data}`);
@@ -20,46 +22,22 @@ const Transactions: React.FC = () => {
           // Process the received data, update UI, etc.
           fetchData(result.data); // Initiate the next request
         } else {
-          console.error('Failed to fetch data');
+          showErrorToast('RealTime Transactions System service is offline');
         }
       } catch (error) {
         console.error('Error fetching data:', error);
+        showErrorToast('RealTime Transactions System service is offline');
       }
     };
-    // const socket: Socket = socketIOClient(API_URL);
-    // socket.on('connect', () => {
-    //   showInfoToast("Connecting to Transactions System service");
-    //   setTimeout(() => showSuccessToast('Connected to Transactions System service'), 3500);
-    // });
-
-    // socket.on('updated_data', transaction => {
-    //   if (transaction.startsWith("No")) {
-    //     showInfoToast(transaction);
-    //   }
-    //   else {
-    //     console.log(transaction);
-
-    //     // var new_transaction: ITransaction = JSON.parse(transaction);
-    //     // setData(data => [...data, new_transaction]);
-
-    //     // if (new_transaction.approved)
-    //     //   showSuccessToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
-    //     //                            ${new_transaction.receiver_email} has been approved`);
-    //     // else
-    //     //   showWarningToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
-    //     //                            ${new_transaction.receiver_email} has been denied`);
-    //   }
-    // })
-
-    // socket.on('disconnect', () => {
-    //   showErrorToast('RealTime Transactions System service is offline');
-    // });
-
-    // // Cleanup on unmount
-    // return () => {
-    //   socket.disconnect();
-    // };
   }, []);
+
+  const ShowInfo = (): void => {
+    if(run < 1) {
+      showInfoToast("Connecting to Transactions System service");
+      setTimeout(() => showSuccessToast('Connected to Transactions System service'), 3500);
+      run = 1;
+    }
+  };
 
   return (
     <div>
