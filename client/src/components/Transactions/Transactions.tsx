@@ -4,7 +4,6 @@ import ITransaction from '../../interfaces/Transaction/ITransaction';
 import { showErrorToast, showSuccessToast, showInfoToast, showWarningToast } from '../Toast/Toast';
 import { ToastContainer } from 'react-toastify';
 import Graph from '../Graph/Graph';
-import axios from 'axios';
 import socketIOClient, { Socket } from 'socket.io-client';
 
 const Transactions: React.FC = () => {
@@ -12,20 +11,25 @@ const Transactions: React.FC = () => {
   const [data, setData] = useState<ITransaction[]>([]);
   
   useEffect(() => {
-    const socket: Socket = socketIOClient("http://localhost:5000/");
-
-    console.log("Connection to realtime service...")
+    const socket: Socket = socketIOClient(API_URL.replace('/api', ''));
 
     socket.on('connect', () => {
-      console.log('Connected to server');
+      ShowInfo();
     });
 
-    socket.on('live', (data: any) => {
-      console.table(data)
+    socket.on('live', (new_transaction: ITransaction) => {
+      setData(data => [...data, new_transaction]);
+
+      if(new_transaction.approved == "APPROVED")
+        showSuccessToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
+                                   ${new_transaction.receiver_email} has been approved`);
+      else
+        showWarningToast(`Transcation ${new_transaction.amount} ${new_transaction.currency} to
+                                   ${new_transaction.receiver_email} has been denied`);
     });
 
     socket.on('disconnect', () => {
-      console.log('RealTime transaction systems service is offline');
+      showErrorToast('RealTime transaction systems service is offline');
     });
 
     // Cleanup on unmount
@@ -37,7 +41,7 @@ const Transactions: React.FC = () => {
   const ShowInfo = (): void => {
     if(run < 1) {
       showInfoToast("Connecting to Transactions System service");
-      setTimeout(() => showSuccessToast('Connected to Transactions System service'), 3500);
+      setTimeout(() => showSuccessToast('Connected to Transactions System service'), 1000);
       run = 1;
     }
   };

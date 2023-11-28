@@ -115,16 +115,6 @@ def process_on_hold_transactions():
                         sender = get_user_by_id(sender_account.uid)
                         receiver = get_user_by_id(receiver_account.uid)
 
-                        # Add currency to dictonary
-                        transaction = transaction.serialize()
-                        transaction["currency"] = currency
-
-                        # Convert the dictionary to a JSON string
-                        socket_io.emit("live", transaction)
-                        
-                        # Between 2 emits add a little pause to prevent browser spam request filter activation
-                        time.sleep(0.5)
-
                         # Get the shared EmailSender instance
                         email_sender = get_email_sender_instance()
 
@@ -133,6 +123,16 @@ def process_on_hold_transactions():
                         # email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
                     except Exception as e:
                         db.session.rollback()
+
+            # Add currency to dictonary
+            transaction = transaction.serialize()
+            transaction["currency"] = currency
+
+            # Convert the dictionary to a JSON string
+            socket_io.emit("live", transaction)
+            
+            # Between 2 emits add a little pause to prevent browser spam request filter activation
+            time.sleep(0.5)
 
             # Commit changes to database
             db.session.commit()

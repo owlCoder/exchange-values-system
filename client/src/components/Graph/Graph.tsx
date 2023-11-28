@@ -27,7 +27,7 @@ const Graph: React.FC<GraphComponentProps> = ({ data }) => {
 
       data.forEach((transaction, index) => {
         const x = (index / data.length) * width;
-        const y = height - (transaction.amount * 0.1); // Scale the amount for visualization
+        const y = height - (transaction.amount < 100 ? transaction.amount * 10 : transaction.amount / 5); // Scale the amount for visualization
         ctx.lineTo(x, y);
       });
 
