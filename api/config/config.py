@@ -16,4 +16,4 @@ SQLALCHEMY_ECHO = False
 DEBUG = True  # Set to False for production
 
 # Allow requests from only whitelisted origins
-ALLOWED_CLIENT_ORIGIN = "http://localhost:3000"
+ALLOWED_CLIENT_ORIGIN = "*"
