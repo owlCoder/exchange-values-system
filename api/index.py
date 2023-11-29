@@ -1,6 +1,6 @@
 from app_factory import create_app
 from config.socket import socket_io
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 
 from services.transcation_proccessing import start_schedule_background
@@ -37,6 +37,15 @@ app.register_blueprint(credit_card_blueprint)
 app.register_blueprint(current_account_blueprint)
 app.register_blueprint(currencies_blueprint)
 app.register_blueprint(transaction_blueprint)
+
+@app.route('/')
+def index():
+    return jsonify({'message': 'Hello, this is your Flask API on Vercel!'})
+
+@app.route('/hello')
+def hello():
+    return jsonify({'message': 'Hello from Flask!'})
+
 
 # Start Transaction System service in background
 start_schedule_background(app)
