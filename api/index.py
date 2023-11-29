@@ -52,4 +52,4 @@ start_schedule_background(app)
 
 if __name__ == '__main__':
     app = create_app()
-    socket_io.run(app, debug=True, port=5000)
+    app.run(app, debug=True, port=5000)
