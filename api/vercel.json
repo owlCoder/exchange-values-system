@@ -1,26 +1,6 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/api/auth0/", "dest": "routes/auth_blueprint.py" },
-    { "src": "/api/auth0/logout/", "dest": "routes/auth_blueprint.py" },
-    { "src": "/api/cards/create", "dest": "routes/credit_card_blueprint.py" },
-    { "src": "/api/cards/checkByUid", "dest": "routes/credit_card_blueprint.py" },
-    { "src": "/api/cards/getCardsByUid", "dest": "routes/credit_card_blueprint.py" },
-    { "src": "/api/cards/updateVerified", "dest": "routes/credit_card_blueprint.py" },
-    { "src": "/api/currencies", "dest": "routes/currencies_blueprint.py" },
-    { "src": "/api/currencies/course", "dest": "routes/currencies_blueprint.py" },
-    { "src": "/api/account/topup", "dest": "routes/current_account_blueprint.py" },
-    { "src": "/api/accounts/getAccountsByCard", "dest": "routes/current_account_blueprint.py" },
-    { "src": "/api/account/exchange", "dest": "routes/current_account_blueprint.py" },
-    { "src": "/api/token/check", "dest": "routes/token_blueprint.py" },
-    { "src": "/api/token/delete", "dest": "routes/token_blueprint.py" },
-    { "src": "/api/transactions/create", "dest": "routes/transaction_blueprint.py" },
-    { "src": "/api/user/create", "dest": "routes/user_blueprint.py" },
-    { "src": "/api/user/<int:user_id>", "dest": "routes/user_blueprint.py" },
-    { "src": "/api/users", "dest": "routes/user_blueprint.py" },
-    { "src": "/api/user/<int:user_id>", "dest": "routes/user_blueprint.py" }
-  ],
   "builds": [
-    { "src": "index.py", "use": "@vercel/python" }
+    { "src": "/api/**/*.py", "use": "@vercel/python" }
   ]
 }

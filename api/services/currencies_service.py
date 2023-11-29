@@ -6,7 +6,7 @@ from services.caching_service import read_cached_data, write_cached_data, is_cac
 STATIC_FOLDER = "static"
 
 
-def get_available_currencies(force_refresh=False):
+def get_available_currency(force_refresh=False):
     cached_file = os.path.join(STATIC_FOLDER, "available_currencies.json")
 
     if not force_refresh and is_cache_valid(cached_file):
