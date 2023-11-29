@@ -12,10 +12,9 @@ def background_task(app):
     
 # Schedule the background task
 def schedule_background(app):
-    schedule.every(10).seconds.do(background_task, app)  # Run every 1 minute
+    schedule.every(60).seconds.do(background_task, app)  # Run every 1 minute
 
     while True:
-        #background_task(app)
         schedule.run_pending()
         time.sleep(5)
 
