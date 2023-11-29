@@ -1,15 +1,11 @@
-import os
-from flask import jsonify
-import requests
-import json
-from http import HTTPStatus
-from config.database import CURRENCY_API_URL
+from flask import json
+from http.server import BaseHTTPRequestHandler
 from services.currencies_service import get_available_currency
 
-STATIC_FOLDER = "static"
-
-def get_available_currencies(request):
-    return {
-        'status': HTTPStatus.OK,
-        'body': jsonify(get_available_currency())  # Replace with your currency data
-    }
+class handler(BaseHTTPRequestHandler):
+    def currency(self):
+        self.send_response(200)
+        self.send_header('Content-type','text/plain')
+        self.end_headers()
+        self.wfile.write((json.dumps(get_available_currency())).encode('utf-8'))
+        return
