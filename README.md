@@ -79,18 +79,6 @@ A virtual environment is a clean, isolated environment for your project's depend
 
    This will create a virtual environment named `venv` in your project directory.
 
-### Installing Dependencies
-
-To install the required dependencies for this project, you can use the `requirements.txt` file.
-
-1. Make sure your virtual environment is activated (see the next section on how to activate it).
-
-2. Run the following command to install the dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
 ### Activating the Virtual Environment
 
 Before you can run the Flask API, you need to activate your virtual environment.
@@ -106,6 +94,18 @@ Before you can run the Flask API, you need to activate your virtual environment.
    ```
 
    You should now see the virtual environment name in your command prompt or PowerShell, indicating that it's active.
+
+### Installing Dependencies
+
+To install the required dependencies for this project, you can use the `requirements.txt` file.
+
+1. Make sure your virtual environment is activated (see the next section on how to activate it).
+
+2. Run the following command to install the dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### Running the API
 
