@@ -50,7 +50,10 @@ def process_on_hold_transactions():
         for transaction in transactions:
             sender_account = get_current_account_by_id(transaction.sender_account_id)
             receiver_account = get_account_by_account_number(transaction.receiver_account_number)
-
+            
+            new_balance_receiver = 0.0
+            currency = sender_account.currency
+            
             # Check if current accounts exist and does sender has enough balance to send
             if sender_account is None or float(sender_account.balance) < float(
                 transaction.amount):
@@ -67,9 +70,7 @@ def process_on_hold_transactions():
                             sender_account.currency,
                         )
                     )
-                    new_balance_receiver = 0.0
-                    currency = sender_account.currency
-
+                    
                     try:
                         if account_id_in_receiver_currency is None:
                             new_account = CurrentAccount(
