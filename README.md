@@ -121,7 +121,7 @@ This will start the development server, and your API will be accessible at `http
 
 # Getting Started with React.JS
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Vite](youhttps://vitejs.dev/).
 
 ## Prerequisites
 
