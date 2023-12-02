@@ -22,7 +22,7 @@ def create_current_account(account_number, balance, currency, card_number, uid):
 # Method to check if an account exists based on UID and currency
 def check_account_exists_by_uid_cardnumber_currency(uid, card_number, currency):
     try:
-        account = db.session.query(CurrentAccount).filter_by(card_number=card_number, uid=uid, currency=currency).first()
+        account = db.session.query(CurrentAccount).filter(CurrentAccount.card_number==card_number, CurrentAccount.uid==uid, CurrentAccount.currency==currency).first()
         return account.account_id if account else None
     except Exception as e:
         return None
@@ -30,7 +30,7 @@ def check_account_exists_by_uid_cardnumber_currency(uid, card_number, currency):
 # Method to check if an account exists based on UID and currency
 def get_account_number_by_uid_and_cardnumber(uid, card_number):
     try:
-        account = db.session.query(CurrentAccount).filter_by(card_number=card_number, uid=uid).first()
+        account = db.session.query(CurrentAccount).filter(CurrentAccount.card_number==card_number, CurrentAccount.uid==uid).first()
         return account
     except Exception as e:
         return None
@@ -38,7 +38,7 @@ def get_account_number_by_uid_and_cardnumber(uid, card_number):
 def get_current_account_by_id(account_id):
     try:
         # Query the database to find the account with the given account ID
-        account = db.session.query(CurrentAccount).filter_by(account_id=account_id).first()
+        account = db.session.query(CurrentAccount).filter(CurrentAccount.account_id==account_id).first()
         return account
     except Exception as e:
         return None
@@ -60,7 +60,7 @@ def update_account_balance(account_id, amount):
 # Method to get account by account number
 def get_account_by_account_number(account_number):
     try:
-        account = db.session.query(CurrentAccount).filter_by(account_number=str(account_number).strip()).first()
+        account = db.session.query(CurrentAccount).filter(CurrentAccount.account_number==str(account_number).strip()).first()
         return account
     except Exception as e:
         return None
@@ -68,7 +68,7 @@ def get_account_by_account_number(account_number):
 # Method to get account id by account number and currency
 def get_account_by_number_and_currency(account_number, currency):
     try:
-        account = db.session.query(CurrentAccount).filter_by(account_number=account_number, currency=currency).first()
+        account = db.session.query(CurrentAccount).filter(CurrentAccount.account_number==account_number, CurrentAccount.currency==currency).first()
         return account.account_id if account else None
     except Exception as e:
         return None
