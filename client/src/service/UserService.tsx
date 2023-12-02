@@ -58,3 +58,16 @@ export async function GetUserAccount(uid: number): Promise<IUser | string> {
     throw new Error(`User doesn't exist. Check entered data`);
   }
 }
+
+export async function GetAllUsers(): Promise<IUser[]> {
+  try {
+    const response = await axios.get<IUser[]>(API_URL + 'users', {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};

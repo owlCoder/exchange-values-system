@@ -5,6 +5,7 @@ import { API_URL } from '../../../main';
 import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { AiFillCreditCard } from 'react-icons/ai';
 import CreditCardsPerUserModal from '../../PopUps/CreditCardsPerUser/CreditCardsPerUserModal';
+import { GetAllUsers } from '../../../service/UserService';
 
 const UsersList: React.FC = () => {
     const [data, setData] = useState<IUser[]>([]);
@@ -14,19 +15,13 @@ const UsersList: React.FC = () => {
     const fetchData = async (mode: boolean) => {
         setLoading(mode);
         try {
-            const response = await axios.get<IUser[]>(API_URL + 'users', {
-                headers: {
-                  'Content-Type': 'application/json;charset=UTF-8',
-                },
-              });
-            setData(response.data);
-        } catch (error) {
-            setData([]);
-        }
-        finally {
+            const userData = await GetAllUsers();
+            setData(userData);
+        } finally {
             setLoading(false);
         }
     };
+
 
     useEffect(() => {
         fetchData(true);
@@ -44,7 +39,7 @@ const UsersList: React.FC = () => {
 
     // Function to show all credits card registered by user
     function OpenCardsInfo(uid?: number): void {
-        setModal(<CreditCardsPerUserModal uid={uid} ModalClose={ModalClose} RefreshDataBackground={Refresher}/>);
+        setModal(<CreditCardsPerUserModal uid={uid} ModalClose={ModalClose} RefreshDataBackground={Refresher} />);
     }
 
     return (
@@ -121,8 +116,8 @@ const UsersList: React.FC = () => {
                                             </td>
                                             <td className="px-6 py-2">
                                                 <div className="flex flex-wrap my-2">
-                                                    <button onClick={() => {OpenCardsInfo(user.uid)}} className="px-5 py-1.5 bg-[#124191] text-white text-md rounded-lg hover:bg-blue-900">
-                                                        <AiFillCreditCard className="inline -mt-1 mr-2 text-2xl" /> 
+                                                    <button onClick={() => { OpenCardsInfo(user.uid) }} className="px-5 py-1.5 bg-[#124191] text-white text-md rounded-lg hover:bg-blue-900">
+                                                        <AiFillCreditCard className="inline -mt-1 mr-2 text-2xl" />
                                                         View Credit Cards Details</button>
                                                 </div>
                                             </td>

@@ -9,7 +9,6 @@ import LoadingSpinner from "../../components/Layout/LoadingSpinner/LoadingSpinne
 
 const Dashboard: React.FC = () => {
     const [loading, setLoading] = useState(true);
-    const [isAdmin ] = useState(false);
     const [verified, setVerified] = useState(false);
     const [pending, setPending] = useState(false);
     const { setUser } = useAuth();
@@ -93,7 +92,7 @@ const Dashboard: React.FC = () => {
                             Transaction Systems
                         </Link>
                          {/* Conditional rendering based on isAdmin, verified, and pending statuses */}
-                         {isAdmin ? null : verified ? null : pending ? <PendingVerification /> : <Verification />}
+                         {verified ? null : pending ? <PendingVerification /> : <Verification />}
                     </div>
                 </section>
             )}

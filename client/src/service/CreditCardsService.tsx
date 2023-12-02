@@ -70,29 +70,28 @@ export async function GetUsersCreditCards(uid: number | undefined): Promise<Arra
   }
 }
 
-export function ActivateCreditCard(card_number: string | undefined, uid: number | undefined): Promise<string> {
-  return new Promise<string>(async (resolve, reject) => {
-    try {
-      if (card_number !== undefined && uid !== undefined) {
-        const response = await axios.put(`${API_URL}cards/updateVerified`,
-          { card_number: card_number, verified: true, uid: uid },
-          {
-            headers: {
-              'Content-Type': 'application/json;charset=UTF-8',
-            },
-          }
-        );
+export async function ActivateCreditCard(card_number: string | undefined, uid: number | undefined): Promise<string> {
+  if (card_number === undefined || uid === undefined) {
+    throw new Error('Invalid card number or user ID');
+  }
 
-        if (response.status === 200) {
-          resolve('Success');
-        } else {
-          reject('Credit card couldn\'t be activated. Try again later.');
-        }
-      } else {
-        reject('Invalid card number or user ID');
-      }
-    } catch (error) {
-      reject('Credit card couldn\'t be activated. Try again later.');
+  try {
+    const response = await axios.put(`${API_URL}cards/updateVerified`, {
+      card_number,
+      verified: true,
+      uid,
+    }, {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+    });
+
+    if (response.status === 200) {
+      return 'Success';
+    } else {
+      throw new Error('Credit card couldn\'t be activated. Try again later.');
     }
-  });
+  } catch (error) {
+    throw new Error('Credit card couldn\'t be activated. Try again later.');
+  }
 }

@@ -32,7 +32,6 @@ const CreateUser: React.FC = () => {
     setError('');
     setLoading(true);
 
-
     // Call service to create new user account
     CreateUserAccount(formData)
       .then((response: string) => {
