@@ -60,7 +60,6 @@ const Profile: React.FC = () => {
         setLoading(true);
 
         // Call service to create new user account
-        console.log(new_data)
         UpdateUserAccount(new_data)
             .then((response: string) => {
                 if (response === 'Success') {
