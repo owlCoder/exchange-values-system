@@ -133,7 +133,7 @@ def process_on_hold_transactions():
             socket_io.emit("live", transaction)
             
             # Between 2 emits add a little pause to prevent browser spam request filter activation
-            time.sleep(0.1)
+            time.sleep(5.0)
 
             # Commit changes to database
             db.session.commit()
