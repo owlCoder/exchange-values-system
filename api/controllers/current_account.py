@@ -16,6 +16,8 @@ def create_current_account(account_number, balance, currency, card_number, uid):
         db.session.commit()
         return True
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         db.session.rollback()
         return False
 

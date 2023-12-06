@@ -26,6 +26,8 @@ def create_credit_card(data):
         db.session.commit()
         return True
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         db.session.rollback()
         return False
 

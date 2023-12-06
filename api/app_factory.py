@@ -1,8 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
 
-from services.transcation_proccessing import start_schedule_background
-
 from config.database import db
 from config.config import ALLOWED_CLIENT_ORIGIN
 
@@ -37,7 +35,4 @@ def create_app():
     app.register_blueprint(currencies_blueprint)
     app.register_blueprint(transaction_blueprint)
 
-    # Start Transaction System service in background
-    start_schedule_background(app)
-    
     return app

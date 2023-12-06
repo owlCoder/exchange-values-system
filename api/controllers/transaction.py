@@ -5,7 +5,6 @@ from controllers.current_account import *
 from controllers.user import get_user_by_id
 from services.email_message import transaction_message
 from services.email_service import get_email_sender_instance
-import time
 
 
 # Function to create a new transaction record using db.session
@@ -32,6 +31,8 @@ def create_transaction(sender_uid, sender_account_id, amount, receiver_account_n
 
 # Method to process transactions waiting for proccessing
 def process_on_hold_transactions():
+    transactions_emit = []
+
     # Get all on hold transactions
     transactions = (db.session.query(Transactions).filter(Transactions.approved == "ON HOLD").all())
 
@@ -109,20 +110,23 @@ def process_on_hold_transactions():
                         email_sender = get_email_sender_instance()
 
                         # Put emails into queue
-                        email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
-                        email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
+                        print("upao")
+                        # email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
+                        # email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
                     except Exception as e:
+                        import traceback
+                        traceback.print_exc()
                         db.session.rollback()
 
             # Add currency to dictonary
-            transaction = transaction.serialize()
-            transaction["currency"] = currency
-
-            # Convert the dictionary to a JSON string
-            socket_io.emit("live", transaction)
+            transaction_update = transaction.serialize()
+            transaction_update["currency"] = currency
             
-            # Between 2 emits add a little pause to prevent browser spam request filter activation
-            time.sleep(5.0)
+            # Convert the dictionary to a JSON string
+            transactions_emit.append(transaction_update)
 
             # Commit changes to database
             db.session.commit()
+
+    # Transactions to emit
+    return transactions_emit
