@@ -2,12 +2,11 @@ import React from 'react';
 import ICreditCardData from '../../../interfaces/CreditCards/ICreditCardData';
 
 const CreditCard: React.FC<ICreditCardData> = ({card_number, cardholder_name, expiry_date, cvv, uid = 1}) => {
-   
     return (
       <div className="w-96 h-56 mx-auto rounded-xl text-white shadow-2xl transition-transform transform">
         <img
           className="relative object-cover w-full h-full rounded-xl" alt=''
-          src={'card' + (Math.round(parseInt(cvv) / 100) % 5) + '.jpg'}
+          src={'card' + (Math.round(parseInt(cvv)) % 5 + 1) + '.jpg'}
         />
         <div className="w-full px-8 absolute top-8">
           <div className="flex justify-between">
