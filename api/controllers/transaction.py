@@ -9,16 +9,7 @@ import time
 
 
 # Function to create a new transaction record using db.session
-def create_transaction(
-    sender_uid,
-    sender_account_id,
-    amount,
-    receiver_account_number,
-    receiver_email,
-    receiver_name,
-    receiver_surname,
-    approved,
-):
+def create_transaction(sender_uid, sender_account_id, amount, receiver_account_number, receiver_email, receiver_name, receiver_surname, approved):
     try:
         new_transaction = Transactions(
             sender_uid=sender_uid,
@@ -42,9 +33,7 @@ def create_transaction(
 # Method to process transactions waiting for proccessing
 def process_on_hold_transactions():
     # Get all on hold transactions
-    transactions = (
-        db.session.query(Transactions).filter(Transactions.approved == "ON HOLD").all()
-    )
+    transactions = (db.session.query(Transactions).filter(Transactions.approved == "ON HOLD").all())
 
     if transactions:
         for transaction in transactions:
@@ -120,8 +109,8 @@ def process_on_hold_transactions():
                         email_sender = get_email_sender_instance()
 
                         # Put emails into queue
-                        # email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
-                        # email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
+                        email_sender.prepare(sender["email"], sender_message, "Transaction has been processed")
+                        email_sender.prepare(receiver["email"], receiver_message, "Transaction has been processed")
                     except Exception as e:
                         db.session.rollback()
 
