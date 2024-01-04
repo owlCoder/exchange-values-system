@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
-from api.controllers.UserController import *
-from api.services.EmailSenderService import get_email_sender_instance
-from api.utilities.EmailMessageParser import activation_message
-from api.services.PasswordHasherService import hash_method
+from controllers.UserController import *
+from services.EmailSenderService import get_email_sender_instance
+from utilities.EmailMessageParser import activation_message
+from services.PasswordHasherService import hash_method
 
 user_blueprint = Blueprint('user_blueprint', __name__)
 

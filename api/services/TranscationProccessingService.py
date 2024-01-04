@@ -1,7 +1,7 @@
 import threading
 import schedule
 import time
-from api.controllers.TransactionController import process_on_hold_transactions
+from controllers.TransactionController import process_on_hold_transactions
 
 # Function to process transactions
 def background_task(app):

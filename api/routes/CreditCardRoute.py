@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from api.services.VerificationService import verify_user_credit_card
-from api.controllers.CreditCardController import *
+from services.VerificationService import verify_user_credit_card
+from controllers.CreditCardController import *
 
 credit_card_blueprint = Blueprint('credit_card_blueprint', __name__)
 

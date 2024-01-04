@@ -1,5 +1,5 @@
-from api.controllers.UserController import update_user_verified_status
-from api.controllers.CreditCardController import update_verified_field
+from controllers.UserController import update_user_verified_status
+from controllers.CreditCardController import update_verified_field
 
 # Service to verify user and user's credit card
 def verify_user_credit_card(card_number, verified_status, uid):

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, DECIMAL, String, ForeignKey, CheckConstraint
-from config.database import Base, engine
+from configuration.DatabaseInitializator import Base, engine
 
 class Transactions(Base):
     __tablename__ = 'transactions'
@@ -14,6 +14,7 @@ class Transactions(Base):
     receiver_surname = Column(String(255), nullable=False)
     approved = Column(String(16), CheckConstraint("approved IN ('ON HOLD', 'APPROVED', 'DENIED')"), nullable=False)
 
+    # Python object to JSON
     def serialize(self):
         return {
             'id': self.id,
@@ -26,6 +27,23 @@ class Transactions(Base):
             'receiver_surname': self.receiver_surname,
             'approved': self.approved
         }
+    
+     # JSON to Python object
+    @classmethod
+    def deserialize(cls, data):
+        return cls(
+            uid=data.get('uid'),
+            first_name=data.get('first_name'),
+            surname=data.get('surname'),
+            address=data.get('address'),
+            city=data.get('city'),
+            country=data.get('country'),
+            phone_number=data.get('phone_number'),
+            email=data.get('email'),
+            password=data.get('password'),
+            admin=data.get('admin', False),
+            verified=data.get('verified', False),
+        )
 
 # Create the table in the database
 Base.metadata.create_all(engine)

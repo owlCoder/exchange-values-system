@@ -1,28 +1,17 @@
 from configuration.SocketConfiguration import socket_io
 from models.Transaction import Transactions
 from configuration.DatabaseInitializator import db
-from api.controllers.CurrentAccountController import *
-from api.controllers.UserController import get_user_by_id
-from api.utilities.EmailMessageParser import transaction_message
-from api.services.EmailSenderService import get_email_sender_instance
+from controllers.CurrentAccountController import *
+from controllers.UserController import get_user_by_id
+from utilities.EmailMessageParser import transaction_message
+from services.EmailSenderService import get_email_sender_instance
 import time
 
 
 # Function to create a new transaction record using db.session
-def create_transaction(sender_uid, sender_account_id, amount, receiver_account_number, receiver_email, receiver_name, receiver_surname, approved):
+def create_transaction(data):
     try:
-        new_transaction = Transactions(
-            sender_uid=sender_uid,
-            sender_account_id=sender_account_id,
-            amount=amount,
-            receiver_account_number=receiver_account_number,
-            receiver_email=receiver_email,
-            receiver_name=receiver_name,
-            receiver_surname=receiver_surname,
-            approved=approved,
-        )
-
-        db.session.add(new_transaction)
+        db.session.add(Transactions.deserialize(data))
         db.session.commit()
         return True
     except Exception as e:

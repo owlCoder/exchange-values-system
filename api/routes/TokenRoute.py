@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from api.controllers.TokenController import is_token_valid, delete_token
+from controllers.TokenController import is_token_valid, delete_token
 
 token_blueprint = Blueprint('token_blueprint', __name__)
 

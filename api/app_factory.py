@@ -1,22 +1,23 @@
 from flask import Flask
 from flask_cors import CORS
 
-from api.services.TranscationProccessingService import start_schedule_background
+from services.TranscationProccessingService import start_schedule_background
 
-from config.database import db
-from config.config import ALLOWED_CLIENT_ORIGIN
+from configuration.DatabaseInitializator import db
+from configuration.SqlAlchemyCORSConfiguration import ALLOWED_CLIENT_ORIGIN
+from configuration.SocketConfiguration import socket_io
 
-from api.routes.AuthRoute import auth_blueprint
-from api.routes.CreditCardRoute import credit_card_blueprint
-from api.routes.CurrentAccountRoute import current_account_blueprint
-from api.routes.UserRoute import user_blueprint
-from api.routes.TokenRoute import token_blueprint
-from api.routes.CurrenciesRoute import currencies_blueprint
-from api.routes.TransactionRoute import transaction_blueprint
+from routes.AuthRoute import auth_blueprint
+from routes.CreditCardRoute import credit_card_blueprint
+from routes.CurrentAccountRoute import current_account_blueprint
+from routes.UserRoute import user_blueprint
+from routes.TokenRoute import token_blueprint
+from routes.CurrenciesRoute import currencies_blueprint
+from routes.TransactionRoute import transaction_blueprint
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_pyfile('config/config.py')
+    app.config.from_pyfile('configuration/SqlAlchemyCORSConfiguration.py')
     app.config['SECRET_KEY'] = 'transaction_systems_wm_1594'
     
     # Initialize CORS
@@ -25,7 +26,6 @@ def create_app():
     # Initialize database engine
     db.init_app(app)
 
-    from config.socket import socket_io
     socket_io.init_app(app, cors_allowed_origins=ALLOWED_CLIENT_ORIGIN)
     
     # Register blueprints

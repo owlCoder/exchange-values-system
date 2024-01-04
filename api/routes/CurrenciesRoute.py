@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from api.services.CurrenciesService import *
+from services.CurrenciesService import *
 
 currencies_blueprint = Blueprint('currencies_blueprint', __name__)
 
