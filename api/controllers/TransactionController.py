@@ -1,10 +1,10 @@
 from config.socket import socket_io
 from models.transaction import Transactions
 from config.database import db
-from controllers.current_account import *
-from controllers.user import get_user_by_id
-from services.email_message import transaction_message
-from services.email_service import get_email_sender_instance
+from api.controllers.CurrentAccountController import *
+from api.controllers.UserController import get_user_by_id
+from api.utilities.EmailMessageParser import transaction_message
+from api.services.EmailSenderService import get_email_sender_instance
 import time
 
 

@@ -1,7 +1,7 @@
 from flask import jsonify
-from controllers.user import check_user_credetials_in_database, get_user_by_email, get_user_by_id
-from controllers.token import create_token, is_token_valid, delete_token
-from services.token_generator import generate_token
+from api.controllers.UserController import check_user_credetials_in_database, get_user_by_email, get_user_by_id
+from api.controllers.TokenController import create_token, is_token_valid, delete_token
+from api.utilities.TokenGenerator import generate_token
 
 # Auth0 method to sign in user
 def auth_user(email, password):

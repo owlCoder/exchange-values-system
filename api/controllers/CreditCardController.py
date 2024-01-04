@@ -1,7 +1,7 @@
-from config.database import db
-from models.credit_card import CreditCard
-from controllers.current_account import create_current_account
-from services.account_number_generator import generate_account_number
+from configuration.DatabaseInitializator import db
+from models.CreditCard import CreditCard
+from controllers.CurrentAccountController import create_current_account
+from services.AccountGeneratorService import generate_account_number
 
 # Method to create a new credit card
 def create_credit_card(data):

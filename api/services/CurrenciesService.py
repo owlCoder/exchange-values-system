@@ -1,7 +1,7 @@
 import os
 import requests
 from config.database import CURRENCY_API_URL
-from services.caching_service import read_cached_data, write_cached_data, is_cache_valid
+from api.services.CachingService import read_cached_data, write_cached_data, is_cache_valid
 
 STATIC_FOLDER = "static"
 
