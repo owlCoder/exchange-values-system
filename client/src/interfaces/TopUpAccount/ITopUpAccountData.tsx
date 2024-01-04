@@ -1,6 +1,6 @@
 interface ITopUpAccountData {
     currency: string;
-    amount: number;
+    balance: number;
     card_number: string;
     uid: number;
   }

@@ -5,7 +5,7 @@ from services.CurrenciesService import convert_currency
 
 current_account_blueprint = Blueprint('current_account_blueprint', __name__)
 
-class CurrentAccount:
+class CurrentAccountBlueprint:
     @current_account_blueprint.route('/api/account/topup', methods=['POST'])
     def top_up_current_account():
         data = request.get_json()
@@ -21,7 +21,7 @@ class CurrentAccount:
         account_number = account.account_number if account else generate_account_number()
 
         if account_id:
-            if update_account_balance(account_id, request_account.amount):
+            if update_account_balance(account_id, request_account.balance):
                 return jsonify({'data': 'Account balance has been topped up'}), 201
             else:
                 return jsonify({'data': 'Account balance hasn\'t been changed'}), 500

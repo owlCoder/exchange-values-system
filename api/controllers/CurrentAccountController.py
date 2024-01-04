@@ -1,5 +1,5 @@
 from decimal import Decimal
-from models.CrrentAccount import CurrentAccount
+from models.CurrentAccount import CurrentAccount
 from configuration.DatabaseInitializator import db
 
 # Method to create a new current account

@@ -9,8 +9,6 @@ def create_token(token, email, uid):
         db.session.commit()
         return True
     except Exception as e:
-        from traceback import print_exc
-        print_exc(e)
         db.session.rollback()
         return False
 
