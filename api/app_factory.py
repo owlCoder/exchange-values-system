@@ -38,6 +38,6 @@ def create_app():
     app.register_blueprint(transaction_blueprint)
 
     # Start Transaction System service in background
-    start_schedule_background(app)
+    #start_schedule_background(app)
     
     return app

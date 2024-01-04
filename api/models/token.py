@@ -19,6 +19,8 @@ class Token(Base):
     # JSON to Python object
     @classmethod
     def deserialize(token, data):
+        import json
+        data = json.loads(data)
         return token(
             token=data.get('token'),
             email=data.get('email'),

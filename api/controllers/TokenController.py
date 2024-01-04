@@ -3,12 +3,14 @@ from configuration.DatabaseInitializator import db
 from models.Token import Token
 
 # Method to create a new token in database and create a new session
-def create_token(data):
+def create_token(token, email, uid):
     try:
-        db.session.add(Token.deserialize(data))
+        db.session.add(Token(token=token, email=email, uid=uid))
         db.session.commit()
         return True
     except Exception as e:
+        from traceback import print_exc
+        print_exc(e)
         db.session.rollback()
         return False
 
