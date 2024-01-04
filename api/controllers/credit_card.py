@@ -6,23 +6,9 @@ from services.account_number_generator import generate_account_number
 # Method to create a new credit card
 def create_credit_card(data):
     try:
-        card_number = data.get('card_number')
-        cardholder_name = data.get('cardholder_name')
-        expiry_date = data.get('expiry_date')
-        cvv = data.get('cvv')
-        uid = data.get('uid')
-
-        new_credit_card = CreditCard(
-            card_number=card_number,
-            cardholder_name=cardholder_name,
-            expiry_date=expiry_date,
-            cvv=cvv,
-            uid=uid,
-            verified=False
-        )
-        
-        db.session.add(new_credit_card)
-        create_current_account(generate_account_number(), 0, 'RSD', card_number, uid)
+        new_card = CreditCard.deserialize(data)
+        db.session.add(new_card)
+        create_current_account(generate_account_number(), 0, 'RSD', new_card.card_number, new_card.uid)
         db.session.commit()
         return True
     except Exception as e:

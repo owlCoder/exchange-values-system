@@ -11,6 +11,7 @@ class CreditCard(Base):
     verified = Column(Boolean, nullable=False)
     uid = Column(Integer, ForeignKey('users.uid'), nullable=False)
 
+    # Python object to JSON
     def serialize(self):
         return {
             'card_number': self.card_number,
@@ -20,5 +21,17 @@ class CreditCard(Base):
             'verified': self.verified,
             'uid': self.uid,
         }
+    
+    # JSON to Python object
+    @classmethod
+    def deserialize(card, data):
+        return card(
+            card_number=data.get('card_number'),
+            cardholder_name=data.get('cardholder_name'),
+            expiry_date=data.get('expiry_date'),
+            cvv=data.get('cvv'),
+            uid=data.get('uid'),
+            verified=False  # Default to False as per your code
+        )
 
 Base.metadata.create_all(engine)

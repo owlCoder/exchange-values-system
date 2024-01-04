@@ -69,7 +69,7 @@ CREATE TABLE transactions (
     sender_uid INT NOT NULL,
     sender_account_id INT NOT NULL,
     amount DECIMAL(15, 4) NOT NULL CHECK (amount > 0.00),
-    receiver_account_number VARCHAR(17) NOT NULL CHECK (LENGTH(receiver_account_number) = 17),
+    receiver_account_number CHAR(17) NOT NULL CHECK (LENGTH(receiver_account_number) = 17),
     receiver_email VARCHAR(255) NOT NULL CHECK (LENGTH(receiver_email) >= 3),
     receiver_name VARCHAR(255) NOT NULL CHECK (LENGTH(receiver_name) >= 1),
     receiver_surname VARCHAR(255) NOT NULL CHECK (LENGTH(receiver_surname) >= 1),
