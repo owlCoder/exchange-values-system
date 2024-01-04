@@ -1,18 +1,11 @@
 from decimal import Decimal
 from api.models.CrrentAccount import CurrentAccount
-from config.database import db
+from configuration.DatabaseInitializator import db
 
 # Method to create a new current account
-def create_current_account(account_number, balance, currency, card_number, uid):
+def create_current_account(data):
     try:
-        new_account = CurrentAccount(
-            account_number=account_number,
-            balance=balance,
-            currency=currency,
-            card_number=card_number,
-            uid=uid
-        )
-        db.session.add(new_account)
+        db.session.add(CurrentAccount.deserialize(data))
         db.session.commit()
         return True
     except Exception as e:

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from config.database import Base, engine
+from configuration.DatabaseInitializator import Base, engine
 
 class User(Base):
     __tablename__ = 'users'
@@ -16,6 +16,7 @@ class User(Base):
     admin = Column(Boolean, nullable=False)
     verified = Column(Boolean, nullable=False)
 
+    # Python object to JSON
     def serialize(self):
         return {
             'uid': self.uid,
@@ -30,5 +31,22 @@ class User(Base):
             'admin': self.admin,
             'verified': self.verified,
         }
+
+    # JSON to Python object
+    @classmethod
+    def deserialize(user, data):
+        return user(
+            uid=data.get('uid'),
+            first_name=data.get('first_name'),
+            surname=data.get('surname'),
+            address=data.get('address'),
+            city=data.get('city'),
+            country=data.get('country'),
+            phone_number=data.get('phone_number'),
+            email=data.get('email'),
+            password=data.get('password'),
+            admin=data.get('admin', False),
+            verified=data.get('verified', False),
+        )
 
 Base.metadata.create_all(engine)

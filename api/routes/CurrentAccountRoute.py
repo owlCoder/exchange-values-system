@@ -9,30 +9,28 @@ class CurrentAccount:
     @current_account_blueprint.route('/api/account/topup', methods=['POST'])
     def top_up_current_account():
         data = request.get_json()
-        card_number = data.get('card_number')
-        uid = data.get('uid')
-        amount = data.get('amount')
-        currency = data.get('currency')
+        request_account = CurrentAccount.deserialize(data)
 
-        if not card_number or not uid or not amount or not currency:
+        if not request_account:
             return jsonify({'data': 'Please provide valid data'}), 400
         
-        account_id = check_account_exists_by_uid_cardnumber_currency(uid, card_number, currency)
-        account = get_account_number_by_uid_and_cardnumber(uid, card_number)
+        account_id = check_account_exists_by_uid_cardnumber_currency(request_account.uid, request_account.card_number, request_account.currency)
+        account = get_account_number_by_uid_and_cardnumber(request_account.uid, request_account.card_number)
 
         # If credit card has no active account, create a new one
         account_number = account.account_number if account else generate_account_number()
 
         if account_id:
-            if update_account_balance(account_id, amount):
+            if update_account_balance(account_id, request_account.amount):
                 return jsonify({'data': 'Account balance has been topped up'}), 201
             else:
                 return jsonify({'data': 'Account balance hasn\'t been changed'}), 500
         else:
-            if account_number and create_current_account(account_number, amount, currency, card_number, uid): 
+            if account_number and create_current_account(data): 
                 return jsonify({'data': 'Account balance has been topped up'}), 201
             else:
                 return jsonify({'data': 'Account balance hasn\'t been changed'}), 501
+
 
     @current_account_blueprint.route('/api/accounts/getAccountsByCard', methods=['POST'])
     def get_accounts_by_card_number():

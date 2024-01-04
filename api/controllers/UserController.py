@@ -1,24 +1,11 @@
-from models.user import User
-from config.database import db
+from models.User import User
+from configuration.DatabaseInitializator import db
 from sqlalchemy.orm.exc import NoResultFound
 
 # Method to create a new user
 def create_new_user(new_data):
     try:
-        new_user = User(
-            first_name = new_data.get("first_name"),
-            surname = new_data.get("surname"),
-            address = new_data.get("address"),
-            city = new_data.get("city"),
-            country = new_data.get("country"),
-            phone_number = new_data.get("phone_number"),
-            email = new_data.get("email"),
-            password = new_data.get("password"),
-            admin =False,
-            verified = False,
-        )
-
-        db.session.add(new_user)
+        db.session.add(User.deserialize(new_data))
         db.session.commit()
         return True
     except Exception as e:
@@ -68,16 +55,17 @@ def get_all_users():
 def update_user(user_id, new_data):
     try:
         user = db.session.query(User).get(user_id)
-        
+        new_data_user = User.deserialize(new_data)
+
         if user:
-            user.first_name = new_data.get("first_name", user.first_name)
-            user.surname = new_data.get("surname", user.surname)
-            user.address = new_data.get("address", user.address)
-            user.city = new_data.get("city", user.city)
-            user.country = new_data.get("country", user.country)
-            user.phone_number = new_data.get("phone_number", user.phone_number)
-            user.email = new_data.get("email", user.email)
-            user.password = new_data.get("password", user.password)
+            user.first_name = new_data_user.first_name
+            user.surname = new_data_user.surname
+            user.address = new_data_user.address
+            user.city = new_data_user.city
+            user.country = new_data_user.country
+            user.phone_number = new_data_user.phone_number
+            user.email = new_data_user.email
+            user.password = new_data_user.password
 
             db.session.commit()
             return True

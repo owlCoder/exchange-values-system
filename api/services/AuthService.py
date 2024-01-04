@@ -6,12 +6,10 @@ from api.utilities.TokenGenerator import generate_token
 # Auth0 method to sign in user
 def auth_user(email, password):
     if check_user_credetials_in_database(email, password):
-        token = generate_token()
-        uid = get_user_by_email(email)
-        user = get_user_by_id(uid)
+        data = { "token": generate_token(), "uid": get_user_by_email(email), "user": get_user_by_id(get_user_by_email(email)) }
 
-        if create_token(token, email, uid):
-            return jsonify({ 'token': token, 'admin': user['admin'], 'uid': uid, 'verified': user['verified'] }), 200
+        if create_token(data):
+            return jsonify({ 'token': data['token'], 'admin': data['user']['admin'], 'uid': data['uid'], 'verified': data['user']['verified'] }), 200
         else:
             return jsonify({'data': "Check your email and password. Auth service failed to create a token"}), 500
     else:
