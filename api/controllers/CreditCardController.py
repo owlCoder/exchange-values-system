@@ -8,10 +8,18 @@ def create_credit_card(data):
     try:
         new_card = CreditCard.deserialize(data)
         db.session.add(new_card)
-        create_current_account(generate_account_number(), 0, 'RSD', new_card.card_number, new_card.uid)
+        request_body = { 
+            "account_number": generate_account_number(),
+            "balance": 0,
+            "currency": "RSD",
+            "card_number": new_card.card_number,
+            "uid": new_card.uid
+        }
+        create_current_account(request_body)
         db.session.commit()
         return True
     except Exception as e:
+        print(e)
         db.session.rollback()
         return False
 

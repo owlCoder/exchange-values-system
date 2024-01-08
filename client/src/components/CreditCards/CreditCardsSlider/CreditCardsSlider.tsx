@@ -20,7 +20,7 @@ const CreditCardsSlider: React.FC<CardSliderData> = ({ cards }) => {
     const [exchangePopup, setExchangePopup] = useState<JSX.Element>(<div />);
     const [transferPopup, setTransferPopup] = useState<JSX.Element>(<div />);
     const [accountsTable, setAccountsTable] = useState<JSX.Element>(<div />);
-    const [refresh, setRefresh] = useState(true);
+    const [refresh, setRefresh] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
     const [showAccountsTable, setShowAccountsTable] = useState<boolean>(false);
 

@@ -18,9 +18,9 @@ const CreditCardAddForm: React.FC = () => {
   };
 
   const [formData, setFormData] = useState<ICreditCardData>(initialFormData);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showMessage, setShowMessage] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

@@ -6,7 +6,7 @@ import { LogOut } from '../../../service/AuthenticationService';
 const PendingVerification: React.FC = () => {
     const { setUser } = useAuth();
 
-    const handleLogout = () => {
+    const handleLogout = (): void => {
         LogOut();
         setUser(null);
     };

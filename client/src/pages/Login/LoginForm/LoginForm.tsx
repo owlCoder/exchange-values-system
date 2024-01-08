@@ -8,10 +8,10 @@ import isICurrentUser from "../../../utils/CurrentUser/TypeValidator";
 import React from "react";
 
 const LoginForm = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [error, setError] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
     const { setUser } = useAuth();
     const navigate = useNavigate();
 
