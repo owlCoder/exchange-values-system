@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../main';
-import ICurrency from '../interfaces/CurrentAccount/ICurrency';
+import { ICurrency } from '../interfaces/CurrentAccount/ICurrency';
 
 export async function GetCurrencyCodes(): Promise<string[] | []> {
   try {
-    const response = await axios.get(API_URL + 'currencies');
+    const response: AxiosResponse = await axios.get(API_URL + 'currencies');
 
     if (response.status === 200) {
       return response.data as string[];
@@ -18,7 +18,7 @@ export async function GetCurrencyCodes(): Promise<string[] | []> {
 
 export async function GetCurrenciesCourses(): Promise<ICurrency | []> {
   try {
-    const response = await axios.get(API_URL + 'currencies/course');
+    const response: AxiosResponse = await axios.get(API_URL + 'currencies/course');
 
     if (response.status === 200) {
       return response.data as ICurrency;

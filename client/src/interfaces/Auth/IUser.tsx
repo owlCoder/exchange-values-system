@@ -1,4 +1,4 @@
-interface IUser {
+export interface IUser {
   uid?: number;
   first_name: string;
   surname: string;
@@ -11,5 +11,3 @@ interface IUser {
   admin?: boolean;
   verified?: boolean;
 }
-
-export default IUser;

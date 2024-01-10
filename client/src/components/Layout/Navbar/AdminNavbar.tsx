@@ -17,7 +17,7 @@ const AdminNavigationHeader: React.FC = () => {
         else return <CreateUser />;
     };
 
-    const SignOut = () => {
+    const SignOut = (): void => {
         LogOut();
         navigate("/");
     };

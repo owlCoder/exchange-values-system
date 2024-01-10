@@ -4,7 +4,7 @@ import { LogOut } from "../../../service/AuthenticationService";
 
 const LoggedIn = () => {
     const navigate = useNavigate();
-    const handleLogout = () => {
+    const handleLogout = (): void => {
       LogOut();
       navigate("/");
     };

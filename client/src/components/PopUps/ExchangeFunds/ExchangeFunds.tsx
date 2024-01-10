@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import IExchangeFundsData from '../../../interfaces/ExchangeFunds/IExchangeFundsData';
-import IExchangeFundsPopUp from '../../../interfaces/ExchangeFunds/IExchangeFundsPopUp';
+import { IExchangeFundsData } from '../../../interfaces/ExchangeFunds/IExchangeFundsData';
+import { IExchangeFundsPopUp } from '../../../interfaces/ExchangeFunds/IExchangeFundsPopUp';
 import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { GetCurrencyCodes } from '../../../service/CurrenciesService';
 import { AiOutlineTransaction } from 'react-icons/ai';
@@ -23,12 +23,12 @@ const ExchangeFunds: React.FC<IExchangeFundsPopUp> = ({ account_id, balance, cur
     const [success, setSuccess] = useState<boolean>(false);
     const [balanceState, setBalanceState] = useState<number>(balance);
 
-    const handleInputChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setFormData({
             ...formData,

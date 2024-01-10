@@ -1,4 +1,4 @@
-interface ICreditCardData {
+export interface ICreditCardData {
   card_number: string;
   cardholder_name: string;
   expiry_date: string;
@@ -6,5 +6,3 @@ interface ICreditCardData {
   uid: number;
   verified: boolean;
 }
-
-export default ICreditCardData;

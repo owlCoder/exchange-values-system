@@ -1,4 +1,4 @@
-interface ITransferFundsData {
+export interface ITransferFundsData {
     sender_uid: number;
     sender_account_id: number;
     amount: number;
@@ -8,5 +8,3 @@ interface ITransferFundsData {
     receiver_surname: string;
     approved: string;
 }
-
-export default ITransferFundsData;

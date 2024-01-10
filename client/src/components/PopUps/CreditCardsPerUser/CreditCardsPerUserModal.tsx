@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ICreditCardModal from '../../../interfaces/CreditCards/ICreditCardModal';
-import ICreditCardData from '../../../interfaces/CreditCards/ICreditCardData';
+import { ICreditCardModal } from '../../../interfaces/CreditCards/ICreditCardModal';
+import { ICreditCardData } from '../../../interfaces/CreditCards/ICreditCardData';
 import { AiFillCheckCircle, AiFillInfoCircle } from 'react-icons/ai';
 import { ActivateCreditCard, GetUsersCreditCards } from '../../../service/CreditCardsService';
 import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
@@ -10,7 +10,7 @@ const CreditCardsPerUserModal: React.FC<ICreditCardModal> = ({ uid, ModalClose, 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
 
-    function GetCreditCardsData() {
+    function GetCreditCardsData(): void {
         setLoading(true);
         GetUsersCreditCards(uid)
             .then((result) => {
@@ -24,7 +24,7 @@ const CreditCardsPerUserModal: React.FC<ICreditCardModal> = ({ uid, ModalClose, 
             });
     }
 
-    function Activation(card_number: string | undefined) {
+    function Activation(card_number: string | undefined): void {
         setLoading(true);
         ActivateCreditCard(card_number, uid)
             .then(() => {

@@ -8,9 +8,9 @@ import { useAuth } from "../../contexts/AuthContext";
 import LoadingSpinner from "../../components/Layout/LoadingSpinner/LoadingSpinner";
 
 const Dashboard: React.FC = () => {
-    const [loading, setLoading] = useState(true);
-    const [verified, setVerified] = useState(false);
-    const [pending, setPending] = useState(false);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [verified, setVerified] = useState<boolean>(false);
+    const [pending, setPending] = useState<boolean>(false);
     const { setUser } = useAuth();
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const Dashboard: React.FC = () => {
 
         setLoading(true);
 
-        const handleLogout = () => {
+        const handleLogout = (): void => {
             LogOut();
             navigate("/");
         };

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import ITransferFundsData from '../../../interfaces/TransferFunds/ITransferFundsData';
-import ITransferFundsPopUp from '../../../interfaces/TransferFunds/ITransferFundsPopUp';
+import { ITransferFundsData } from '../../../interfaces/TransferFunds/ITransferFundsData';
+import { ITransferFundsPopUp } from '../../../interfaces/TransferFunds/ITransferFundsPopUp';
 import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { TbTransferVertical } from 'react-icons/tb';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -26,12 +26,12 @@ const TransferFunds: React.FC<ITransferFundsPopUp> = ({ account_id, balance, cur
     const [error, setError] = useState<boolean>(false);
     const [success, setSuccess] = useState<boolean>(false);
 
-    const handleInputChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setInProgress(true);
 

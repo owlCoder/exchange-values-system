@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import ITransaction from '../../interfaces/Transaction/ITransaction';
+import { ITransaction } from '../../interfaces/Transaction/ITransaction';
 
 interface GraphComponentProps {
   data: ITransaction[];
@@ -66,7 +66,7 @@ const Graph: React.FC<GraphComponentProps> = ({ data }) => {
     };
   }, [data]);
 
-  const isDarkMode = () => {
+  const isDarkMode = (): boolean => {
     const theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     return theme;
   };

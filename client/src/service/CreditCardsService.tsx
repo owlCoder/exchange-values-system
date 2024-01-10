@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../main';
 import { isCardNumberValid, isExpiryDateValid, isCVVValid } from '../utils/CreditCard/DataValidator';
-import ICreditCardData from '../interfaces/CreditCards/ICreditCardData';
+import { ICreditCardData } from '../interfaces/CreditCards/ICreditCardData';
 
 export async function SaveCreditCardData(cardData: ICreditCardData): Promise<string | undefined> {
   try {
@@ -76,7 +76,7 @@ export async function ActivateCreditCard(card_number: string | undefined, uid: n
   }
 
   try {
-    const response = await axios.put(`${API_URL}cards/updateVerified`, {
+    const response: AxiosResponse = await axios.put(`${API_URL}cards/updateVerified`, {
       card_number,
       verified: true,
       uid,

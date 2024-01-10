@@ -46,14 +46,14 @@ const CreditCardsSlider: React.FC<CardSliderData> = ({ cards }) => {
         setRefresh(refresh => !refresh);
     };
 
-    const changeCard = (direction: string) => {
+    const changeCard = (direction: string) : void => {
         if (sliderRef.current) {
             direction === 'left' ? sliderRef.current.slickPrev() : sliderRef.current.slickNext();
             setShowAccountsTable(false);
         }
     };
 
-    const CustomArrow = ({ direction }: any) => (
+    const CustomArrow = ({ direction }: any) : JSX.Element => (
         <div
             onClick={() => changeCard(direction)}
             className={`slick-arrow ${direction === 'left' ? 'slick-prev' : 'slick-next'}`}

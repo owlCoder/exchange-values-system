@@ -6,7 +6,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Administrator from "./pages/Admin/Admin";
 import User from "./pages/User/User";
 
-function App() {
+function App(): JSX.Element {
   return (
     <AuthProvider>
       <Router>

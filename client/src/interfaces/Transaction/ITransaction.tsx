@@ -1,8 +1,6 @@
-import ITransferFundsData from "../TransferFunds/ITransferFundsData";
+import { ITransferFundsData } from "../TransferFunds/ITransferFundsData";
 
-interface ITransaction extends ITransferFundsData {
+export interface ITransaction extends ITransferFundsData {
     id: number;
     currency: string;
 };
-
-export default ITransaction;

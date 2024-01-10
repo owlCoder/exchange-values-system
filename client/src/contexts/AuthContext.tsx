@@ -8,7 +8,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<ICurrentUser | null>(() => {
     // Initialize currentUser from local storage
-    const storedUser = localStorage.getItem('currentUser');
+    const storedUser: string | null = localStorage.getItem('currentUser');
     return storedUser ? JSON.parse(storedUser) : null;
   });
 

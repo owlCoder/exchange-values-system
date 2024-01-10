@@ -9,13 +9,13 @@ import { GetAllUsers } from '../../../service/UserService';
 
 const UsersList: React.FC = () => {
     const [data, setData] = useState<IUser[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const [modal, setModal] = useState<JSX.Element>(<div></div>)
 
-    const fetchData = async (mode: boolean) => {
+    const fetchData = async (mode: boolean) : Promise<void> => {
         setLoading(mode);
         try {
-            const userData = await GetAllUsers();
+            const userData: IUser[] = await GetAllUsers();
             setData(userData);
         } finally {
             setLoading(false);

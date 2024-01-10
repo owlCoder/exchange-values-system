@@ -29,7 +29,7 @@ const UserNavigationHeader: React.FC = () => {
         </div>;
     };
 
-    const SignOut = () => {
+    const SignOut = (): void => {
         LogOut();
         navigate("/");
     };

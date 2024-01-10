@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { API_URL } from '../main';
-import ITransferFundsData from '../interfaces/TransferFunds/ITransferFundsData';
+import { ITransferFundsData } from '../interfaces/TransferFunds/ITransferFundsData';
 
 export async function Transfer(data: ITransferFundsData): Promise<string> {
   try {

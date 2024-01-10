@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import ITopUpPopup from '../../../interfaces/TopUpAccount/ITopUpPopup';
-import ITopUpAccountData from '../../../interfaces/TopUpAccount/ITopUpAccountData';
+import { ITopUpPopup } from '../../../interfaces/TopUpAccount/ITopUpPopup';
+import { ITopUpAccountData } from '../../../interfaces/TopUpAccount/ITopUpAccountData';
 import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { GetCurrencyCodes } from '../../../service/CurrenciesService';
 import { AiOutlineArrowUp } from 'react-icons/ai';
@@ -22,12 +22,12 @@ const TopUpBalance: React.FC<ITopUpPopup> = ({ card_number, uid, closeModalMetho
     const [error, setError] = useState<boolean>(false);
     const [success, setSuccess] = useState<boolean>(false);
 
-    const handleInputChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>): void => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setFormData({
             ...formData,

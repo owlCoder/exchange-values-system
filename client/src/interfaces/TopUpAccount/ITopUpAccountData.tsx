@@ -1,9 +1,6 @@
-interface ITopUpAccountData {
-    currency: string;
-    balance: number;
-    card_number: string;
-    uid: number;
-  }
-  
-  export default ITopUpAccountData;
-  
+export interface ITopUpAccountData {
+  currency: string;
+  balance: number;
+  card_number: string;
+  uid: number;
+}  

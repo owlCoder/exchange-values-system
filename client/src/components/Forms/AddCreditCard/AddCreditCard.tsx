@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import { useAuth } from '../../../contexts/AuthContext';
 import { isCVVValid, isCardNumberValid, isExpiryDateValid } from '../../../utils/CreditCard/DataValidator';
-import ICreditCardData from '../../../interfaces/CreditCards/ICreditCardData';
+import { ICreditCardData } from '../../../interfaces/CreditCards/ICreditCardData';
 import { SaveCreditCardData } from '../../../service/CreditCardsService';
 
 const CreditCardAddForm: React.FC = () => {
@@ -22,7 +22,7 @@ const CreditCardAddForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showMessage, setShowMessage] = useState<boolean>(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
 
     if (name === 'card_number') {
@@ -46,7 +46,7 @@ const CreditCardAddForm: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setError('');
     setLoading(true);

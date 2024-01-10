@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { MdClear } from 'react-icons/md';
-import IUser from '../../../interfaces/Auth/IUser';
+import { IUser } from '../../../interfaces/Auth/IUser';
 import { GetUserAccount, UpdateUserAccount } from '../../../service/UserService';
 import Info from '../../PopUps/Informative/Info';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { useAuth } from '../../../contexts/AuthContext';
-import isUser from '../../../utils/User/TypeValidator';
+import { isUser } from '../../../utils/User/TypeValidator';
 import { hashPassword } from '../../../service/CryptoHasherService';
 
 const Profile: React.FC = () => {
@@ -29,13 +29,13 @@ const Profile: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [infoModal, setInfoModal] = useState<boolean>(false);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
     // Function to handle new user data
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         setError('');
 

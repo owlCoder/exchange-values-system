@@ -1,7 +1,5 @@
-import ICreditCardData from "./ICreditCardData";
+import { ICreditCardData } from "./ICreditCardData";
 
-interface CardSliderData {
+export interface CardSliderData {
   cards: ICreditCardData[];
 }
-
-export default CardSliderData;

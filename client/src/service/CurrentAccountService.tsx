@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { API_URL } from '../main';
-import ITopUpAccountData from '../interfaces/TopUpAccount/ITopUpAccountData';
-import ICurrentAccount from '../interfaces/CurrentAccount/ICurrentAccount';
-import IExchangeFundsData from '../interfaces/ExchangeFunds/IExchangeFundsData';
+import { ITopUpAccountData } from '../interfaces/TopUpAccount/ITopUpAccountData';
+import { ICurrentAccount } from '../interfaces/CurrentAccount/ICurrentAccount';
+import { IExchangeFundsData } from '../interfaces/ExchangeFunds/IExchangeFundsData';
 
 export async function TopUp(data: ITopUpAccountData): Promise<string> {
   try {

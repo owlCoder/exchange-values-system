@@ -1,6 +1,6 @@
-import IUser from "../../interfaces/Auth/IUser";
+import { IUser } from "../../interfaces/Auth/IUser";
 
-const isUser = (obj: any): obj is IUser => (
+export const isUser = (obj: any): obj is IUser => (
     typeof obj === 'object' &&
     'uid' in obj &&
     'first_name' in obj &&
@@ -13,5 +13,3 @@ const isUser = (obj: any): obj is IUser => (
     'password' in obj &&
     ('admin' in obj || 'verified' in obj)
 );
-
-export default isUser;
