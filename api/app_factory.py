@@ -19,7 +19,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_pyfile('configuration/SqlAlchemyCORSConfiguration.py')
     app.config['SECRET_KEY'] = 'transaction_systems_wm_1594'
-    
+
     # Initialize CORS
     CORS(app, origins=[ALLOWED_CLIENT_ORIGIN], methods=["POST", "GET", "PUT"])
     
@@ -39,5 +39,11 @@ def create_app():
 
     # Start Transaction System service in background
     start_schedule_background(app)
-    
+
+    # Show info message about database connection
+    if app.config['SQLALCHEMY_DATABASE_URI'] == app.config['SQLALCHEMY_DATABASE_URI_DEVELOPEMENT']: 
+        print("\033[35m * Running queries on developement database\033[0m")
+    else: 
+        print("\033[36m * Running queries on production database\033[0m")
+
     return app
