@@ -28,21 +28,18 @@ class Transactions(Base):
             'approved': self.approved
         }
     
-     # JSON to Python object
     @classmethod
     def deserialize(cls, data):
         return cls(
-            uid=data.get('uid'),
-            first_name=data.get('first_name'),
-            surname=data.get('surname'),
-            address=data.get('address'),
-            city=data.get('city'),
-            country=data.get('country'),
-            phone_number=data.get('phone_number'),
-            email=data.get('email'),
-            password=data.get('password'),
-            admin=data.get('admin', False),
-            verified=data.get('verified', False),
+            id=data.get('id'),
+            sender_uid=data.get('sender_uid'),
+            sender_account_id=data.get('sender_account_id'),
+            amount=float(data.get('amount', 0.0)),  # Default value of 0.0 if 'amount' is not present
+            receiver_account_number=data.get('receiver_account_number'),
+            receiver_email=data.get('receiver_email'),
+            receiver_name=data.get('receiver_name'),
+            receiver_surname=data.get('receiver_surname'),
+            approved=data.get('approved', False)
         )
 
 # Create the table in the database
