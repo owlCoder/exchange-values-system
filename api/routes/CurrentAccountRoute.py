@@ -20,12 +20,16 @@ class CurrentAccountBlueprint:
         # If credit card has no active account, create a new one
         account_number = account.account_number if account else generate_account_number()
 
+        print(data)
+        print(account_number)
+
         if account_id:
             if update_account_balance(account_id, request_account.balance):
                 return jsonify({'data': 'Account balance has been topped up'}), 201
             else:
                 return jsonify({'data': 'Account balance hasn\'t been changed'}), 500
         else:
+            data['account_number'] = account_number
             if account_number and create_current_account(data): 
                 return jsonify({'data': 'Account balance has been topped up'}), 201
             else:

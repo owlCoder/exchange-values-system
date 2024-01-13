@@ -2,7 +2,7 @@ import uuid
 
 def activation_message(email, password):
     return f"""\
-    Welcome to new era of transcations!
+    Welcome to new era of transactions!
 
     Here are your login details:
     Email: {email}

@@ -27,7 +27,7 @@ class CurrentAccount(Base):
     def deserialize(account, data):
         return account(
             account_number=data.get('account_number'),
-            balance=data.get('balance'),
+            balance=float(data.get('balance')),
             currency=data.get('currency'),
             card_number=data.get('card_number'),
             uid=data.get('uid')
