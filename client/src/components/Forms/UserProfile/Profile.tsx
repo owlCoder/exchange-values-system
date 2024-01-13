@@ -116,7 +116,7 @@ const Profile: React.FC = () => {
 
     return (
         <div>
-            {infoModal && <Info title='User has been created successfully' closeModalMethod={setInfoModal} />}
+            {infoModal && <Info title='Your information has been saved' closeModalMethod={setInfoModal} />}
             {loading ? <LoadingSpinner /> :
                 <div className="overflow-y-auto h-screen overflow-x-hidden justify-center items-center w-full md:inset-0 md:h-full">
                     <div className="relative p-4 w-full h-full md:h-auto px-32">
