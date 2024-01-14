@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from services.PasswordHasherService import hash_method
+from utilities.PasswordHasher import hash_method
 from services.AuthService import auth_user, unauth_user
 
 auth_blueprint = Blueprint("auth_blueprint", __name__)

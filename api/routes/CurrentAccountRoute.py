@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from controllers.CurrentAccountController import *
-from services.AccountGeneratorService import generate_account_number
+from utilities.AccountNumberGenerator import generate_account_number
 from services.CurrenciesService import convert_currency
 
 current_account_blueprint = Blueprint('current_account_blueprint', __name__)

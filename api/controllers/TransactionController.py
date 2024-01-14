@@ -33,8 +33,7 @@ def process_on_hold_transactions():
             currency = sender_account.currency
             
             # Check if current accounts exist and does sender has enough balance to send
-            if sender_account is None or float(sender_account.balance) < float(
-                transaction.amount):
+            if sender_account is None or float(sender_account.balance) < float(transaction.amount):
                 transaction.approved = "DENIED"
             else:
                 # Check if receiver account exists

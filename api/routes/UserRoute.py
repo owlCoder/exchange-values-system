@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from controllers.UserController import *
 from services.EmailSenderService import get_email_sender_instance
 from utilities.EmailMessageParser import activation_message
-from services.PasswordHasherService import hash_method
+from utilities.PasswordHasher import hash_method
 
 user_blueprint = Blueprint('user_blueprint', __name__)
 

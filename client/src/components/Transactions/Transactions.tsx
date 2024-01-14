@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { API_URL } from '../../main';
-import ITransaction from '../../interfaces/Transaction/ITransaction';
+import { ITransaction } from '../../interfaces/Transaction/ITransaction';
 import { showErrorToast, showSuccessToast, showInfoToast, showWarningToast } from '../Toast/Toast';
 import { ToastContainer } from 'react-toastify';
 import Graph from '../Graph/Graph';

@@ -1,21 +1,21 @@
 from configuration.DatabaseInitializator import db
 from models.CreditCard import CreditCard
 from controllers.CurrentAccountController import create_current_account
-from services.AccountGeneratorService import generate_account_number
+from utilities.AccountNumberGenerator import generate_account_number
 
 # Method to create a new credit card
 def create_credit_card(data):
     try:
         new_card = CreditCard.deserialize(data)
         db.session.add(new_card)
-        request_body = { 
+        current_account = { 
             "account_number": generate_account_number(),
             "balance": 0,
             "currency": "RSD",
             "card_number": new_card.card_number,
             "uid": new_card.uid
         }
-        create_current_account(request_body)
+        create_current_account(current_account)
         db.session.commit()
         return True
     except Exception as e:

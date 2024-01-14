@@ -14,9 +14,12 @@ def create_new_user(new_data):
 
 # Method to check if user exists in system with entered email and passwords
 def check_user_credetials_in_database(email, hashed_password):
-    user = db.session.query(User).filter(User.email == email, User.password == hashed_password).first()
-    return user is not None  # Return True if user exists, False otherwise
-
+    try:
+        user = db.session.query(User).filter(User.email == email, User.password == hashed_password).first()
+        return user is not None  # Return True if user exists, False otherwise
+    except Exception as e:
+        return False
+    
 # Method to get user by user ID
 def get_user_by_id(user_id):
     try:
