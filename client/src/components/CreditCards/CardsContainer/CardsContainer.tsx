@@ -3,7 +3,7 @@ import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { GetUsersCreditCards } from '../../../service/CreditCardsService';
-import ICreditCardData from '../../../interfaces/CreditCards/ICreditCardData';
+import { ICreditCardData } from '../../../interfaces/CreditCards/ICreditCardData';
 import CreditCardsSlider from '../CreditCardsSlider/CreditCardsSlider';
 
 const CardsContainer: React.FC = () => {
