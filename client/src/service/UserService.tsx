@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../main';
 import { IUser } from '../interfaces/Auth/IUser';
 

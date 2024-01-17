@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
-import ICurrentUser from '../interfaces/Auth/ICurrentUser';
+import { ICurrentUser } from '../interfaces/Auth/ICurrentUser';
 import AuthProviderProps from '../props/AuthContextProps';
-import AuthContextType from '../types/AuthContextType';
+import { AuthContextType } from '../types/AuthContextType';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

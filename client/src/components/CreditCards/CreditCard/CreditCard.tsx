@@ -1,5 +1,5 @@
 import React from 'react';
-import ICreditCardData from '../../../interfaces/CreditCards/ICreditCardData';
+import { ICreditCardData } from '../../../interfaces/CreditCards/ICreditCardData';
 
 const CreditCard: React.FC<ICreditCardData> = ({card_number, cardholder_name, expiry_date, cvv, uid = 1}) => {
     return (

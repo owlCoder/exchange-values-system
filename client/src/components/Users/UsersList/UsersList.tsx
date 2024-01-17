@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import IUser from '../../../interfaces/Auth/IUser';
-import axios from 'axios';
-import { API_URL } from '../../../main';
+import { IUser } from '../../../interfaces/Auth/IUser';
 import LoadingSpinner from '../../Layout/LoadingSpinner/LoadingSpinner';
 import { AiFillCreditCard } from 'react-icons/ai';
 import CreditCardsPerUserModal from '../../PopUps/CreditCardsPerUser/CreditCardsPerUserModal';
