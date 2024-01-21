@@ -25,7 +25,7 @@ class EmailSender:
     def prepare(self, receiver_email, message_body, subject):
         message = MIMEText(message_body)
         message['Subject'] = subject
-        message['From'] = f'{"Transaction Systems Support"} <{"danijelj2001.xda@gmail.com"}>'
+        message['From'] = f'{"Transaction Systems Support"} <{"example@mail.com"}>'
         
         # Add email message to the queue
         self.email_queue.put((receiver_email, message))
@@ -41,8 +41,8 @@ class EmailSender:
                 
                 server = smtplib.SMTP('smtp-mail.outlook.com', 587)
                 server.starttls()
-                server.login('danijelj2001.xda@gmail.com', 'D@lib0rka123')
-                server.sendmail('danijelj2001.xda@gmail.com', receiver_email, message.as_string())
+                server.login('example@mail.com', 'password')
+                server.sendmail('example@mail.com', receiver_email, message.as_string())
                 server.quit()
                 
                 print(f"Email sent to {receiver_email}")
